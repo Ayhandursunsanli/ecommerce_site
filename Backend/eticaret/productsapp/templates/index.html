@@ -190,22 +190,26 @@
 
     <section class="category py-5">
         <div class="container">
-            <h6 class="minihead text-center">Shop by category</h6>
-            <h6 class="mdhead text-center">Shop by category</h6>
+            <h6 class="minihead text-center">Kategoriye Göre Alışveriş</h6>
+            <h6 class="mdhead text-center">Kategoriler</h6>
             <hr class="headhr">
             <div class="row mt-2">
-                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-3">
-                    <a class="card" href="category.html">
-                        <div class="imgbox">
-                            <img src="https://websitedemos.net/furniture-shop-04/wp-content/uploads/sites/1116/2022/07/cat-1-400x400.jpg"
-                                alt="">
-                        </div>
-                        <div class="text-box">
-                            <p>Abajur</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-3">
+                
+                {% for anakategori in anakategori %}
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-3">
+                        <a class="card" href="category.html">
+                            <div class="imgbox">
+                                <img src="{{ anakategori.anakategoriGorsel.url }}" alt="">
+                            </div>
+                            <div class="text-box">
+                                <p>{{ anakategori.anakategoriBaslik }}</p>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+                    
+                
+                {% comment %} <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-3">
                     <a class="card" href="category.html">
                         <div class="imgbox">
                             <img src="https://websitedemos.net/furniture-shop-04/wp-content/uploads/sites/1116/2022/07/cat-4-400x400.jpg"
@@ -237,15 +241,15 @@
                             <p>Sarkıt</p>
                         </div>
                     </a>
-                </div>
+                </div> {% endcomment %}
             </div>
         </div>
     </section>
 
     <section class="products py-5">
         <div class="container">
-            <h6 class="minihead text-center">Shop by category</h6>
-            <h6 class="mdhead text-center">Featured products</h6>
+            <h6 class="minihead text-center">En Özel Ürünler</h6>
+            <h6 class="mdhead text-center">Özel Ürünler</h6>
             <hr class="headhr">
             <div class="row mt-2">
                 <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-3">
