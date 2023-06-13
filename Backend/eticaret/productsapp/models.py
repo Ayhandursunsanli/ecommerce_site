@@ -10,3 +10,7 @@ class Slogan(models.Model):
     buyukBaslik = models.CharField(max_length=100)
     aciklama = models.CharField(max_length=100)
 
+class Anakategori(models.Model):
+    anakategoriGorsel = models.ImageField(upload_to='headerphoto/', blank=False, null=False)
+    anakategoriBaslik = models.CharField(max_length=50)
+
