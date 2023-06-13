@@ -38,12 +38,11 @@
 
 <body>
     <header>
-        <img class="header-img"
-            src="https://websitedemos.net/furniture-shop-04/wp-content/uploads/sites/1116/2022/07/hero-01.jpg" alt="">
+        <img class="header-img" src="{{ slogan.gorsel.url }}" alt="">
         <nav class="navbar navbar-expand-lg bg-body-transparent px-4">
             <div class="container-fluid">
                 <a class="navbar-brand me-xl-5 pe-xl-5" href="index.html">
-                    <img src="./img/lampadalogo2.png" width="75px" alt="">
+                    <img src="{% static 'img/lampadalogo2.png' %}" width="75px" alt="">
                 </a>
                 <button class="btn btn-close-white navbar-toggler " type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
@@ -90,9 +89,9 @@
             </div>
         </nav>
         <div class="slogan">
-            <h6 class="minihead">Black Friday in july</h6>
-            <h6 class="mdhead" style="font-size: 4.3333333333333rem;">Up to 50% off</h6>
-            <h6 class="mt-4 mb-4">Hundreds of styles available</h6>
+            <h6 class="minihead">{{ slogan.miniBaslik }}</h6>
+            <h6 class="mdhead" style="font-size: 4.3333333333333rem;">{{ slogan.buyukBaslik }}</h6>
+            <h6 class="mt-4 mb-4">{{ slogan.aciklama }}</h6>
             <a class="btn-primary" href="category.html"> SHOP NOW</a>
         </div>
     </header>
