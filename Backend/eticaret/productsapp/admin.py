@@ -1,6 +1,8 @@
 from django.contrib import admin
-from .models import Slogan
-from .models import Anakategori
+from .models import *
+# from .models import Slogan
+# from .models import Anakategori
+# from .models import Urun (yıldızla hepsini çektim uğraşmamak için)
 
 
 # Register your models here.
@@ -8,3 +10,4 @@ from .models import Anakategori
 
 admin.site.register(Slogan)
 admin.site.register(Anakategori)
+admin.site.register(Urun)

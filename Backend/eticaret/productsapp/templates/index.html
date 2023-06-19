@@ -36,6 +36,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
+
 <body>
     <header>
         <img class="header-img" src="{{ slogan.gorsel.url }}" alt="">
@@ -252,7 +253,7 @@
             <h6 class="mdhead text-center">Özel Ürünler</h6>
             <hr class="headhr">
             <div class="row mt-2">
-                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-3">
+                {% comment %} <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-3">
                     <div class="card" id="card1">
                         <div class="sale">
                             <p>İnidirim</p>
@@ -336,22 +337,32 @@
                         </div>
                         <p class="price"> <del>2.250 TL</del> - 1.500 TL</p>
                     </a>
-                </div>
-                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-3">
-                    <a class="card" href="product-detail.html">
-                        <div class="sale">
-                            <p>İnidirimli</p>
-                        </div>
-                        <div class="imgbox">
-                            <img src="https://st.myideasoft.com/idea/ha/74/myassets/products/729/vinner-munch-gold-kaplama-metal-abajur-etnic-desenli-23002.jpeg?revision=1683454673"
-                                alt="">
-                        </div>
-                        <div class="text-box">
-                            <p class="name">Product Name 1</p>
-                        </div>
-                        <p class="price"> <del>2.250 TL</del> - 1.500 TL</p>
-                    </a>
-                </div>
+                </div> {% endcomment %}
+
+                
+                {% for urunler in urunler  %}
+
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-3">
+                        <a class="card" href="product-detail.html">
+                            <div class="sale">
+                                <p></p>
+                            </div>
+                            <div class="imgbox">
+                                <img src="https://st.myideasoft.com/idea/ha/74/myassets/products/729/vinner-munch-gold-kaplama-metal-abajur-etnic-desenli-23002.jpeg?revision=1683454673"
+                                    alt="">
+                            </div>
+                            <div class="text-box">
+                                <p class="name">Product Name 1</p>
+                            </div>
+                            <p class="price"> <del>2.250 TL</del> - 1.500 TL</p>
+                        </a>
+                    </div>
+                    
+                {% endfor %}
+                    
+                
+
+
             </div>
             <div class="row mt-2">
                 <div class="col-lg-8 mt-3">
