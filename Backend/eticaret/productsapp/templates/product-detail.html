@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="tr">
 
@@ -31,14 +32,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- style css -->
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary public-navbar px-4">
         <div class="container-fluid">
             <a class="navbar-brand me-xl-5 pe-xl-5" href="index.html">
-                <img src="./img/lampadalogo2.png" width="75px" alt="">
+                <img src="{% static 'img/lampadalogo2.png' %}" width="75px" alt="">
             </a>
             <button class="btn btn-close-white navbar-toggler " type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
@@ -143,25 +144,37 @@
         <div class="row mt-5">
             <div class="col-lg-5 col-md-12 col-12">
                 <div class="sproduct-imgbox">
-                    <img class="img-fluid pb-1" src="https://st3.myideasoft.com/idea/ha/74/myassets/products/920/vinner-oslo-siyah-kaplama-tek-ayakli-metal-lambader-siyah-25869.jpeg?revision=1683469743" id="MainImg" alt="">
+                    <img class="img-fluid pb-1" src="{{ urun.urunresmi.url }}" id="MainImg" alt="">
                 </div>
                 <div class="small-img-group">
                     <div class="small-img-col mt-3">
-                        <img src="https://st3.myideasoft.com/idea/ha/74/myassets/products/920/vinner-oslo-siyah-kaplama-tek-ayakli-metal-lambader-siyah-25869.jpeg?revision=1683469743" width="100%" class="small-img" alt="">
+                        <img src="{{ urun.urunresmi.url }}" width="100%" class="small-img" alt="">
                     </div>
-                    <div class="small-img-col mt-3">
-                        <img src="https://st.myideasoft.com/idea/ha/74/myassets/products/045/vinner-ottowa-eskitme-tekli-kure-burgulu-metal-lambader-gold-seritli-mataro-vizon-7455.jpeg?revision=1685720664" width="100%" class="small-img" alt="">
-                    </div>
-                    <div class="small-img-col mt-3">
-                        <img src="https://st2.myideasoft.com/idea/ha/74/myassets/products/045/vinner-ottowa-eskitme-tekli-kure-burgulu-metal-lambader-gold-seritli-mataro-vizon-7456.jpeg?revision=1685720664" width="100%" class="small-img" alt="">
-                    </div>
+                    {% if urun.urunresmiTwo %}
+                        <div class="small-img-col mt-3">
+                            <img src="{{ urun.urunresmiTwo.url }}" width="100%" class="small-img" alt="">
+                        </div>
+                    {% endif %}
+                    {% if urun.urunresmiThree %}
+                        <div class="small-img-col mt-3">
+                            <img src="{{ urun.urunresmiThree.url }}" width="100%" class="small-img" alt="">
+                        </div>
+                    {% endif %}
+                    {% if urun.urunresmiFour %}
+                        <div class="small-img-col mt-3">
+                            <img src="{{ urun.urunresmiFour.url }}" width="100%" class="small-img" alt="">
+                        </div>
+                    {% endif %}
                 </div>
             </div>
-
-            <div class="col-lg-6 col-md-12 col-12">
-                <h6>Anasayfa / Abajur</h6>
-                <h3 class="py-4">Lorem ipsum dolor sit amet.</h3>
-                <h2>1.250 TL</h2>
+            <div class="col-lg-6 col-md-12 col-12 mt-lg-0 mt-5">
+                <h6>Anasayfa / {{urun.kategori}}</h6>
+                <h3 class="pt-4">{{urun.isim}}</h3>
+                <span>{{urun.aciklama}}</span>
+                <h2 class="pt-4">{{urun.fiyat}} TL</h2>
+                <h6 class="mt-4">Kategori : {{urun.kategori}} </h6>
+                <h6>Rengi : {{urun.urunRengi}} </h6>
+                <h6>Stok Kodu : {{urun.stokKodu}} </h6>
                 <select class="my-3">
                     <option value="">Renk Seçiniz</option>
                     <option value="">Siyah</option>
@@ -170,8 +183,6 @@
                 </select>
                 <input type="number" value="1">
                 <button class="buy-btn">Sepete Ekle</button>
-                <h4 class="mt-5 mb-3">Product Details</h4>
-                <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquid labore corporis, rem accusantium deleniti reprehenderit temporibus at. Laborum beatae accusamus mollitia expedita ipsam repellat molestiae quia quas eius sit quam maiores enim, perspiciatis ut fuga officiis repudiandae dolor. Repudiandae, impedit omnis quasi pariatur velit eaque laudantium placeat rem dolorum eum?</span>
             </div>
         </div>
     </section>
@@ -458,7 +469,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
     <!-- app js -->
-    <script src="./js/app.js"></script>
+    <script src="{% static 'js/app.js' %}"></script>
 </body>
 
 </html>

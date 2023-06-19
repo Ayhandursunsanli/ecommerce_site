@@ -421,7 +421,7 @@ header .slogan {
 }
 .sproduct .small-img-group {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   height: 120px;
 }
 .sproduct .small-img-group .small-img-col {
