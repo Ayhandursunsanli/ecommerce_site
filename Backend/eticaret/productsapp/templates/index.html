@@ -52,25 +52,25 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
                         <li class="nav-item ms-xl-5">
-                            <a class="nav-link" href="category.html">TÜM ÜRÜNLER</a>
+                            <a class="nav-link" href="{% url 'category' %}">TÜM ÜRÜNLER</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="category.html">ABAJUR</a>
+                            <a class="nav-link" href="{% url 'category' %}">ABAJUR</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="category.html">LAMBADER</a>
+                            <a class="nav-link" href="{% url 'category' %}">LAMBADER</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="category.html">MASA LAMBASI</a>
+                            <a class="nav-link" href="{% url 'category' %}">MASA LAMBASI</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="category.html">SARKIT</a>
+                            <a class="nav-link" href="{% url 'category' %}">SARKIT</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">HAKKIMIZDA</a>
+                            <a class="nav-link" href="{% url 'about-us' %}">HAKKIMIZDA</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="contact-us.html">İLETİŞİM</a>
+                            <a class="nav-link" href="{% url 'contact-us' %}">İLETİŞİM</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">YARDIM</a>
@@ -78,7 +78,7 @@
                     </ul>
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
                         <li class="nav-item">
-                            <a class="nav-link" href="/login/"><i class="fa-solid fa-user"></i> GİRİŞ YAP / ÜYE OL</a>
+                            <a class="nav-link" href="{% url 'login' %}"><i class="fa-solid fa-user"></i> GİRİŞ YAP / ÜYE OL</a>
                         </li>
                         <li class="nav-item ms-1">
                             <button class="btn btn-primary shopping-button" type="button" data-bs-toggle="offcanvas"
@@ -342,7 +342,7 @@
                 
                 {% for urunler in urunler  %}
                     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-3">
-                        <a class="card" href="product-detail.html">
+                        <a class="card" href="{% url 'product' %}">
                             {% comment %} <div class="sale">
                                 <p></p>
                             </div> {% endcomment %}
