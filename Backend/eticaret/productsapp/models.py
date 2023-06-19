@@ -21,7 +21,7 @@ class Urun(models.Model):
     kategori = models.CharField(max_length=100, blank=False, default='')
     isim = models.CharField(max_length= 100)
     aciklama = models.TextField(max_length=500)
-    fiyat = models.IntegerField()
+    fiyat = models.DecimalField(max_digits=8, decimal_places=2)
 
     # __str__ : admin panelinde göstermek istediğimiz bilgi.
     def __str__(self):

@@ -18,3 +18,6 @@ def index(request):
 
 def login(request):
     return render(request, 'login-register.html')
+
+def category(request):
+    return render(request, 'category.html')
