@@ -141,25 +141,14 @@ header
 .products
     .card
         width: 100%
-        height: 400px
+        height: 500px
         overflow: hidden
         position: relative
         transition: .4s
-        // &::before 
-        //     content: ""
-        //     position: absolute
-        //     top: 0
-        //     left: 0
-        //     width: 100%
-        //     height: 100%
-        //     background-color: black
-        //     opacity: 0
-        //     transition: opacity 0.3s ease
-        //     pointer-events: none
-        //     z-index: 2
+        text-decoration: none
         .imgbox
             width: 100%
-            height: 70%
+            height: 350px
             overflow: hidden
             img
                 width: 100%
@@ -167,14 +156,9 @@ header
                 object-fit: contain
                 transition: .4s
         .text-box
-            width: 250px
-            z-index: 1
-            position: absolute
-            top: 70%
-            left: calc( 50% - 125px )
             background-color: white
-            border-radius: 10px
-            // box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px
+            border-top: 1px solid #c5c5c59c
+            border-bottom: 1px solid #c5c5c59c
             .name
                 text-transform: uppercase
                 font-size: 12px
@@ -184,27 +168,25 @@ header
                 margin-bottom: 0
                 padding-top: .75rem
                 padding-bottom: .75rem
-                border: 1px solid #c5c5c59c
-        .price
-            text-align: center
+        .price-content
+            padding-top: .5rem
+            padding-bottom: .5rem
+            height: 100px
             display: flex
-            justify-content: center
-            align-items: end
-            // border-bottom-left-radius: 10px
-            // border-bottom-right-radius: 10px
-            padding-top: .3rem
-            padding-bottom: 1rem
-            margin-bottom:0
-            width: 100%
-            height: 80px
-            border-top: 1px solid #c5c5c59c
-            z-index: 1
-            position: absolute
-            bottom: 0px
-            font-weight: 800
-            font-size: 14px
-            color: #0000009c
-            background-color: #ffffff
+            flex-direction: column
+            align-items: center
+            justify-content: space-around
+            .price
+                text-align: center
+                margin-bottom:0
+                font-weight: 800
+                font-size: 18px
+                color: #0000009c
+            button
+                padding-top: .6rem
+                padding-bottom: .6rem
+                width: 50%
+
         .product-color
             margin: auto
             padding-top: 1rem
@@ -245,10 +227,6 @@ header
                 margin-bottom: 0
                 font-size: 10px
                 color: #0000009c
-        // &:hover img
-        //     transform: scale(1.1)
-        // &:hover::before
-        //     opacity: 0.5
         &:hover
             box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px
     .collection

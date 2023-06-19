@@ -341,23 +341,23 @@
 
                 
                 {% for urunler in urunler  %}
-
                     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-3">
                         <a class="card" href="product-detail.html">
-                            <div class="sale">
+                            {% comment %} <div class="sale">
                                 <p></p>
-                            </div>
+                            </div> {% endcomment %}
                             <div class="imgbox">
-                                <img src="https://st.myideasoft.com/idea/ha/74/myassets/products/729/vinner-munch-gold-kaplama-metal-abajur-etnic-desenli-23002.jpeg?revision=1683454673"
-                                    alt="">
+                                <img src="{{ urunler.urunresmi.url }}" alt="">
                             </div>
                             <div class="text-box">
-                                <p class="name">Product Name 1</p>
+                                <p class="name">{{ urunler.isim }}</p>
                             </div>
-                            <p class="price"> <del>2.250 TL</del> - 1.500 TL</p>
+                            <div class="price-content">
+                                <p class="price">{{ urunler.fiyat }}</p>
+                                <button class="btn btn-primary">İncele</button>
+                            </div>
                         </a>
                     </div>
-                    
                 {% endfor %}
                     
                 
