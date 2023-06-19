@@ -21,3 +21,14 @@ def login(request):
 
 def category(request):
     return render(request, 'category.html')
+
+def productDetail(request):
+    return render(request, 'product-detail.html')
+
+def aboutUs(request):
+    return render(request, 'about-us.html')
+
+def contactUs(request):
+    return render(request, 'contact-us.html')
+
+
