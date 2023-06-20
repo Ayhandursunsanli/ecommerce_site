@@ -16,8 +16,11 @@ def index(request):
     }
     return render(request, 'index.html', context)
 
+def register(request):
+    return render(request, 'register.html')
+
 def login(request):
-    return render(request, 'login-register.html')
+    return render(request, 'login.html')
 
 def category(request):
     urunler = Urun.objects.all()

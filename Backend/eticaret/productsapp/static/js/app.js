@@ -86,46 +86,5 @@ smallimg[2].onclick = function () {
 
 
 
-// let urunList = [
-//     {
-//         urunAdi : "Lampada Oslo",
-//         urunModel : [
-//             [
-//                 siyah = {
-//                     fiyat : 1500,
-//                     urunGorsel : "https://st3.myideasoft.com/idea/ha/74/myassets/products/920/vinner-oslo-siyah-kaplama-tek-ayakli-metal-lambader-siyah-25869.jpeg?revision=1683469743",
-//                 },
-
-//                 beyaz = {
-//                     fiyat : 1300,
-//                     urunGorsel : "https://st.myideasoft.com/idea/ha/74/myassets/products/919/vinner-oslo-siyah-kaplama-tek-ayakli-metal-lambader-krom-seritli-hasir-beyaz-25840.jpeg?revision=1683469591",
-//                 },
-
-//                 turuncu = {
-//                     fiyat : 2250,
-//                     urunGorsel : "https://st1.myideasoft.com/idea/ha/74/myassets/products/045/vinner-ottowa-eskitme-tekli-kure-burgulu-metal-lambader-gold-seritli-mataro-vizon-7454.jpeg?revision=1685720664",
-//                 }
-//             ]
-//         ]
-//     },
-
-//     {
-//         urunAdi : "Lampada Munch",
-//         urunModel : [
-//             [
-//                 siyah = {
-//                     fiyat : 2250,
-//                     urunGorsel : "https://st3.myideasoft.com/idea/ha/74/myassets/products/779/vinner-munch-eskitme-kaplama-metal-duz-tek-ayakli-lambader-hasir-gri-25064.jpeg?revision=1683465356",
-//                 },
-
-//                 beyaz = {
-//                     fiyat : 2000,
-//                     urunGorsel : "https://st3.myideasoft.com/idea/ha/74/myassets/products/782/vinner-munch-eskitme-kaplama-metal-duz-tek-ayakli-lambader-beyaz-25070.jpeg?revision=1683465385",
-//                 }
-//             ]
-//         ]
-//     }
-// ]
-
 
 
