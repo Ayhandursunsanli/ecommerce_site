@@ -36,110 +36,19 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary public-navbar px-4">
-        <div class="container-fluid">
-            <a class="navbar-brand me-xl-5 pe-xl-5" href="index.html">
-                <img src="./img/lampadalogo2.png" width="75px" alt="">
-            </a>
-            <button class="btn btn-close-white navbar-toggler " type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-                    <li class="nav-item ms-xl-5">
-                        <a class="nav-link" href="category.html">TÜM ÜRÜNLER</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="category.html">ABAJUR</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="category.html">LAMBADER</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="category.html">MASA LAMBASI</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="category.html">SARKIT</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">HAKKIMIZDA</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact-us.html">İLETİŞİM</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">YARDIM</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-                    <li class="nav-item">
-                        <a class="nav-link" href="login-register.html"><i class="fa-solid fa-user"></i> GİRİŞ YAP / ÜYE OL</a>
-                    </li>
-                    <li class="nav-item ms-1">
-                        <button class="btn btn-primary shopping-button" type="button" data-bs-toggle="offcanvas"
-                            data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i
-                                class="fa-solid fa-cart-shopping"></i> SEPET (<span>0</span>)</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
-    <!-- offcanvas-right-shopping-basket-body -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasRightLabel">Alışveriş Sepeti</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <hr>
-        <div class="offcanvas-body d-flex flex-column align-items-center gap-5">
-            <h5 class="text-center">Alışveriş Sepetiniz Şu Anda Boş</h5>
-            <i class="fa-solid fa-cart-shopping text-center" style="font-size: 100px;"></i>
-        </div>
-    </div>
+    <!-- navbar -->
+    {% include 'includes/_navbar.html' %}
 
-    <!-- offcanvas -->
+    <!-- offcanvas-basket -->
+    {% include 'includes/_offcanvas-basket.html' %}
 
-    <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop"
-        aria-labelledby="staticBackdropLabel">
-        <div class="offcanvas-header">
-            <img src="./img/lampadalogo2.png" width="50px" alt="">
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <hr>
-        <div class="offcanvas-body">
-            <div>
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="category.html">TÜM ÜRÜNLER</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="category.html">ABAJUR</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="category.html">LAMBADER</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="category.html">MASA LAMBASI</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="category.html">SARKIT</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">HAKKIMIZDA</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact-us.html">İLETİŞİM</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">YARDIM</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
 
+    <!-- offcanvas-menu -->
+    {% include 'includes/_offcanvas-menu.html' %}
+    
+
+    <!-- urunler (sadece bu sayfa için, yüklenen tüm ürünler buraya geliyor) -->
     <section class="products py-5">
         <div class="container">
             <h6 class="minihead text-center">Tüm Ürünler Burada</h6>
@@ -213,119 +122,9 @@
         </div>
     </section>
 
-    <footer class="text-center text-lg-start bg-white text-muted pt-5">
-        <!-- Section: Social media -->
-        <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-            <!-- Left -->
-            <div class="me-5 d-none d-lg-block">
-                <span>Get connected with us on social networks:</span>
-            </div>
-            <!-- Left -->
 
-            <!-- Right -->
-            <div>
-                <a href="" class="me-4 link-secondary text-decoration-none">
-                    <i class="fa-brands fa-facebook-f"></i>
-                </a>
-                <a href="" class="me-4 link-secondary text-decoration-none">
-                    <i class="fa-brands fa-twitter"></i>
-                </a>
-                <a href="" class="me-4 link-secondary text-decoration-none">
-                    <i class="fa-brands fa-google"></i>
-                </a>
-                <a href="" class="me-4 link-secondary text-decoration-none">
-                    <i class="fa-brands fa-instagram"></i>
-                </a>
-                <a href="" class="me-4 link-secondary text-decoration-none">
-                    <i class="fa-brands fa-linkedin"></i>
-                </a>
-                <!-- Right -->
-        </section>
-        <!-- Section: Social media -->
-
-        <!-- Section: Links  -->
-        <section class="">
-            <div class="container text-center text-md-start mt-5">
-                <!-- Grid row -->
-                <div class="row mt-3">
-                    <!-- Grid column -->
-                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-                        <!-- Content -->
-                        <h6 class="text-uppercase fw-bold mb-4">
-                            <i class="fas fa-gem me-3 text-secondary"></i>Lampada Aydınlatma
-                        </h6>
-                        <p>
-                            Here you can use rows and columns to organize your footer content. Lorem ipsum
-                            dolor sit amet, consectetur adipisicing elit.
-                        </p>
-                    </div>
-                    <!-- Grid column -->
-
-                    <!-- Grid column -->
-                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                        <!-- Links -->
-                        <h6 class="text-uppercase fw-bold mb-4">
-                            Links
-                        </h6>
-                        <p>
-                            <a href="#!" class="text-reset text-decoration-none">Hakkımızda</a>
-                        </p>
-                        <p>
-                            <a href="#!" class="text-reset text-decoration-none">Yardım</a>
-                        </p>
-                    </div>
-                    <!-- Grid column -->
-
-                    <!-- Grid column -->
-                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                        <!-- Links -->
-                        <h6 class="text-uppercase fw-bold mb-4">
-                            Categories
-                        </h6>
-                        <p>
-                            <a href="category.html" class="text-reset text-decoration-none">Tüm Ürünler</a>
-                        </p>
-                        <p>
-                            <a href="category.html" class="text-reset text-decoration-none">Abajur</a>
-                        </p>
-                        <p>
-                            <a href="category.html" class="text-reset text-decoration-none">Lambader</a>
-                        </p>
-                        <p>
-                            <a href="category.html" class="text-reset text-decoration-none">Masa Lambası</a>
-                        </p>
-                        <p>
-                            <a href="category.html" class="text-reset text-decoration-none">Sarkıt</a>
-                        </p>
-                    </div>
-                    <!-- Grid column -->
-
-                    <!-- Grid column -->
-                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                        <!-- Links -->
-                        <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
-                        <p><i class="fas fa-home me-3 text-secondary"></i> 15 Temmuz mah. Bağcılar/İSTANBUL</p>
-                        <p>
-                            <i class="fas fa-envelope me-3 text-secondary"></i>
-                            info@example.com
-                        </p>
-                        <p><i class="fas fa-phone me-3 text-secondary"></i> 0 (212) 123 45 78</p>
-                        <p><i class="fas fa-print me-3 text-secondary"></i> 0 (212) 234 56 89</p>
-                    </div>
-                    <!-- Grid column -->
-                </div>
-                <!-- Grid row -->
-            </div>
-        </section>
-        <!-- Section: Links  -->
-
-        <!-- Copyright -->
-        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.025);">
-            © 2023:
-            <a class="text-reset fw-bold" href="#">Lampada Aydınlatma</a>
-        </div>
-        <!-- Copyright -->
-    </footer>
+    <!-- footer -->
+    {% include 'includes/_footer.html' %}
 
 
 
