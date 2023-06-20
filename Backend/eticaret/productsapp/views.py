@@ -20,7 +20,12 @@ def login(request):
     return render(request, 'login-register.html')
 
 def category(request):
-    return render(request, 'category.html')
+    urunler = Urun.objects.all()
+    context = {
+        'urunler' : urunler,
+    }
+
+    return render(request, 'category.html', context)
 
 def productDetail(request, urunId):
     urunum = Urun.objects.get(id = urunId)

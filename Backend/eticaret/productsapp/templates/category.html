@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="tr">
 
@@ -31,7 +32,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- style css -->
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
 <body>
@@ -141,111 +142,31 @@
 
     <section class="products py-5">
         <div class="container">
-            <h6 class="minihead text-center">Shop by category</h6>
-            <h6 class="mdhead text-center">Featured products</h6>
+            <h6 class="minihead text-center">Tüm Ürünler Burada</h6>
+            <h6 class="mdhead text-center">Tüm Ürünler</h6>
             <hr class="headhr">
             <div class="row mt-2">
-                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-3">
-                    <div class="card" id="card1">
-                        <div class="sale">
-                            <p>İnidirim</p>
-                        </div>
-                        <a href="product-detail.html" class="imgbox" id="product-image">
-                            <img src="" alt="">
+                {% for urunler in urunler  %}
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-3">
+                        <a class="card" href="{% url 'product' urunler.id %}">
+                            {% comment %} <div class="sale">
+                                <p></p>
+                            </div> {% endcomment %}
+                            <div class="imgbox">
+                                <img src="{{ urunler.urunresmi.url }}" alt="">
+                            </div>
+                            <div class="text-box">
+                                <p class="name">{{ urunler.isim }}</p>
+                            </div>
+                            <div class="price-content">
+                                <p class="price">{{ urunler.fiyat }} TL</p>
+                                <button class="btn btn-primary">İncele</button>
+                            </div>
                         </a>
-                        <div class="text-box">
-                            <p class="name">Product Name 1</p>
-                        </div>
-                        <p class="price"> <del>2.250 TL</del> - 1.500 TL</p>
-                        <div class="product-color">
-                            <button class="color-button pblack" type="button" onclick="renkDegistir('black')">
-
-                            </button>
-                            <button class="color-button pwhite" type="button" onclick="renkDegistir('white')">
-
-                            </button>
-                            <button class="color-button porange" type="button" onclick="renkDegistir('orange')">
-
-                            </button>
-                        </div>
                     </div>
-                </div>
-                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-3">
-                    <a class="card" href="product-detail.html">
-                        <div class="sale">
-                            <p>İnidirimli</p>
-                        </div>
-                        <div class="imgbox">
-                            <img src="https://st3.myideasoft.com/idea/ha/74/myassets/products/060/vinner-ottowa-eskitme-tekli-kure-burgulu-metal-lambader-gold-seritli-mataro-vizon-7471.jpeg?revision=1685720806"
-                                alt="">
-                        </div>
-                        <div class="text-box">
-                            <p class="name">Product Name 1</p>
-                        </div>
-                        <p class="price"> 3.000 TL</p>
-                    </a>
-                </div>
-                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-3">
-                    <a class="card" href="product-detail.html">
-                        <div class="sale">
-                            <p>İnidirimli</p>
-                        </div>
-                        <div class="imgbox">
-                            <img src="https://st1.myideasoft.com/idea/ha/74/myassets/products/186/vinner-siyah-kaplama-uclu-kure-kristal-duz-metal-tek-ayak-lambader-silindir-gul-desenli-baslik-29288.jpeg?revision=1683490825"
-                                alt="">
-                        </div>
-                        <div class="text-box">
-                            <p class="name">Product Name 1</p>
-                        </div>
-                        <p class="price"> <del>2.250 TL</del> - 1.500 TL</p>
-                    </a>
-                </div>
-                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-3">
-                    <a class="card" href="product-detail.html">
-                        <div class="sale">
-                            <p>İnidirimli</p>
-                        </div>
-                        <div class="imgbox">
-                            <img src="https://st3.myideasoft.com/idea/ha/74/myassets/products/799/vinner-munch-eskitme-kaplama-metal-duz-tek-ayakli-lambader-flowers-desenli-25106.jpeg?revision=1683465557"
-                                alt="">
-                        </div>
-                        <div class="text-box">
-                            <p class="name">Product Name 1</p>
-                        </div>
-                        <p class="price"> <del>2.250 TL</del> - 1.500 TL</p>
-                    </a>
-                </div>
-                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-3">
-                    <a class="card" href="product-detail.html">
-                        <div class="sale">
-                            <p>İnidirimli</p>
-                        </div>
-                        <div class="imgbox">
-                            <img src="https://st1.myideasoft.com/idea/ha/74/myassets/products/148/resized.jpg?revision=1654033345"
-                                alt="">
-                        </div>
-                        <div class="text-box">
-                            <p class="name">Product Name 1</p>
-                        </div>
-                        <p class="price"> <del>2.250 TL</del> - 1.500 TL</p>
-                    </a>
-                </div>
-                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-3">
-                    <a class="card" href="product-detail.html">
-                        <div class="sale">
-                            <p>İnidirimli</p>
-                        </div>
-                        <div class="imgbox">
-                            <img src="https://st.myideasoft.com/idea/ha/74/myassets/products/729/vinner-munch-gold-kaplama-metal-abajur-etnic-desenli-23002.jpeg?revision=1683454673"
-                                alt="">
-                        </div>
-                        <div class="text-box">
-                            <p class="name">Product Name 1</p>
-                        </div>
-                        <p class="price"> <del>2.250 TL</del> - 1.500 TL</p>
-                    </a>
-                </div>
+                {% endfor %}      
             </div>
+
             <div class="row mt-2">
                 <div class="col-lg-8 mt-3">
                     <div class="collection">
@@ -421,7 +342,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
     <!-- app js -->
-    <script src="./js/app.js"></script>
+    <script src="{% static 'js/app.js' %}"></script>
 </body>
 
 </html>
