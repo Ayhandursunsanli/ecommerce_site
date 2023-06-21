@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Slogan
 from .models import Anakategori
 from .models import Urun
+from django.db.models import Q
 
 # Create your views here.
 
@@ -30,15 +31,49 @@ def login(request):
     }
     return render(request, 'login.html', context)
 
+# def allProduct(request):
+#     urunler = Urun.objects.all()
+#     anakategori = Anakategori.objects.all()
+#     context = {
+#         'anakategori' : anakategori,
+#         'urunler' : urunler,
+#     }
+
+#     return render(request, 'all-product.html', context)
+
+
+
 def allProduct(request):
     urunler = Urun.objects.all()
     anakategori = Anakategori.objects.all()
+    sort_option = request.GET.get('sort_option')
+    search_query = request.GET.get('search_query')
+
+    if search_query:
+        urunler = urunler.filter(
+            Q(isim__icontains=search_query) |
+            Q(kategori__icontains=search_query) |
+            Q(urunRengi__icontains=search_query) |
+            Q(aciklama__icontains=search_query)
+        )
+
+    if sort_option == 'asc':
+        urunler = urunler.order_by('fiyat')
+    elif sort_option == 'desc':
+        urunler = urunler.order_by('-fiyat')
+
     context = {
-        'anakategori' : anakategori,
-        'urunler' : urunler,
+        'anakategori': anakategori,
+        'urunler': urunler,
+        'sort_option': sort_option,
+        'search_query': search_query,
     }
 
+    if search_query and not urunler.exists():
+        context['no_results'] = True
+
     return render(request, 'all-product.html', context)
+
 
 def category(request,categoryName):
     urunler = Urun.objects.filter(kategori=categoryName)

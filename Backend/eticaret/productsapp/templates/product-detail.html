@@ -82,10 +82,10 @@
                 <hr>
                 <div class="d-flex align-items-center justify-content-start mt-4">
                     {% if urun.indirimli_fiyat %}
-                        <h2 class="text-muted"><del>{{ urun.fiyat }} TL</del></h2>
-                        <h2 class="ms-4">{{ urun.indirimli_fiyat }} TL</h2>
+                        <h2 class="text-muted fw-light"><del>{{ urun.fiyat }} TL</del></h2>
+                        <h2 class="ms-4 text-danger">{{ urun.indirimli_fiyat }} TL</h2>
                     {% else %}
-                        <h2 class="">{{ urun.fiyat }} TL</h2>
+                        <h2 class="text-danger">{{ urun.fiyat }} TL</h2>
                     {% endif %}
                 </div>
                 
