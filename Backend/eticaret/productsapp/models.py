@@ -27,6 +27,7 @@ class Urun(models.Model):
     isim = models.CharField(max_length= 100)
     aciklama = models.TextField(max_length=500)
     fiyat = models.DecimalField(max_digits=8, decimal_places=2)
+    indirimli_fiyat = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
     is_special = models.BooleanField(default=False)
 
     # __str__ : admin panelinde göstermek istediğimiz bilgi.

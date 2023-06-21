@@ -205,7 +205,12 @@ header .slogan {
   align-items: center;
   justify-content: space-around;
 }
-.products .card .price-content .price {
+.products .card .price-content .price-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.products .card .price-content .price-box p {
   text-align: center;
   margin-bottom: 0;
   font-weight: 800;
@@ -248,8 +253,8 @@ header .slogan {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   border: 1px solid black;
   border-radius: 50%;
   position: absolute;
@@ -261,7 +266,7 @@ header .slogan {
 }
 .products .card .sale p {
   margin-bottom: 0;
-  font-size: 10px;
+  font-size: 14px;
   color: rgba(0, 0, 0, 0.6117647059);
 }
 .products .card:hover {
@@ -543,6 +548,10 @@ header .slogan {
 .register form .register-input {
   width: 100%;
   margin-top: 0.5rem;
+}
+
+.offcanvas-let-menu .offcanvas-body .navbar-nav .nav-item .nav-link {
+  text-transform: uppercase;
 }
 
 @media screen and (max-width: 992px) {

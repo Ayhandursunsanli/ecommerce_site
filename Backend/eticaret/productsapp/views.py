@@ -17,14 +17,24 @@ def index(request):
     return render(request, 'index.html', context)
 
 def register(request):
-    return render(request, 'register.html')
+    anakategori = Anakategori.objects.all()
+    context = {
+        'anakategori' : anakategori,
+    }
+    return render(request, 'register.html', context)
 
 def login(request):
-    return render(request, 'login.html')
+    anakategori = Anakategori.objects.all()
+    context = {
+        'anakategori' : anakategori,
+    }
+    return render(request, 'login.html', context)
 
 def allProduct(request):
     urunler = Urun.objects.all()
+    anakategori = Anakategori.objects.all()
     context = {
+        'anakategori' : anakategori,
         'urunler' : urunler,
     }
 
@@ -32,7 +42,9 @@ def allProduct(request):
 
 def category(request,categoryName):
     urunler = Urun.objects.filter(kategori=categoryName)
+    anakategori = Anakategori.objects.all()
     context = {
+        'anakategori' : anakategori,
         'urunler' : urunler,
         'kategori': categoryName,
     }
@@ -40,17 +52,27 @@ def category(request,categoryName):
 
 def productDetail(request, urunId):
     urunum = Urun.objects.get(id = urunId)
+    anakategori = Anakategori.objects.all()
     context = {
+        'anakategori' : anakategori,
         'urun' : urunum
     }
     return render(request, 'product-detail.html', context)
-    
+
 
 def aboutUs(request):
-    return render(request, 'about-us.html')
+    anakategori = Anakategori.objects.all()
+    context = {
+        'anakategori' : anakategori,
+    }
+    return render(request, 'about-us.html', context)
 
 def contactUs(request):
-    return render(request, 'contact-us.html')
+    anakategori = Anakategori.objects.all()
+    context = {
+        'anakategori' : anakategori,
+    }
+    return render(request, 'contact-us.html', context)
 
 
 

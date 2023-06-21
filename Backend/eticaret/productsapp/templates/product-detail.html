@@ -76,12 +76,25 @@
             </div>
             <div class="col-lg-6 col-md-12 col-12 mt-lg-0 mt-5">
                 <h6>Anasayfa / {{urun.kategori}}</h6>
-                <h3 class="pt-4">{{urun.isim}}</h3>
+                <hr>
+                <h3 class="">{{urun.isim}}</h3>
                 <span>{{urun.aciklama}}</span>
-                <h2 class="pt-4">{{urun.fiyat}} TL</h2>
-                <h6 class="mt-4">Kategori : {{urun.kategori}} </h6>
+                <hr>
+                <div class="d-flex align-items-center justify-content-start mt-4">
+                    {% if urun.indirimli_fiyat %}
+                        <h2 class="text-muted"><del>{{ urun.fiyat }} TL</del></h2>
+                        <h2 class="ms-4">{{ urun.indirimli_fiyat }} TL</h2>
+                    {% else %}
+                        <h2 class="">{{ urun.fiyat }} TL</h2>
+                    {% endif %}
+                </div>
+                
+
+                <hr>
+                <h6 class="mt-3">Kategori : {{urun.kategori}} </h6>
                 <h6>Rengi : {{urun.urunRengi}} </h6>
                 <h6>Stok Kodu : {{urun.stokKodu}} </h6>
+                <hr>
                 <select class="my-3">
                     <option value="">Renk Seçiniz</option>
                     <option value="">Siyah</option>

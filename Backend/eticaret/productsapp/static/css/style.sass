@@ -176,12 +176,16 @@ header
             flex-direction: column
             align-items: center
             justify-content: space-around
-            .price
-                text-align: center
-                margin-bottom:0
-                font-weight: 800
-                font-size: 18px
-                color: #0000009c
+            .price-box
+                display: flex
+                align-items: center
+                justify-content: center
+                p
+                    text-align: center
+                    margin-bottom:0
+                    font-weight: 800
+                    font-size: 18px
+                    color: #0000009c
             button
                 padding-top: .6rem
                 padding-bottom: .6rem
@@ -213,8 +217,8 @@ header
             display: flex
             justify-content: center
             align-items: center
-            width: 40px
-            height: 40px
+            width: 60px
+            height: 60px
             border: 1px solid black
             border-radius: 50%
             position: absolute
@@ -225,7 +229,7 @@ header
             background-color: white
             p
                 margin-bottom: 0
-                font-size: 10px
+                font-size: 14px
                 color: #0000009c
         &:hover
             box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px
@@ -481,6 +485,12 @@ header
             width: 100%
             margin-top: .5rem
 
+.offcanvas-let-menu
+    .offcanvas-body
+        .navbar-nav
+            .nav-item
+                .nav-link
+                    text-transform: uppercase
 
 
 
