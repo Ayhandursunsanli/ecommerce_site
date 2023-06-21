@@ -22,13 +22,21 @@ def register(request):
 def login(request):
     return render(request, 'login.html')
 
-def category(request):
+def allProduct(request):
     urunler = Urun.objects.all()
     context = {
         'urunler' : urunler,
     }
 
-    return render(request, 'category.html', context)
+    return render(request, 'all-product.html', context)
+
+def category(request,categoryName):
+    urunler = Urun.objects.filter(kategori=categoryName)
+    context = {
+        'urunler' : urunler,
+        'kategori': categoryName,
+    }
+    return render(request, 'category.html',context)
 
 def productDetail(request, urunId):
     urunum = Urun.objects.get(id = urunId)
@@ -43,5 +51,6 @@ def aboutUs(request):
 
 def contactUs(request):
     return render(request, 'contact-us.html')
+
 
 
