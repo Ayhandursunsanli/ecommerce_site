@@ -88,23 +88,33 @@
             <div class="row mt-2">
                 {% for urunler in urunler  %}
                     {% if urunler.is_special %}
-                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-3">
-                            <a class="card" href="{% url 'product' urunler.id %}">
-                                {% comment %} <div class="sale">
-                                    <p></p>
-                                </div> {% endcomment %}
-                                <div class="imgbox">
-                                    <img src="{{ urunler.urunresmi.url }}" alt="">
-                                </div>
-                                <div class="text-box">
-                                    <p class="name">{{ urunler.isim }}</p>
-                                </div>
-                                <div class="price-content">
-                                    <p class="price">{{ urunler.fiyat }} TL</p>
-                                    <button class="btn btn-primary">İncele</button>
-                                </div>
-                            </a>
-                        </div>
+                            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-3">
+                                <a class="card" href="{% url 'product' urunler.id %}">
+                                    {% if urunler.indirimli_fiyat %}
+                                        <div class="sale">
+                                            <p>İndirim</p>
+                                        </div> 
+                                    {% endif %}
+
+                                    <div class="imgbox">
+                                        <img src="{{ urunler.urunresmi.url }}" alt="">
+                                    </div>
+                                    <div class="text-box">
+                                        <p class="name">{{ urunler.isim }}</p>
+                                    </div>
+                                    <div class="price-content">
+                                        <div class="price-box">
+                                            {% if urunler.indirimli_fiyat %}
+                                            <p class="price"><del>{{ urunler.fiyat }} TL</del></p>
+                                            <p class="discounted-price ms-3">{{ urunler.indirimli_fiyat }} TL</p>
+                                            {% else %}
+                                            <p class="price">{{ urunler.fiyat }} TL</p>
+                                            {% endif %}
+                                        </div>
+                                        <button class="btn btn-primary">İncele</button>
+                                    </div>
+                                </a>
+                            </div>
                         {% endif %}
                 {% endfor %}      
             </div>
@@ -157,14 +167,14 @@
 
     <section class="chooseus py-5">
         <div class="container">
-            <h6 class="minihead text-center">Best products</h6>
-            <h6 class="mdhead text-center">Why choose us</h6>
+            <h6 class="minihead text-center">En İyi Ürünler</h6>
+            <h6 class="mdhead text-center">Neden Bizi Seçmelisiniz?</h6>
             <hr class="headhr">
             <div class="row">
                 <div class="chooseus-box col-xl-3 col-lg-3 col-md-6 col-sm-12 mt-5">
                     <i class="fa-solid fa-truck"></i>
-                    <h4>Fast Delivery</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec.</p>
+                    <h4>Hızlı Teslimat</h4>
+                    <p class="text-muted">Müşterilerimize hızlı teslimat sağlayarak, alışveriş deneyimlerini en üst seviyeye çıkarıyoruz. Siparişlerinizi zamanında ve güvenli bir şekilde kapınıza ulaştırarak, ihtiyaçlarınızı hızla karşılıyoruz. Siz siparişi verdiğiniz anda, biz de harekete geçiyor ve en kısa sürede ürünlerinizi elinize ulaştırıyoruz. Hızlı teslimat prensibimizle, sizlere zaman kazandırmak ve memnuniyetinizi sağlamak için çalışıyoruz</p>
                 </div>
                 <div class="chooseus-box col-xl-3 col-lg-3 col-md-6 col-sm-12 mt-5">
                     <i class="fa-regular fa-credit-card"></i>

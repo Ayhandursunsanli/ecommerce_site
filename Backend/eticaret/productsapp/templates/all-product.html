@@ -55,25 +55,34 @@
             <h6 class="mdhead text-center">Tüm Ürünler</h6>
             <hr class="headhr">
             <div class="row mt-2">
-                {% for urunler in urunler  %}
+                {% for urun in urunler %}
                     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-3">
-                        <a class="card" href="{% url 'product' urunler.id %}">
-                            {% comment %} <div class="sale">
-                                <p></p>
-                            </div> {% endcomment %}
+                        <a class="card" href="{% url 'product' urun.id %}">
+                            {% if urun.indirimli_fiyat %}
+                                <div class="sale">
+                                    <p>İndirim</p>
+                                </div> 
+                            {% endif %}
                             <div class="imgbox">
-                                <img src="{{ urunler.urunresmi.url }}" alt="">
+                                <img src="{{ urun.urunresmi.url }}" alt="">
                             </div>
                             <div class="text-box">
-                                <p class="name">{{ urunler.isim }}</p>
+                                <p class="name">{{ urun.isim }}</p>
                             </div>
                             <div class="price-content">
-                                <p class="price">{{ urunler.fiyat }} TL</p>
+                                <div class="price-box">
+                                    {% if urun.indirimli_fiyat %}
+                                    <p class="price fw-lighter"><del>{{ urun.fiyat }} TL</del></p>
+                                    <p class="discounted-price ms-3">{{ urun.indirimli_fiyat }} TL</p>
+                                    {% else %}
+                                    <p class="price">{{ urun.fiyat }} TL</p>
+                                    {% endif %}
+                                </div>
                                 <button class="btn btn-primary">İncele</button>
                             </div>
                         </a>
                     </div>
-                {% endfor %}      
+                {% endfor %}
             </div>
 
             <div class="row mt-2">
