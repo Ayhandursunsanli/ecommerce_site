@@ -215,7 +215,7 @@ header .slogan {
   margin-bottom: 0;
   font-weight: 800;
   font-size: 18px;
-  color: rgba(0, 0, 0, 0.6117647059);
+  color: red;
 }
 .products .card .price-content button {
   padding-top: 0.6rem;

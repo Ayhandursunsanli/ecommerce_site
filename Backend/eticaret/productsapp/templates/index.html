@@ -46,7 +46,7 @@
             <h6 class="minihead">{{ slogan.miniBaslik }}</h6>
             <h6 class="mdhead" style="font-size: 4.3333333333333rem;">{{ slogan.buyukBaslik }}</h6>
             <h6 class="mt-4 mb-4">{{ slogan.aciklama }}</h6>
-            <a class="btn-primary" href="category.html"> SHOP NOW</a>
+            <a class="btn-primary" href="{% url 'allProduct' %}"> ALIŞVERİŞE BAŞLA</a>
         </div>
     </header>
 
@@ -105,7 +105,7 @@
                                     <div class="price-content">
                                         <div class="price-box">
                                             {% if urunler.indirimli_fiyat %}
-                                            <p class="price"><del>{{ urunler.fiyat }} TL</del></p>
+                                            <p class="price fw-lighter text-dark"><del>{{ urunler.fiyat }} TL</del></p>
                                             <p class="discounted-price ms-3">{{ urunler.indirimli_fiyat }} TL</p>
                                             {% else %}
                                             <p class="price">{{ urunler.fiyat }} TL</p>
@@ -178,18 +178,18 @@
                 </div>
                 <div class="chooseus-box col-xl-3 col-lg-3 col-md-6 col-sm-12 mt-5">
                     <i class="fa-regular fa-credit-card"></i>
-                    <h4>Free Shipping</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec.</p>
+                    <h4>Ücretsiz Kargo</h4>
+                    <p class="text-muted">Biz, müşteri memnuniyetini ön planda tutarak hizmet veren bir şirket olarak, Ücretsiz Kargo seçeneğini sunarak sizlere değer katmayı hedefliyoruz. Siz müşterilerimizin taleplerine hızlı ve ekonomik bir şekilde cevap vermek amacıyla bu avantajlı seçeneği sunmaktayız.</p>
                 </div>
                 <div class="chooseus-box col-xl-3 col-lg-3 col-md-6 col-sm-12 mt-5">
                     <i class="fa-solid fa-shield-halved"></i>
-                    <h4>Secure Checkout</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec.</p>
+                    <h4>Güvenli Ödeme</h4>
+                    <p class="text-muted">Güvenli ödeme seçeneklerimiz sayesinde, alışverişlerinizi gönül rahatlığıyla yapabilir, ödeme işlemlerinizi sorunsuz bir şekilde tamamlayabilirsiniz. Müşteri memnuniyetini sağlamak ve güvenliğinizi garanti altına almak için her zaman en iyi güvenlik önlemlerini uyguluyoruz.</p>
                 </div>
                 <div class="chooseus-box col-xl-3 col-lg-3 col-md-6 col-sm-12 mt-5">
                     <i class="fa-solid fa-cart-arrow-down"></i>
-                    <h4>Easy Returns</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec.</p>
+                    <h4>İade</h4>
+                    <p class="text-muted">Müşteri memnuniyetini sağlamak amacıyla, iade politikamızla size destek oluyoruz. Ürünlerimizden memnun kalmamanız durumunda, belirli koşullar altında iade işlemleri yapabilirsiniz.</p>
                 </div>
             </div>
         </div>

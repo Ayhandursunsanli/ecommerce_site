@@ -46,7 +46,7 @@
 
     <!-- offcanvas-menu -->
     {% include 'includes/_offcanvas-menu.html' %}
-    
+
 
     <!-- urunler (sadece bu sayfa için, yüklenen tüm ürünler buraya geliyor) -->
     <section class="products py-5">
@@ -54,38 +54,63 @@
             <h6 class="minihead text-center">Tüm Ürünler Burada</h6>
             <h6 class="mdhead text-center">Tüm Ürünler</h6>
             <hr class="headhr">
-            <div class="row mt-2">
-                {% for urun in urunler %}
-                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-3">
-                        <a class="card" href="{% url 'product' urun.id %}">
-                            {% if urun.indirimli_fiyat %}
-                                <div class="sale">
-                                    <p>İndirim</p>
-                                </div> 
-                            {% endif %}
-                            <div class="imgbox">
-                                <img src="{{ urun.urunresmi.url }}" alt="">
-                            </div>
-                            <div class="text-box">
-                                <p class="name">{{ urun.isim }}</p>
-                            </div>
-                            <div class="price-content">
-                                <div class="price-box">
-                                    {% if urun.indirimli_fiyat %}
-                                    <p class="price fw-lighter"><del>{{ urun.fiyat }} TL</del></p>
-                                    <p class="discounted-price ms-3">{{ urun.indirimli_fiyat }} TL</p>
-                                    {% else %}
-                                    <p class="price">{{ urun.fiyat }} TL</p>
-                                    {% endif %}
-                                </div>
-                                <button class="btn btn-primary">İncele</button>
-                            </div>
-                        </a>
-                    </div>
-                {% endfor %}
+
+            <div class="sort-options my-3 d-flex justify-content-between align-items-center">
+                <form method="GET" action="{% url 'allProduct' %}" class="d-flex justify-content-between align-items-center me-4">
+                    {% csrf_token %}
+                    <input type="text" name="search_query" placeholder="Ürün Ara" class="pt-2 pb-2 ps-2 pe-2 me-2" style="width: 250px;">
+                    <button type="submit" class="btn btn-primary pb-2 pt-2 ps-4 pe-4">Ara</button>
+                </form>
+
+                <ul class="nav-item dropdown m-0 p-0">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Sırala
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="?sort_option=asc"><i class="fa-solid fa-arrow-up"></i> Artan Fiyat</a></li>
+                        <li><a class="dropdown-item" href="?sort_option=desc"><i class="fa-solid fa-arrow-down"></i> Azalan Fiyat</a></li>
+                        <li>
+                    </ul>
+                </ul>
             </div>
 
             <div class="row mt-2">
+                {% for urun in urunler %}
+                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-3">
+                    <a class="card" href="{% url 'product' urun.id %}">
+                        {% if urun.indirimli_fiyat %}
+                        <div class="sale">
+                            <p>İndirim</p>
+                        </div>
+                        {% endif %}
+                        <div class="imgbox">
+                            <img src="{{ urun.urunresmi.url }}" alt="">
+                        </div>
+                        <div class="text-box">
+                            <p class="name">{{ urun.isim }}</p>
+                        </div>
+                        <div class="price-content">
+                            <div class="price-box">
+                                {% if urun.indirimli_fiyat %}
+                                <p class="price fw-lighter text-dark"><del>{{ urun.fiyat }} TL</del></p>
+                                <p class="discounted-price ms-3">{{ urun.indirimli_fiyat }} TL</p>
+                                {% else %}
+                                <p class="price">{{ urun.fiyat }} TL</p>
+                                {% endif %}
+                            </div>
+                            <button class="btn btn-primary">İncele</button>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if no_results %}
+                <p>Arama sorgunuz için sonuç bulunamadı.</p>
+            {% endif %}
+
+            <div class="row mt-5">
                 <div class="col-lg-8 mt-3">
                     <div class="collection">
                         <img src="https://img.freepik.com/free-photo/modern-shop-prepared-live-auction_23-2149947499.jpg?w=996&t=st=1685569435~exp=1685570035~hmac=45e67f2898ec7406a063e40289262864d3bcdf6971118b3f1946af6d0d73587f"
