@@ -119,10 +119,15 @@ def category(request,categoryName):
 
 def productDetail(request, urunId):
     urunum = Urun.objects.get(id = urunId)
+    ayniKategoridekiUrunler = Urun.objects.filter(kategori=urunum.kategori).exclude(id=urunum.id)
     anakategori = Anakategori.objects.all()
+    wrapperOne = Wrapperone.objects.all()
+
     context = {
         'anakategori' : anakategori,
-        'urun' : urunum
+        'urun' : urunum,
+        'wrapperone' : wrapperOne,
+        'ayniKategoridekiUrunler' : ayniKategoridekiUrunler,
     }
     return render(request, 'product-detail.html', context)
 
