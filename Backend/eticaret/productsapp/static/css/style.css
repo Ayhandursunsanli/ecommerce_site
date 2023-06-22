@@ -255,19 +255,20 @@ header .slogan {
   align-items: center;
   width: 60px;
   height: 60px;
-  border: 1px solid black;
   border-radius: 50%;
   position: absolute;
   top: 20px;
   left: 20px;
   z-index: 1;
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
-  background-color: white;
+  background-color: red;
 }
 .products .card .sale p {
   margin-bottom: 0;
   font-size: 14px;
-  color: rgba(0, 0, 0, 0.6117647059);
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: white;
 }
 .products .card:hover {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
