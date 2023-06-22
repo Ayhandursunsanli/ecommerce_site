@@ -16,6 +16,15 @@ class Anakategori(models.Model):
     anakategoriGorsel = models.ImageField(upload_to='headerphoto/', blank=False, null=False)
     anakategoriBaslik = models.CharField(max_length=50)
 
+class Wrapperone(models.Model):
+    wrapperResim1 = models.ImageField(upload_to='wrapperphoto/', blank=False, null=False)
+    wrapperResim2 = models.ImageField(upload_to='wrapperphoto/', blank=True, null=True)
+    wrapperResim3 = models.ImageField(upload_to='wrapperphoto/', blank=True, null=True)
+    wrapperResim4 = models.ImageField(upload_to='wrapperphoto/', blank=True, null=True)
+    wrapperResim5 = models.ImageField(upload_to='wrapperphoto/', blank=True, null=True)
+    wrapperText = models.CharField(max_length=200, blank=True, null= True)
+
+
 class Urun(models.Model):
     urunresmi = models.ImageField(upload_to='urunphoto/', blank=False, null=False, default='')
     urunresmiTwo = models.ImageField(upload_to='urunphoto/', blank=True, null=False, default='')

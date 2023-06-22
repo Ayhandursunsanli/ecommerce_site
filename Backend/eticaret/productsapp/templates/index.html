@@ -118,49 +118,68 @@
                         {% endif %}
                 {% endfor %}      
             </div>
-
-            <div class="row mt-2">
-                <div class="col-lg-8 mt-3">
-                    <div class="collection">
-                        <img src="https://img.freepik.com/free-photo/modern-shop-prepared-live-auction_23-2149947499.jpg?w=996&t=st=1685569435~exp=1685570035~hmac=45e67f2898ec7406a063e40289262864d3bcdf6971118b3f1946af6d0d73587f"
-                            alt="">
-                        <div class="collection-text">
-                            <h6 class="minihead text-white text-center">New arrivals</h6>
-                            <h6 class="mdhead text-white text-center">Brand new, modern lamps collection <i
-                                    class="fa-solid fa-caret-right fa-fade"></i></h6>
-                            <p class="text-white text-center mt-3 mb-0">Ideal for offices, bedrooms and all in between.
-                            </p>
+            <div class="row mt-5 collection-parent wrapperone">
+                <div class="col-lg-12 mt-3">
+                    {% for wrapper in wrapperone %}
+                        <div class="text-box">
+                            <p class="text-center pt-4 fs-2">{{ wrapper.wrapperText }}</p>
                         </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mt-3">
-                    <div class="owl-carousel owl-theme owl-carouseltwo">
-                        <div class="item">
-                            <a class="card" href="">
-                                <div class="imgbox">
-                                    <img src="https://img.freepik.com/free-photo/living-room-with-lots-lamps_23-2149400854.jpg?w=360&t=st=1685572774~exp=1685573374~hmac=1dd9dd3e7e7253530fd7c2f3ca94a81c5264dd4268fa06055b4cf16bb9980e06"
-                                        alt="">
+                        <a href="{% url 'allProduct' %}" class="btn btn-primary mt-5">Alışverişe Başla</a>
+                        <div class="owl-carousel owl-theme owl-carouseltwo">
+                        
+                            {% if wrapper.wrapperResim1 %}
+                                <div class="item">
+                                    <div class="card">
+                                        <div class="imgbox">
+                                            <img src="{{ wrapper.wrapperResim1.url }}"
+                                                alt="">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="text-box">
-                                    <p class="text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                        Tenetur, harum.</p>
+                            {% endif %}
+                            {% if wrapper.wrapperResim2 %}
+                                <div class="item">
+                                    <div class="card">
+                                        <div class="imgbox">
+                                            <img src="{{ wrapper.wrapperResim2.url }}"
+                                                alt="">
+                                        </div>
+                                    </div>
                                 </div>
-                            </a>
+                            {% endif %}
+                            {% if wrapper.wrapperResim3 %}
+                                <div class="item">
+                                    <div class="card">
+                                        <div class="imgbox">
+                                            <img src="{{ wrapper.wrapperResim3.url }}"
+                                                alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if wrapper.wrapperResim4 %}
+                                <div class="item">
+                                    <div class="card">
+                                        <div class="imgbox">
+                                            <img src="{{ wrapper.wrapperResim4.url }}"
+                                                alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if wrapper.wrapperResim5 %}
+                                <div class="item">
+                                    <div class="card">
+                                        <div class="imgbox">
+                                            <img src="{{ wrapper.wrapperResim5.url }}"
+                                                alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
                         </div>
-                        <div class="item">
-                            <a class="card" href="">
-                                <div class="imgbox">
-                                    <img src="https://images.unsplash.com/photo-1568563094147-ae8eb3a8a3c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80"
-                                        alt="">
-                                </div>
-                                <div class="text-box">
-                                    <p class="text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                        Voluptatibus corrupti minima hic cum iste qui?</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                    {% endfor %}
+                </div> 
             </div>
         </div>
     </section>

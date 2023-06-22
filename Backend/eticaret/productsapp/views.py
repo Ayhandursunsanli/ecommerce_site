@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Slogan
 from .models import Anakategori
 from .models import Urun
+from .models import Wrapperone
 from django.db.models import Q
 
 # Create your views here.
@@ -10,10 +11,12 @@ def index(request):
     slogan = Slogan.objects.first()
     anakategori = Anakategori.objects.all()
     urunler = Urun.objects.all()
+    wrapperOne = Wrapperone.objects.all()
     context = {
         'slogan': slogan,
         'anakategori' : anakategori,
         'urunler' : urunler,
+        'wrapperone' : wrapperOne,
     }
     return render(request, 'index.html', context)
 
@@ -46,6 +49,7 @@ def login(request):
 def allProduct(request):
     urunler = Urun.objects.all()
     anakategori = Anakategori.objects.all()
+    wrapperOne = Wrapperone.objects.all()
     sort_option = request.GET.get('sort_option')
     search_query = request.GET.get('search_query')
 
@@ -66,6 +70,7 @@ def allProduct(request):
     context = {
         'anakategori': anakategori,
         'urunler': urunler,
+        'wrapperone' : wrapperOne,
         'sort_option': sort_option,
         'search_query': search_query,
     }
@@ -79,6 +84,7 @@ def allProduct(request):
 def category(request,categoryName):
     urunler = Urun.objects.filter(kategori=categoryName)
     anakategori = Anakategori.objects.all()
+    wrapperOne = Wrapperone.objects.all()
     sort_option = request.GET.get('sort_option')
     search_query = request.GET.get('search_query')
 
@@ -100,6 +106,7 @@ def category(request,categoryName):
     context = {
         'anakategori' : anakategori,
         'urunler' : urunler,
+        'wrapperone' : wrapperOne,
         'kategori': categoryName,
         'sort_option': sort_option,
         'search_query': search_query,

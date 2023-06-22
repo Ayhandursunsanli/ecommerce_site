@@ -11,3 +11,4 @@ from .models import *
 admin.site.register(Slogan)
 admin.site.register(Anakategori)
 admin.site.register(Urun)
+admin.site.register(Wrapperone)

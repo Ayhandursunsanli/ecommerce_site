@@ -273,50 +273,42 @@ header .slogan {
 .products .card:hover {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
-.products .collection {
-  width: 100%;
-  height: 600px;
-  overflow: hidden;
+.products .collection-parent {
+  position: relative;
   position: relative;
 }
-.products .collection::before {
-  content: "";
+.products .collection-parent .text-box {
+  z-index: 2;
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgb(0, 0, 0));
-  pointer-events: none;
-}
-.products .collection img {
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-.products .collection .collection-text {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  z-index: 1;
-  top: 50%;
+  top: 70%;
   left: 50%;
   transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0);
+  transition: 0.4s;
 }
-.products .owl-carouseltwo {
-  position: relative;
+.products .collection-parent .text-box p {
+  line-height: 1.5;
+  text-align: center;
+  margin-bottom: 0;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  color: white;
 }
-.products .owl-carouseltwo .item .card {
+.products .collection-parent .btn-primary {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+.products .collection-parent .item .card {
   width: 100%;
   height: 600px;
   overflow: hidden;
   position: relative;
   border: none;
 }
-.products .owl-carouseltwo .item .card::before {
+.products .collection-parent .item .card::before {
   content: "";
   display: block;
   position: absolute;
@@ -326,7 +318,7 @@ header .slogan {
   transition: height 0.5s ease-out;
   background: linear-gradient(to bottom, transparent 0%, rgb(0, 0, 0) 100%);
 }
-.products .owl-carouseltwo .item .card::after {
+.products .collection-parent .item .card::after {
   content: ".";
   display: block;
   clear: both;
@@ -334,59 +326,23 @@ header .slogan {
   line-height: 0;
   height: 0;
 }
-.products .owl-carouseltwo .item .card:hover::before {
+.products .collection-parent .item .card:hover::before {
   height: 0%;
 }
-.products .owl-carouseltwo .item .card:hover .text-box {
+.products .collection-parent .item .card:hover .text-box {
   display: none;
 }
-.products .owl-carouseltwo .item .card .imgbox {
+.products .collection-parent .item .card .imgbox {
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
-.products .owl-carouseltwo .item .card .imgbox img {
+.products .collection-parent .item .card .imgbox img {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
   transition: 0.4s;
-}
-.products .owl-carouseltwo .item .card .text-box {
-  width: 250px;
-  z-index: 1;
-  position: absolute;
-  top: 80%;
-  left: calc(50% - 125px);
-  background-color: rgba(255, 255, 255, 0);
-  transition: 0.4s;
-}
-.products .owl-carouseltwo .item .card .text-box p {
-  line-height: 1.5;
-  text-align: center;
-  margin-bottom: 0;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  color: white;
-}
-.products .owl-carouseltwo .item .card .price {
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 0.3rem;
-  padding-bottom: 0.3rem;
-  margin-bottom: 0;
-  width: 100%;
-  height: 80px;
-  border-top: 1px solid rgba(197, 197, 197, 0.6117647059);
-  z-index: 1;
-  position: absolute;
-  bottom: 0px;
-  font-weight: 800;
-  font-size: 14px;
-  color: rgba(0, 0, 0, 0.6117647059);
-  background-color: #ffffff;
 }
 
 .chooseus .chooseus-box {
