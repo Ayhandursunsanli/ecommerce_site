@@ -54,6 +54,7 @@ def allProduct(request):
             Q(isim__icontains=search_query) |
             Q(kategori__icontains=search_query) |
             Q(urunRengi__icontains=search_query) |
+            Q(stokKodu__icontains=search_query) |
             Q(aciklama__icontains=search_query)
         )
 
@@ -78,11 +79,35 @@ def allProduct(request):
 def category(request,categoryName):
     urunler = Urun.objects.filter(kategori=categoryName)
     anakategori = Anakategori.objects.all()
+    sort_option = request.GET.get('sort_option')
+    search_query = request.GET.get('search_query')
+
+    if search_query:
+        urunler = urunler.filter(
+            Q(isim__icontains=search_query) |
+            Q(kategori__icontains=search_query) |
+            Q(urunRengi__icontains=search_query) |
+            Q(stokKodu__icontains=search_query) |
+            Q(aciklama__icontains=search_query)
+        )
+
+    if sort_option == 'asc':
+        urunler = urunler.order_by('fiyat')
+    elif sort_option == 'desc':
+        urunler = urunler.order_by('-fiyat')
+
+
     context = {
         'anakategori' : anakategori,
         'urunler' : urunler,
         'kategori': categoryName,
+        'sort_option': sort_option,
+        'search_query': search_query,
     }
+
+    if search_query and not urunler.exists():
+        context['no_results'] = True
+
     return render(request, 'category.html',context)
 
 def productDetail(request, urunId):
