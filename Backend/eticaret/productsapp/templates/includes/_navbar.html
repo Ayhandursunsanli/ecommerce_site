@@ -1,4 +1,4 @@
-{% comment %} include {% endcomment %}
+
 {% load static %}
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary public-navbar px-4">
@@ -6,6 +6,17 @@
         <a class="navbar-brand me-xl-5 pe-xl-5" href="{% url 'index' %}">
             <img src="{% static 'img/lampadalogo2.png' %}" width="75px" alt="">
         </a>
+
+        <!-- responsive login/register/exit -->
+        <div class="responsive-login-register">
+            <a class="nav-link" href="{% url 'login' %}"><i class="fa-solid fa-right-to-bracket"></i></a>
+            <a class="nav-link" href="{% url 'register' %}"><i class="fa-solid fa-user-plus"></i></a>
+            <a href="#" class="nav-link" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fa-solid fa-cart-shopping mt-1"></i>:  0</a>
+            <!-- eğer giriş yapmış ise display flex olacak if döndürücez -->
+            <!-- <a class="nav-link" href="#"><i class="fa-solid fa-power-off"></i></a> -->
+        </div>
+
         <button class="btn btn-close-white navbar-toggler " type="button" data-bs-toggle="offcanvas"
             data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
             <span class="navbar-toggler-icon"></span>
@@ -16,9 +27,9 @@
                     <a class="nav-link" href="{% url 'allProduct' %}">TÜM ÜRÜNLER</a>
                 </li>
                 {% for anakategori in anakategori %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'category' anakategori.anakategoriBaslik %}">{{ anakategori.anakategoriBaslik }}</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'category' anakategori.anakategoriBaslik %}">{{ anakategori.anakategoriBaslik }}</a>
+                </li>
                 {% endfor %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'about-us' %}">HAKKIMIZDA</a>
@@ -30,9 +41,18 @@
                     <a class="nav-link" href="#">YARDIM</a>
                 </li>
             </ul>
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'register' %}"><i class="fa-solid fa-user"></i> GİRİŞ YAP / ÜYE OL</a>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center ">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Giriş Yap / Üye Ol
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'login' %}"><i class="fa-solid fa-right-to-bracket"></i> GİRİŞ YAP</a></li>
+                        <li><a class="dropdown-item" href="{% url 'register' %}"><i class="fa-solid fa-user-plus"></i> ÜYE OL</a></li>
+
+                        <!-- eğer giriş yapmış ise display flex olacak if döndürücez -->
+                        <!-- <li><a class="dropdown-item" href="#"><i class="fa-solid fa-power-off"></i> ÇIKIŞ YAP</a></li> -->
+                    </ul>
                 </li>
                 <li class="nav-item ms-1">
                     <button class="btn btn-primary shopping-button" type="button" data-bs-toggle="offcanvas"

@@ -70,6 +70,7 @@ header
         top: 40%
         left: 5%
 
+//includese navbar. 
 .public-navbar
     .collapse
         .navbar-nav
@@ -83,6 +84,35 @@ header
         .shopping-button
                     font-size: 0.9rem
                     padding: .8rem
+        .dropdown
+            .dropdown-menu
+                top: 54px !important
+                background-color: #f8f9fa !important
+                opacity: 1
+                .dropdown-item
+                    font-size: .9rem
+                    i
+                        width: 25px
+                    &:active
+                        background: $temacolororange
+                    &:hover
+                        color: $temacolororange
+                        background: none
+    .responsive-login-register
+        display: none
+        width: 50%
+        display: none
+        justify-content: space-evenly
+        align-items: center
+        a
+            font-size: .9rem
+            transition: all .2s linear
+            text-transform: uppercase
+            margin-bottom: 0
+            i
+                margin-bottom: 0
+                font-size: 1rem
+
 .references
     .owl-carouselone
         .item
@@ -486,3 +516,13 @@ header
             height: 100%
         .imgbox
             height: 100%
+    
+
+@media screen and (max-width: 991.9px)
+    .public-navbar
+        .responsive-login-register
+            display: flex
+            a
+                font-size: .9rem
+                transition: all .2s linear
+                text-transform: uppercase
