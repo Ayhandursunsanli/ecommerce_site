@@ -9,12 +9,16 @@
 
         <!-- responsive login/register/exit -->
         <div class="responsive-login-register">
+            
+            {% if user.is_authenticated %}
+            <!-- eğer giriş yapmış ise display flex olacak if döndürücez -->
+            <a class="nav-link" href="{% url 'logout' %}"><i class="fa-solid fa-power-off"></i></a>
+            <a href="#" class="nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fa-solid fa-cart-shopping mt-1"></i>:  0</a>
+            {% else %}
             <a class="nav-link" href="{% url 'login' %}"><i class="fa-solid fa-right-to-bracket"></i></a>
             <a class="nav-link" href="{% url 'register' %}"><i class="fa-solid fa-user-plus"></i></a>
-            <a href="#" class="nav-link" type="button" data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fa-solid fa-cart-shopping mt-1"></i>:  0</a>
-            <!-- eğer giriş yapmış ise display flex olacak if döndürücez -->
-            <!-- <a class="nav-link" href="#"><i class="fa-solid fa-power-off"></i></a> -->
+            {% endif %}
+
         </div>
 
         <button class="btn btn-close-white navbar-toggler " type="button" data-bs-toggle="offcanvas"
@@ -43,15 +47,26 @@
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center ">
                 <li class="nav-item dropdown">
+                    
+                    {% if user.is_authenticated  %}
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Giriş Yap / Üye Ol
+                        {{ user.get_full_name }}
                     </a>
+                    {% else %}
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Giriş Yap / Üye Ol
+                        </a>
+                    {% endif %}
+                        
                     <ul class="dropdown-menu">
+                        
+                        {% if user.is_authenticated %}
+                        <!-- eğer giriş yapmış ise display flex olacak if döndürücez -->
+                        <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="fa-solid fa-power-off"></i> ÇIKIŞ YAP</a></li>
+                        {% else %}
                         <li><a class="dropdown-item" href="{% url 'login' %}"><i class="fa-solid fa-right-to-bracket"></i> GİRİŞ YAP</a></li>
                         <li><a class="dropdown-item" href="{% url 'register' %}"><i class="fa-solid fa-user-plus"></i> ÜYE OL</a></li>
-
-                        <!-- eğer giriş yapmış ise display flex olacak if döndürücez -->
-                        <!-- <li><a class="dropdown-item" href="#"><i class="fa-solid fa-power-off"></i> ÇIKIŞ YAP</a></li> -->
+                        {% endif %}
                     </ul>
                 </li>
                 <li class="nav-item ms-1">

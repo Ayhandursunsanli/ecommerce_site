@@ -53,24 +53,32 @@
             <hr class="headhr">
             <div class="row mt-5 justify-content-center">
                 <div class="col-md-7">
-                    <form action="">
-                        <label for="">Adı:</label>
-                        <input class="register-input" type="text" placeholder="Adınızı Giriniz">
-                        <label for="">Soyadı:</label>
-                        <input class="register-input" type="text" placeholder="Soyadınızı Giriniz">
-                        <label for="">E-Mail:</label>
-                        <input class="register-input" type="email" placeholder="E-Mail Adresinizi Giriniz">
-                        <label for="">Şifrenizi Giriniz: </label>
-                        <input  class="register-input"type="password" placeholder="Şifrenizi Giriniz (En az 6 karakter olmalıdır)">
-                        <label for="">Şifrenizi Tekrar: </label>
-                        <input class="register-input" type="password" placeholder="Şifrenizi Tekrar Giriniz">
-                        <label for="">Telefon:</label>
-                        <input class="register-input" type="tel" id="phone-input" value="+90" placeholder="Telefon numarası">
-                        <input type="checkbox" class="register-checkbox me-2">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        {% if error %}
+                            <div class="alert alert-danger">
+                                {{ error }}
+                            </div>
+                        {% endif %} 
+                        <label for="username">Kullanıcı Adı:</label>
+                        <input class="register-input" type="text" placeholder="Kullanıcı Adı Giriniz" name="username" value="{{ username }}">
+                        <label for="firtname">Adı:</label>
+                        <input class="register-input" type="text" placeholder="Adınızı Giriniz" name="firstname" value="{{ firstname }}">
+                        <label for="lastname">Soyadı:</label>
+                        <input class="register-input" type="text" placeholder="Soyadınızı Giriniz" name="lastname" value="{{ lastname }}">
+                        <label for="email">E-Mail:</label>
+                        <input class="register-input" type="email" placeholder="E-Mail Adresinizi Giriniz" name="email" value="{{ email }}">
+                        <label for="password">Şifrenizi Giriniz: </label>
+                        <input  class="register-input"type="password" placeholder="Şifrenizi Giriniz (En az 6 karakter olmalıdır)" name="password">
+                        <label for="repassword">Şifrenizi Tekrar: </label>
+                        <input class="register-input" type="password" placeholder="Şifrenizi Tekrar Giriniz" name="repassword">
+                        <label for="phone">Telefon:</label>
+                        <input class="register-input" type="tel" id="phone-input" placeholder="Telefon numarası" name="phone" value="{{ phone }}">
+                        <input type="checkbox" class="register-checkbox me-2" name="accept_terms">
                         <label for="" data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor: pointer; font-size: 14px; text-decoration:underline;">Üyelik Sözleşmesini Kabul Ediyorum</label><br>
-                        <input type="checkbox" class="register-checkbox me-2">
+                        <input type="checkbox" class="register-checkbox me-2" name="accept_privacy">
                         <label for="" data-bs-toggle="modal" data-bs-target="#exampleModal2" class="d-inline" style="cursor: pointer;font-size: 14px; text-decoration:underline;">Kişisel verilerin işlenmesine ilişkin Aydınlatma Metnini okudum.</label> 
-                        <button class="btn btn-primary d-block mt-5">Kayıt Ol</button>
+                        <button type="submit" value="Register" class="btn btn-primary d-block mt-5">Kayıt Ol</button>
                     </form>
 
                     <!-- Modal-Body Üyelik -->

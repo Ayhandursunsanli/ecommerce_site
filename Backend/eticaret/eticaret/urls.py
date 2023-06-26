@@ -18,15 +18,17 @@ from django.urls import path
 from productsapp.views import *
 from django.conf.urls.static import static
 from django.conf import settings
+from userapp.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
     path('register/', register, name='register'),
-    path('login/', login, name='login'),
+    path('login/', login_request, name='login'),
     path('allProduct/',allProduct,name='allProduct'),
     path('category/<str:categoryName>',category,name='category'),
     path('product/<int:urunId>', productDetail, name='product'),
     path('about-us/',aboutUs,name='about-us'),
     path('contact-us/',contactUs,name='contact-us'),
+    path('logout/',logout_request,name='logout'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
