@@ -95,6 +95,41 @@ header .slogan {
   font-size: 0.9rem;
   padding: 0.8rem;
 }
+.public-navbar .collapse .dropdown .dropdown-menu {
+  top: 54px !important;
+  background-color: #f8f9fa !important;
+  opacity: 1;
+}
+.public-navbar .collapse .dropdown .dropdown-menu .dropdown-item {
+  font-size: 0.9rem;
+}
+.public-navbar .collapse .dropdown .dropdown-menu .dropdown-item i {
+  width: 25px;
+}
+.public-navbar .collapse .dropdown .dropdown-menu .dropdown-item:active {
+  background: #c19a83;
+}
+.public-navbar .collapse .dropdown .dropdown-menu .dropdown-item:hover {
+  color: #c19a83;
+  background: none;
+}
+.public-navbar .responsive-login-register {
+  display: none;
+  width: 50%;
+  display: none;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.public-navbar .responsive-login-register a {
+  font-size: 0.9rem;
+  transition: all 0.2s linear;
+  text-transform: uppercase;
+  margin-bottom: 0;
+}
+.public-navbar .responsive-login-register a i {
+  margin-bottom: 0;
+  font-size: 1rem;
+}
 
 .references .owl-carouselone .item {
   display: flex;
@@ -517,5 +552,15 @@ header .slogan {
   }
   .mission-vision .imgbox {
     height: 100%;
+  }
+}
+@media screen and (max-width: 991.9px) {
+  .public-navbar .responsive-login-register {
+    display: flex;
+  }
+  .public-navbar .responsive-login-register a {
+    font-size: 0.9rem;
+    transition: all 0.2s linear;
+    text-transform: uppercase;
   }
 }/*# sourceMappingURL=style.css.map */
