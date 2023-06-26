@@ -20,19 +20,19 @@ def index(request):
     }
     return render(request, 'index.html', context)
 
-def register(request):
-    anakategori = Anakategori.objects.all()
-    context = {
-        'anakategori' : anakategori,
-    }
-    return render(request, 'register.html', context)
+# def register(request):
+#     anakategori = Anakategori.objects.all()
+#     context = {
+#         'anakategori' : anakategori,
+#     }
+#     return render(request, 'register.html', context)
 
-def login(request):
-    anakategori = Anakategori.objects.all()
-    context = {
-        'anakategori' : anakategori,
-    }
-    return render(request, 'login.html', context)
+# def login(request):
+#     anakategori = Anakategori.objects.all()
+#     context = {
+#         'anakategori' : anakategori,
+#     }
+#     return render(request, 'login.html', context)
 
 # def allProduct(request):
 #     urunler = Urun.objects.all()
