@@ -18,11 +18,14 @@ def login_request(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST["password"]
+        remember_me = request.POST.get('remember_me') 
 
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
             login(request, user)
+            if remember_me:
+                request.session.set_expiry(3600)
             return redirect('index')
         else:
             return render(request, "login.html", {
