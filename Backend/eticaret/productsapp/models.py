@@ -56,7 +56,8 @@ class Footer(models.Model):
     site_description = models.CharField(max_length=200)
     company_address = models.CharField(max_length=200)
     company_phone = models.CharField(max_length=15)
-    whatsapp_number = models.CharField(max_length=15)
+    company_email = models.CharField(max_length=50, blank=False, null=True)
+    whatsapp_number = models.CharField(max_length=15,)
     social_media = models.ManyToManyField(SocialMedia, blank=True)
     
 

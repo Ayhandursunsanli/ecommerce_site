@@ -3,6 +3,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 import re
 import phonenumbers
+from productsapp.models import Anakategori
+from productsapp.models import SocialMedia
+from productsapp.models import Footer
 
 def is_valid_phone_number(phone_number, country_code):
     try:
@@ -12,6 +15,9 @@ def is_valid_phone_number(phone_number, country_code):
         return False
 
 def login_request(request):
+    socail_media = SocialMedia.objects.all()
+    footer = Footer.objects.first()
+    anakategori = Anakategori.objects.all()
     if request.user.is_authenticated:
         return redirect('index')
 
@@ -31,10 +37,17 @@ def login_request(request):
             return render(request, "login.html", {
                 'error': 'Kullanıcı adı veya parola hatalı'
             })
-
-    return render(request, 'login.html')
+    context = {
+        'anakategori' : anakategori,
+        'footer' : footer,
+        'social_media' : socail_media,
+    }
+    return render(request, 'login.html', context)
 
 def register(request):
+    anakategori = Anakategori.objects.all()
+    socail_media = SocialMedia.objects.all()
+    footer = Footer.objects.first()
     if request.user.is_authenticated:
         return redirect('index')
     
@@ -118,8 +131,12 @@ def register(request):
                 'lastname': lastname,
                 'phone': phone,
             })
-
-    return render(request, 'register.html')
+    context = {
+        'anakategori' : anakategori,
+        'footer' : footer,
+        'social_media' : socail_media,
+    }
+    return render(request, 'register.html', context)
 
 def logout_request(request):
     logout(request)
