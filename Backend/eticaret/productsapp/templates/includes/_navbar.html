@@ -62,7 +62,9 @@
                         
                         {% if user.is_authenticated %}
                         <!-- eğer giriş yapmış ise display flex olacak if döndürücez -->
+                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user"></i>PROFİLİ GÖSTER</a></li>
                         <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="fa-solid fa-power-off"></i> ÇIKIŞ YAP</a></li>
+
                         {% else %}
                         <li><a class="dropdown-item" href="{% url 'login' %}"><i class="fa-solid fa-right-to-bracket"></i> GİRİŞ YAP</a></li>
                         <li><a class="dropdown-item" href="{% url 'register' %}"><i class="fa-solid fa-user-plus"></i> ÜYE OL</a></li>

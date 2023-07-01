@@ -172,15 +172,7 @@ def contactUs(request):
     return render(request, 'contact-us.html', context)
 
 
-# def footer(request):
-#     footer = Footer.objects.first()
-#     social_media = SocialMedia.objects.all()
-#     context = {
-#         'footer' : footer,
-#         'social_media' : social_media,
-        
-#     }
-#     return render(request, '_footer.html', context)
+
 
 
 
