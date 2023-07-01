@@ -546,6 +546,14 @@ header .slogan {
   text-transform: uppercase;
 }
 
+footer .socail-media img {
+  filter: grayscale(100%);
+  transition: 0.3s all ease;
+}
+footer .socail-media img:hover {
+  filter: none;
+}
+
 @media screen and (max-width: 992px) {
   .mission-vision .mycard {
     height: 100%;

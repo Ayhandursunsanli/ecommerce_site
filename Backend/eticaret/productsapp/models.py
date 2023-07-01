@@ -42,3 +42,23 @@ class Urun(models.Model):
     # __str__ : admin panelinde göstermek istediğimiz bilgi.
     def __str__(self):
         return self.isim
+
+class SocialMedia(models.Model):
+    name = models.CharField(max_length=50, blank=True, null= True)
+    photo = models.ImageField(upload_to='footersocialmedia_photos/')
+    link = models.URLField(max_length=1000)
+
+    def __str__(self):
+        return self.name
+
+
+class Footer(models.Model):
+    site_description = models.CharField(max_length=200)
+    company_address = models.CharField(max_length=200)
+    company_phone = models.CharField(max_length=15)
+    whatsapp_number = models.CharField(max_length=15)
+    social_media = models.ManyToManyField(SocialMedia, blank=True)
+    
+
+    def __str__(self):
+        return self.site_description
