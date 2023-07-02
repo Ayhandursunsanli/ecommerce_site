@@ -55,25 +55,33 @@
                 <div class="col-md-7">
                     <form action="" method="POST">
                         {% csrf_token %}
-                        {% if error %}
-                            <div class="alert alert-danger">
-                                {{ error }}
-                            </div>
-                        {% endif %} 
+                        
+                        {% if messages %}
+
+                            
+                            {% for mesaj in messages %}
+                                <div class="alert alert-{{ mesaj.tags }} text-center">
+                                    {{ mesaj }}
+                                </div>
+                            {% endfor %}
+                                
+                            
+                        {% endif %}
+                            
                         <label for="username">Kullanıcı Adı:</label>
-                        <input class="register-input" type="text" placeholder="Kullanıcı Adı Giriniz" name="username" value="{{ username }}">
-                        <label for="firtname">Adı:</label>
+                        <input class="register-input" type="text" placeholder="Kullanıcı Adı Giriniz" name="kullanici" value="{{ username }}">
+                        <!-- <label for="firtname">Adı:</label>
                         <input class="register-input" type="text" placeholder="Adınızı Giriniz" name="firstname" value="{{ firstname }}">
                         <label for="lastname">Soyadı:</label>
-                        <input class="register-input" type="text" placeholder="Soyadınızı Giriniz" name="lastname" value="{{ lastname }}">
+                        <input class="register-input" type="text" placeholder="Soyadınızı Giriniz" name="lastname" value="{{ lastname }}"> -->
                         <label for="email">E-Mail:</label>
-                        <input class="register-input" type="email" placeholder="E-Mail Adresinizi Giriniz" name="email" value="{{ email }}">
+                        <input class="register-input" type="email" placeholder="E-Mail Adresinizi Giriniz" name="email">
                         <label for="password">Şifrenizi Giriniz: </label>
-                        <input  class="register-input"type="password" placeholder="Şifrenizi Giriniz (En az 6 karakter olmalıdır)" name="password">
-                        <label for="repassword">Şifrenizi Tekrar: </label>
-                        <input class="register-input" type="password" placeholder="Şifrenizi Tekrar Giriniz" name="repassword">
-                        <label for="phone">Telefon:</label>
-                        <input class="register-input" type="tel" id="phone-input" placeholder="Telefon numarası" name="phone" value="{{ phone }}">
+                        <input  class="register-input"type="password" placeholder="Şifrenizi Giriniz (En az 8 karakter olmalıdır)" name="sifre1">
+                        <label for="repassword">Şifrenizi Tekrar Giriniz: </label>
+                        <input class="register-input" type="password" placeholder="Şifrenizi Tekrar Giriniz" name="sifre2">
+                        <!-- <label for="phone">Telefon:</label>
+                        <input class="register-input" type="tel" id="phone-input" placeholder="Telefon numarası" name="phone" value="{{ phone }}"> -->
                         <input type="checkbox" class="register-checkbox me-2" name="accept_terms">
                         <label for="" data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor: pointer; font-size: 14px; text-decoration:underline;">Üyelik Sözleşmesini Kabul Ediyorum</label><br>
                         <input type="checkbox" class="register-checkbox me-2" name="accept_privacy">

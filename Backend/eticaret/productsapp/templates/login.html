@@ -40,11 +40,14 @@
     <!-- navbar -->
     {% include 'includes/_navbar.html' %}
 
+
     <!-- offcanvas-basket -->
     {% include 'includes/_offcanvas-basket.html' %}
 
     <!-- offcanvas-menu -->
     {% include 'includes/_offcanvas-menu.html' %}
+
+    
 
     <section class="register">
         <div class="container">
@@ -56,20 +59,26 @@
                     <form action="" method="POST">
                         {% csrf_token %}
 
-                        {% if error %}
-                            <div class="alert alert-danger">
-                                {{ error }}
-                            </div>
+                        {% if messages %}
+
+                                
+                            {% for mesaj in messages %}
+                                <div class="alert alert-{{ mesaj.tags }} text-center" id='mesaj'>
+                                    {{ mesaj }}
+                                </div>
+                            {% endfor %}
+                        
+                
                         {% endif %}
                         
                         <label for="username">Kullanıcı Adı:</label>
-                        <input class="register-input" type="text" placeholder="Kullanıcı Adınızı Giriniz" name="username">
+                        <input class="register-input" type="text" placeholder="Kullanıcı Adınızı Giriniz" name="kullanici">
                         <label for="password">Şifrenizi Giriniz: </label>
-                        <input class="register-input" type="password" placeholder="Şifrenizi Giriniz (En az 6 karakter olmalıdır)" name="password">
+                        <input class="register-input" type="password" placeholder="Şifrenizi Giriniz (En az 8 karakter olmalıdır)" name="sifre">
                         <input type="checkbox" class="register-checkbox me-2" name="remember_me">
                         <label for="" style="cursor: pointer; font-size: 14px; text-decoration:underline;">Beni Hatırla</label>
                         <label for="" class="d-inline ms-5" style="cursor: pointer;font-size: 16px; text-decoration:underline;"><a href="" class="text-black">Şifremi Unuttum</a></label> 
-                        <button type="submit" value="Login" class="btn btn-primary d-block mt-5">Giriş Yap</button>
+                        <button type="submit" value="Login" class="btn btn-primary d-block mt-5" value ="Giriş Yap">Giriş Yap</button>
                     </form>
                 </div>
             </div>

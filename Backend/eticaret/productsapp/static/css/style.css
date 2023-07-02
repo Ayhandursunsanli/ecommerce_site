@@ -51,6 +51,11 @@
   border: 1px solid #c7662e;
 }
 
+.alert-error {
+  background-color: red;
+  color: white;
+}
+
 header {
   height: 100vh;
   position: relative;
