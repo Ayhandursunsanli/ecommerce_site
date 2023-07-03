@@ -95,14 +95,15 @@
                 <h6>Rengi : {{urun.urunRengi}} </h6>
                 <h6>Stok Kodu : {{urun.stokKodu}} </h6>
                 <hr>
-                {% comment %} <select class="my-3">
-                    <option value="">Renk Seçiniz</option>
-                    <option value="">Siyah</option>
-                    <option value="">Beyaz</option>
-                    <option value="">Turuncu</option>
-                </select> {% endcomment %}
-                <input type="number" value="1">
-                <button class="buy-btn">Sepete Ekle</button>
+                
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <input type="number" name="adet" value="1">
+                    <input type="hidden" name="urunId" value="{{ urun.id }}">
+                    <input type="submit" value="Sepete Ekle" class="btn btn-primary p-2" style="width: 150px; ">
+                </form>
+                    
+
             </div>
         </div>
     </section>

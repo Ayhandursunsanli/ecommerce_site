@@ -1,10 +1,11 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
 
 # Create your models here.
 
 
-
+User = get_user_model()
 
 class Slogan(models.Model):
     gorsel = models.ImageField(upload_to='headerphoto/', blank=False, null=False)
@@ -63,3 +64,20 @@ class Footer(models.Model):
 
     def __str__(self):
         return self.site_description
+
+
+
+class Sepet(models.Model):
+    urun = models.ForeignKey(Urun, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    adet = models.IntegerField(default=1)
+    toplam = models.IntegerField(null=True)
+    # toplam = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    odendiMi = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.user.username
+    
+    def hesapla_toplam(self):
+        return self.adet * self.urun.fiyat
+    

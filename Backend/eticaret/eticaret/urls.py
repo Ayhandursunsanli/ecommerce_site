@@ -31,4 +31,5 @@ urlpatterns = [
     path('product/<int:urunId>', productDetail, name='product'),
     path('about-us/', aboutUs, name='about-us'),
     path('contact-us/', contactUs, name='contact-us'),
+    path('sepet/', sepet, name='sepet')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
