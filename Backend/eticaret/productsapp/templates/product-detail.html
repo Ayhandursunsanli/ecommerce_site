@@ -40,9 +40,6 @@
     <!-- navbar -->
     {% include 'includes/_navbar.html' %}
 
-    <!-- offcanvas-basket -->
-    {% include 'includes/_offcanvas-basket.html' %}
-
     <!-- offcanvas-menu -->
     {% include 'includes/_offcanvas-menu.html' %}
 
@@ -98,11 +95,21 @@
                 
                 <form action="" method="POST">
                     {% csrf_token %}
-                    <input type="number" name="adet" value="1">
+                    <input type="number" name="adet" value="1" class="adetInput">
                     <input type="hidden" name="urunId" value="{{ urun.id }}">
                     <input type="submit" value="Sepete Ekle" class="btn btn-primary p-2" style="width: 150px; ">
                 </form>
-                    
+                {% if messages %}
+
+                                
+                    {% for mesaj in messages %}
+                        <div class="alert alert-{{ mesaj.tags }} text-center mt-3" id='mesaj'>
+                            {{ mesaj }}
+                        </div>
+                    {% endfor %}
+            
+
+                {% endif %}
 
             </div>
         </div>
@@ -229,8 +236,12 @@
     <!-- owl carousel min js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
+    <!-- owl-carousel-js (silme)-->
+    <script src="{% static 'js/owl-carousel.js' %}"></script>
+
     <!-- app js -->
     <script src="{% static 'js/app.js' %}"></script>
+
 </body>
 
 </html>

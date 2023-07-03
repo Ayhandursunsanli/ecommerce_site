@@ -1,6 +1,8 @@
 
 {% load static %}
 
+
+
 <nav class="navbar navbar-expand-lg bg-body-tertiary public-navbar px-4">
     <div class="container-fluid">
         <a class="navbar-brand me-xl-5 pe-xl-5" href="{% url 'index' %}">
@@ -14,7 +16,7 @@
             <!-- eğer giriş yapmış ise display flex olacak if döndürücez -->
             <a class="nav-link" href="#">{{ user.username }}</a>
             <a class="nav-link" href="{% url 'logout' %}"><i class="fa-solid fa-power-off"></i></a>
-            <a href="#" class="nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fa-solid fa-cart-shopping mt-1"></i>:  0</a>
+            <a href="#" class="nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fa-solid fa-cart-shopping mt-1"></i>:  {{ toplam_urun_sayisi }}</a>
 
             {% else %}
             <a class="nav-link" href="{% url 'login' %}"><i class="fa-solid fa-right-to-bracket"></i></a>
@@ -74,9 +76,8 @@
                     </ul>
                 </li>
                 <li class="nav-item ms-1">
-                    <button class="btn btn-primary shopping-button" type="button" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i
-                            class="fa-solid fa-cart-shopping"></i> SEPET (<span>0</span>)</button>
+                    <a href="{% url 'sepet' %}" class="btn btn-primary shopping-button" type="button"><i
+                            class="fa-solid fa-cart-shopping"></i> SEPET: {{ sepet.toplam_urun_sayisi }} / {{ toplam_tutar }} TL </a>
                 </li>
             </ul>
         </div>
