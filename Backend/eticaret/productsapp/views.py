@@ -1,10 +1,10 @@
-from django.shortcuts import render
-# from .models import Slogan
-# from .models import Anakategori
-# from .models import Urun
-# from .models import Wrapperone
+from django.shortcuts import render,redirect
+from django.contrib import messages
 from .models import *
+from decimal import Decimal
+
 from django.db.models import Q
+
 
 # Create your views here.
 
@@ -138,6 +138,35 @@ def productDetail(request, urunId):
     socail_media = SocialMedia.objects.all()
     footer = Footer.objects.first()
 
+
+    # SEPETE EKLEME
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            urunId = request.POST['urunId']
+            adet = request.POST['adet']
+            adet = int(adet)
+            #eklenecek ürün
+            urunum = Urun.objects.get(id = urunId)
+            if Sepet.objects.filter(user = request.user, urun = urunum).exists():
+                sepetim = Sepet.objects.get(user = request.user, urun=urunum)
+                sepetim.adet += adet
+                sepetim.toplam = urunum.fiyat * sepetim.adet
+                sepetim.save()
+                messages.success(request, 'Ürün Sepette Güncellendi')
+                return redirect('index')
+            else:
+                sepetim = Sepet.objects.create(
+                    urun = urunum,
+                    user = request.user,
+                    adet = adet,
+                    toplam = urunum.fiyat * adet
+                )
+                sepetim.save()
+                messages.success(request, 'Ürün Sepete Eklendi')
+                return redirect('index')
+        else:
+            messages.error(request, 'Giriş Yapmanız Gerekiyor')
+            return redirect('login')
     context = {
         'anakategori' : anakategori,
         'urun' : urunum,
@@ -172,6 +201,46 @@ def contactUs(request):
     return render(request, 'contact-us.html', context)
 
 
+# def sepet(request):
+#     user = request.user
+#     sepetim = Sepet.objects.filter(user = user)
+#     if request.method == 'POST':
+#         urunId = request.POST['urunId']
+#         silinen = Sepet.objects.get(id = urunId)
+#         silinen.delete()
+#         messages.success(request, 'Ürün sepetten kaldırıldı.')
+#         return redirect('sepet')
+#     context= {
+#         'sepetim' : sepetim
+#     }
+#     return render(request, 'sepet.html', context)
+
+
+
+
+def sepet(request):
+    user = request.user
+    sepetim = Sepet.objects.filter(user=user)
+    toplam_tutar = Decimal('0.00')
+
+    if request.method == 'POST':
+        urunId = request.POST['urunId']
+        silinen = Sepet.objects.get(id=urunId)
+        toplam_tutar -= silinen.toplam  # Çıkarılan ürünün toplam fiyatını toplam tutardan çıkar
+        silinen.delete()
+        messages.success(request, 'Ürün sepetten kaldırıldı.')
+        return redirect('sepet')
+
+    for sepet in sepetim:
+        toplam_tutar += sepet.hesapla_toplam()
+    
+    
+
+    context = {
+        'sepetim': sepetim,
+        'toplam_tutar': toplam_tutar
+    }
+    return render(request, 'sepet.html', context)
 
 
 
