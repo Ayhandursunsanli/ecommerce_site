@@ -40,10 +40,6 @@
     <!-- navbar -->
     {% include 'includes/_navbar.html' %}
 
-    <!-- offcanvas-basket -->
-    {% include 'includes/_offcanvas-basket.html' %}
-
-
     <!-- offcanvas-menu -->
     {% include 'includes/_offcanvas-menu.html' %}
 
@@ -66,6 +62,8 @@
 
             {% endif %}
             <div class="border px-4 mt-5 sepet">
+
+                {% if sepetim.exists %}
                 <div class="row mt-4">
                     <div class="col-2">
                         <h6>Ürün Resmi</h6>
@@ -87,40 +85,73 @@
                     </div>
                 </div>
                 <hr>
-                {% for urun in sepetim %}
-                <div class="row mt-2 d-flex align-items-center">
-                    <div class="col-2">
-                        <img src="{{ urun.urun.urunresmi.url }}" alt="" width="70px">
+                {% else %}
+                <p></p>
+                {% endif %}
+                {% if sepetim.exists %}
+                    {% for urun in sepetim %}
+                    <div class="row mt-2 d-flex align-items-center">
+                        <div class="col-2">
+                            <img src="{{ urun.urun.urunresmi.url }}" alt="" width="70px">
+                        </div>
+                        <div class="col-2">
+                            <p>{{ urun.urun.isim }}</p>
+                        </div>
+                        <div class="col-2">
+                            <p>{{ urun.urun.fiyat }} TL</p>
+                        </div>
+                        <div class="col-2">
+                            <!-- <p>{{ urun.adet }} Adet</p> -->
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="urunId" value="{{ urun.id }}">
+                                <!-- <label for="">Adet: </label> -->
+                                <input type="number" name="yeniAdet" value="{{ urun.adet }}" class="border-0 adetInput " style="width: 50px;">
+                                <input type="submit" value="Güncelle" name="guncelle" class="btn btn-primary py-1 px-2 fw-light">
+                            </form>
+                        </div>
+                        <div class="col-2">
+                            <p>{{ urun.toplam }} TL</p>
+                        </div>
+                        <div class="col-2">
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="urunId" value="{{ urun.id }}">
+                                <input type="submit" class="btn btn-close py-2" value="">
+                            </form>
+                        </div>
                     </div>
-                    <div class="col-2">
-                        <p>{{ urun.urun.isim }}</p>
+                    <hr>
+                    {% endfor %}
+                {% else %}
+                    <div class="d-flex flex-column align-items-center gap-4 mt-5">
+                        <p class="text-center" style="font-size: 20px;">Sepetinizde ürün bulunmuyor.</p>
+                        <i class="fa-solid fa-cart-shopping m-auto" style="font-size: 100px;"></i>
                     </div>
-                    <div class="col-2">
-                        <p>{{ urun.urun.fiyat }} TL</p>
-                    </div>
-                    <div class="col-2">
-                        <p>{{ urun.adet }} Adet</p>
-                    </div>
-                    <div class="col-2">
-                        <p>{{ urun.toplam }} TL</p>
-                    </div>
-                    <div class="col-2">
-                        <form action="" method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" name="urunId" value="{{ urun.id }}">
-                            <input type="submit" class="btn btn-primary" value="Çıkar">
-                        </form>
-                    </div>
-                </div>
-                <hr>
-            {% endfor %}
+                {% endif %}
                 <div class="row py-3">
                     <div class="col-6">
                     </div>
-                    <div class="col-6 text-end mb-3">
-                        <p class="fw-bolder">Toplam Tutar: {{ toplam_tutar }} TL</p>
-                        <button class="d-inline ms-auto mt-3" style="width: 150px;">Ödeme Yap</button>
+                {% if sepetim.exists %}
+                    <div class="col-6 mb-3 d-flex justify-content-end">
+                        <div class="row">
+                            <div class="col-6 text-end">
+                                <p>Ürün Sayısı : </p>
+                                <p>Toplam Tutar : </p>
+                            </div>
+                            <div class="col-6 ">
+                                <p class="fw-bold" style="color: crimson;">{{ toplam_urun_sayisi }}</p>
+                                <p class="fw-bold" style="color: crimson;">{{ toplam_tutar }} TL</p>
+                            </div>
+                            <button class="d-inline ms-auto mt-3 btn btn-primary py-2 me-5" style="width: 150px;">Ödeme Yap</button>
+                            
+                        </div>
+                        <!-- <p class="fw-bolder"><span class=" fw-light">Toplam Ürün Sayısı:</span> {{ toplam_urun_sayisi }}</p>
+                        <p class="fw-bolder"><span class="fw-light">Toplam Tutar:</span> {{ toplam_tutar }} TL</p> -->
                     </div>
+                    {% else %}
+                        <p></p>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -143,6 +174,10 @@
 
     <!-- owl carousel min js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+
+    <!-- owl-carousel-js (silme)-->
+    <script src="{% static 'js/owl-carousel.js' %}"></script>
 
     <!-- app js -->
     <script src="{% static 'js/app.js' %}"></script>
