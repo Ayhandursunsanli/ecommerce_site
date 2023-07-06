@@ -261,6 +261,9 @@ header .slogan {
   font-size: 18px;
   color: red;
 }
+.products .card .price-content .price-box p del {
+  color: black;
+}
 .products .card .price-content button {
   padding-top: 0.6rem;
   padding-bottom: 0.6rem;
@@ -315,7 +318,7 @@ header .slogan {
   color: white;
 }
 .products .card:hover {
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 .products .collection-parent {
   position: relative;
