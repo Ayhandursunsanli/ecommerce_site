@@ -75,10 +75,17 @@
                         {% endif %}
                     </ul>
                 </li>
+                {% if user.is_authenticated %}
                 <li class="nav-item ms-1">
                     <a href="{% url 'sepet' %}" class="btn btn-primary shopping-button" type="button"><i
                             class="fa-solid fa-cart-shopping"></i> SEPET: {{ sepet.toplam_urun_sayisi }} / {{ toplam_tutar }} TL </a>
                 </li>
+                {% else %}
+                <li class="nav-item ms-1">
+                    <a href="{% url 'login' %}" class="btn btn-primary shopping-button" type="button"><i
+                            class="fa-solid fa-cart-shopping"></i> SEPET </a>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </div>
