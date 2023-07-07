@@ -53,6 +53,7 @@
                 <li class="nav-item dropdown">
                     
                     {% if user.is_authenticated  %}
+                        
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         {{ user.get_full_name }}
                     </a>
@@ -78,7 +79,7 @@
                 {% if user.is_authenticated %}
                 <li class="nav-item ms-1">
                     <a href="{% url 'sepet' %}" class="btn btn-primary shopping-button" type="button"><i
-                            class="fa-solid fa-cart-shopping"></i> SEPET: {{ sepet.toplam_urun_sayisi }} / {{ toplam_tutar }} TL </a>
+                            class="fa-solid fa-cart-shopping"></i> SEPET: {{ toplam_urun_sayisi }} / {{ toplam_tutar }} TL </a>
                 </li>
                 {% else %}
                 <li class="nav-item ms-1">
