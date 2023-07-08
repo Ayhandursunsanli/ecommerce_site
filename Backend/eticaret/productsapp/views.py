@@ -18,12 +18,16 @@ def index(request):
 
     # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
     user = request.user
-    sepetim = Sepet.objects.filter(user=user)
     toplam_tutar = Decimal('0.00')
     toplam_urun_sayisi = 0
-    for sepet in sepetim:
-        toplam_tutar += sepet.hesapla_toplam()
-        toplam_urun_sayisi += sepet.adet
+
+    if user.is_authenticated:  # Kullanıcı girişi yapılmışsa
+        sepetim = Sepet.objects.filter(user=user)
+        for sepet in sepetim:
+            toplam_tutar += sepet.hesapla_toplam()
+            toplam_urun_sayisi += sepet.adet
+    else:  # Kullanıcı girişi yapılmamışsa, boş bir sepet listesi oluştur
+        sepetim = []
 
 
     context = {
@@ -52,12 +56,16 @@ def allProduct(request):
 
     # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
     user = request.user
-    sepetim = Sepet.objects.filter(user=user)
     toplam_tutar = Decimal('0.00')
     toplam_urun_sayisi = 0
-    for sepet in sepetim:
-        toplam_tutar += sepet.hesapla_toplam()
-        toplam_urun_sayisi += sepet.adet
+
+    if user.is_authenticated:  # Kullanıcı girişi yapılmışsa
+        sepetim = Sepet.objects.filter(user=user)
+        for sepet in sepetim:
+            toplam_tutar += sepet.hesapla_toplam()
+            toplam_urun_sayisi += sepet.adet
+    else:  # Kullanıcı girişi yapılmamışsa, boş bir sepet listesi oluştur
+        sepetim = []
 
     if search_query:
         urunler = urunler.filter(
@@ -104,12 +112,17 @@ def category(request,categoryName):
 
     # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
     user = request.user
-    sepetim = Sepet.objects.filter(user=user)
     toplam_tutar = Decimal('0.00')
     toplam_urun_sayisi = 0
-    for sepet in sepetim:
-        toplam_tutar += sepet.hesapla_toplam()
-        toplam_urun_sayisi += sepet.adet
+
+    if user.is_authenticated:  # Kullanıcı girişi yapılmışsa
+        sepetim = Sepet.objects.filter(user=user)
+        for sepet in sepetim:
+            toplam_tutar += sepet.hesapla_toplam()
+            toplam_urun_sayisi += sepet.adet
+    else:  # Kullanıcı girişi yapılmamışsa, boş bir sepet listesi oluştur
+        sepetim = []
+
 
 
 
@@ -192,12 +205,16 @@ def productDetail(request, urunId):
         
     # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
     user = request.user
-    sepetim = Sepet.objects.filter(user=user)
     toplam_tutar = Decimal('0.00')
     toplam_urun_sayisi = 0
-    for sepet in sepetim:
-        toplam_tutar += sepet.hesapla_toplam()
-        toplam_urun_sayisi += sepet.adet
+
+    if user.is_authenticated:  # Kullanıcı girişi yapılmışsa
+        sepetim = Sepet.objects.filter(user=user)
+        for sepet in sepetim:
+            toplam_tutar += sepet.hesapla_toplam()
+            toplam_urun_sayisi += sepet.adet
+    else:  # Kullanıcı girişi yapılmamışsa, boş bir sepet listesi oluştur
+        sepetim = []
 
     context = {
         'anakategori' : anakategori,
@@ -222,12 +239,16 @@ def aboutUs(request):
 
     # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
     user = request.user
-    sepetim = Sepet.objects.filter(user=user)
     toplam_tutar = Decimal('0.00')
     toplam_urun_sayisi = 0
-    for sepet in sepetim:
-        toplam_tutar += sepet.hesapla_toplam()
-        toplam_urun_sayisi += sepet.adet
+
+    if user.is_authenticated:  # Kullanıcı girişi yapılmışsa
+        sepetim = Sepet.objects.filter(user=user)
+        for sepet in sepetim:
+            toplam_tutar += sepet.hesapla_toplam()
+            toplam_urun_sayisi += sepet.adet
+    else:  # Kullanıcı girişi yapılmamışsa, boş bir sepet listesi oluştur
+        sepetim = []
 
 
     context = {
@@ -249,12 +270,16 @@ def contactUs(request):
 
     # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
     user = request.user
-    sepetim = Sepet.objects.filter(user=user)
     toplam_tutar = Decimal('0.00')
     toplam_urun_sayisi = 0
-    for sepet in sepetim:
-        toplam_tutar += sepet.hesapla_toplam()
-        toplam_urun_sayisi += sepet.adet
+
+    if user.is_authenticated:  # Kullanıcı girişi yapılmışsa
+        sepetim = Sepet.objects.filter(user=user)
+        for sepet in sepetim:
+            toplam_tutar += sepet.hesapla_toplam()
+            toplam_urun_sayisi += sepet.adet
+    else:  # Kullanıcı girişi yapılmamışsa, boş bir sepet listesi oluştur
+        sepetim = []
 
 
     context = {
