@@ -16,42 +16,30 @@ def index(request):
     socail_media = SocialMedia.objects.all()
     footer = Footer.objects.first()
 
+    # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
+    user = request.user
+    sepetim = Sepet.objects.filter(user=user)
+    toplam_tutar = Decimal('0.00')
+    toplam_urun_sayisi = 0
+    for sepet in sepetim:
+        toplam_tutar += sepet.hesapla_toplam()
+        toplam_urun_sayisi += sepet.adet
+
+
     context = {
         'slogan': slogan,
         'anakategori' : anakategori,
         'urunler' : urunler,
         'wrapperone' : wrapperOne,
         'footer' : footer,
-        'social_media' : socail_media
+        'social_media' : socail_media,
+
+        # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
+        'toplam_tutar': toplam_tutar,
+        'toplam_urun_sayisi': toplam_urun_sayisi
 
     }
     return render(request, 'index.html', context)
-
-# def register(request):
-#     anakategori = Anakategori.objects.all()
-#     context = {
-#         'anakategori' : anakategori,
-#     }
-#     return render(request, 'register.html', context)
-
-# def login(request):
-#     anakategori = Anakategori.objects.all()
-#     context = {
-#         'anakategori' : anakategori,
-#     }
-#     return render(request, 'login.html', context)
-
-# def allProduct(request):
-#     urunler = Urun.objects.all()
-#     anakategori = Anakategori.objects.all()
-#     context = {
-#         'anakategori' : anakategori,
-#         'urunler' : urunler,
-#     }
-
-#     return render(request, 'all-product.html', context)
-
-
 
 def allProduct(request):
     urunler = Urun.objects.all()
@@ -61,6 +49,15 @@ def allProduct(request):
     search_query = request.GET.get('search_query')
     socail_media = SocialMedia.objects.all()
     footer = Footer.objects.first()
+
+    # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
+    user = request.user
+    sepetim = Sepet.objects.filter(user=user)
+    toplam_tutar = Decimal('0.00')
+    toplam_urun_sayisi = 0
+    for sepet in sepetim:
+        toplam_tutar += sepet.hesapla_toplam()
+        toplam_urun_sayisi += sepet.adet
 
     if search_query:
         urunler = urunler.filter(
@@ -84,13 +81,17 @@ def allProduct(request):
         'search_query': search_query,
         'footer' : footer,
         'social_media' : socail_media,
+
+        # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
+        'sepetim': sepetim,
+        'toplam_tutar': toplam_tutar,
+        'toplam_urun_sayisi': toplam_urun_sayisi
     }
 
     if search_query and not urunler.exists():
         context['no_results'] = True
 
     return render(request, 'all-product.html', context)
-
 
 def category(request,categoryName):
     urunler = Urun.objects.filter(kategori=categoryName)
@@ -100,6 +101,17 @@ def category(request,categoryName):
     search_query = request.GET.get('search_query')
     socail_media = SocialMedia.objects.all()
     footer = Footer.objects.first()
+
+    # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
+    user = request.user
+    sepetim = Sepet.objects.filter(user=user)
+    toplam_tutar = Decimal('0.00')
+    toplam_urun_sayisi = 0
+    for sepet in sepetim:
+        toplam_tutar += sepet.hesapla_toplam()
+        toplam_urun_sayisi += sepet.adet
+
+
 
     if search_query:
         urunler = urunler.filter(
@@ -125,6 +137,15 @@ def category(request,categoryName):
         'search_query': search_query,
         'footer' : footer,
         'social_media' : socail_media,
+
+        # Navbardaki aktif menüyü göstermek için
+        'categoryName': categoryName,
+
+        # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
+        'sepetim': sepetim,
+        'toplam_tutar': toplam_tutar,
+        'toplam_urun_sayisi': toplam_urun_sayisi,
+
     }
 
     if search_query and not urunler.exists():
@@ -139,7 +160,6 @@ def productDetail(request, urunId):
     wrapperOne = Wrapperone.objects.all()
     socail_media = SocialMedia.objects.all()
     footer = Footer.objects.first()
-
 
     # SEPETE EKLEME
     if request.method == 'POST':
@@ -169,6 +189,16 @@ def productDetail(request, urunId):
         else:
             messages.error(request, 'Giriş Yapmanız Gerekiyor')
             return redirect('login')
+        
+    # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
+    user = request.user
+    sepetim = Sepet.objects.filter(user=user)
+    toplam_tutar = Decimal('0.00')
+    toplam_urun_sayisi = 0
+    for sepet in sepetim:
+        toplam_tutar += sepet.hesapla_toplam()
+        toplam_urun_sayisi += sepet.adet
+
     context = {
         'anakategori' : anakategori,
         'urun' : urunum,
@@ -176,17 +206,39 @@ def productDetail(request, urunId):
         'ayniKategoridekiUrunler' : ayniKategoridekiUrunler,
         'footer' : footer,
         'social_media' : socail_media,
+
+        # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
+        'toplam_tutar': toplam_tutar,
+        'toplam_urun_sayisi': toplam_urun_sayisi
     }
+
+
     return render(request, 'product-detail.html', context)
 
 def aboutUs(request):
     anakategori = Anakategori.objects.all()
     socail_media = SocialMedia.objects.all()
     footer = Footer.objects.first()
+
+    # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
+    user = request.user
+    sepetim = Sepet.objects.filter(user=user)
+    toplam_tutar = Decimal('0.00')
+    toplam_urun_sayisi = 0
+    for sepet in sepetim:
+        toplam_tutar += sepet.hesapla_toplam()
+        toplam_urun_sayisi += sepet.adet
+
+
     context = {
         'anakategori' : anakategori,
         'footer' : footer,
         'social_media' : socail_media,
+
+        # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
+        'sepetim': sepetim,
+        'toplam_tutar': toplam_tutar,
+        'toplam_urun_sayisi': toplam_urun_sayisi
     }
     return render(request, 'about-us.html', context)
 
@@ -194,10 +246,26 @@ def contactUs(request):
     anakategori = Anakategori.objects.all()
     socail_media = SocialMedia.objects.all()
     footer = Footer.objects.first()
+
+    # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
+    user = request.user
+    sepetim = Sepet.objects.filter(user=user)
+    toplam_tutar = Decimal('0.00')
+    toplam_urun_sayisi = 0
+    for sepet in sepetim:
+        toplam_tutar += sepet.hesapla_toplam()
+        toplam_urun_sayisi += sepet.adet
+
+
     context = {
         'anakategori' : anakategori,
         'footer' : footer,
         'social_media' : socail_media,
+
+        # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
+        'sepetim': sepetim,
+        'toplam_tutar': toplam_tutar,
+        'toplam_urun_sayisi': toplam_urun_sayisi
     }
     return render(request, 'contact-us.html', context)
 
@@ -231,12 +299,9 @@ def sepet(request):
             messages.success(request, 'Ürün sepetten kaldırıldı.')
             return redirect('sepet')
 
-
     for sepet in sepetim:
         toplam_tutar += sepet.hesapla_toplam()
         toplam_urun_sayisi += sepet.adet
-    
-    
 
     context = {
         'anakategori' : anakategori,
