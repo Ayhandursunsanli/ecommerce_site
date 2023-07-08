@@ -13,18 +13,18 @@
             <div>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'allProduct' %}">TÜM ÜRÜNLER</a>
+                        <a class="nav-link {% if '/allProduct/' in request.path %}activemenu{% endif %} " href="{% url 'allProduct' %}">TÜM ÜRÜNLER</a>
                     </li>
                     {% for anakategori in anakategori %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'category' anakategori.anakategoriBaslik %}">{{ anakategori.anakategoriBaslik }}</a>
+                        <a class="nav-link {% if anakategori.anakategoriBaslik == categoryName %}activemenu{% endif %}" href="{% url 'category' anakategori.anakategoriBaslik %}" href="{% url 'category' anakategori.anakategoriBaslik %}">{{ anakategori.anakategoriBaslik }}</a>
                     </li>
                     {% endfor %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'about-us' %}">HAKKIMIZDA</a>
+                        <a class="nav-link {% if '/about-us/' in request.path %}activemenu{% endif %}" href="{% url 'about-us' %}">HAKKIMIZDA</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'contact-us' %}">İLETİŞİM</a>
+                        <a class="nav-link {% if '/contact-us/' in request.path %}activemenu{% endif %}" href="{% url 'contact-us' %}">İLETİŞİM</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">YARDIM</a>

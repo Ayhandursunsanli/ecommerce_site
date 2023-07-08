@@ -100,6 +100,11 @@ header .slogan {
   transform: scale(1.1);
   color: #c19a83;
 }
+.public-navbar .collapse .navbar-nav .nav-link.activemenu {
+  transform: scale(1.1);
+  color: #c19a83;
+  border-bottom: 1px solid #c19a83;
+}
 .public-navbar .collapse .shopping-button {
   font-size: 0.9rem;
   padding: 0.8rem;
@@ -556,6 +561,10 @@ header .slogan {
 
 .offcanvas-let-menu .offcanvas-body .navbar-nav .nav-item .nav-link {
   text-transform: uppercase;
+}
+.offcanvas-let-menu .offcanvas-body .navbar-nav .nav-item .nav-link.activemenu {
+  color: #c19a83;
+  font-weight: bold;
 }
 
 footer .socail-media img {
