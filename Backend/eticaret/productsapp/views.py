@@ -2,8 +2,11 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from .models import *
 from decimal import Decimal
+from collections import Counter
+
 
 from django.db.models import Q
+from django.db.models import Count
 
 
 # Create your views here.
@@ -47,6 +50,10 @@ def index(request):
 
 def allProduct(request):
     urunler = Urun.objects.all()
+    
+    urun_sayisi = urunler.values('isim').annotate(urun_sayisi=Count('isim')) #Filtrede ürün sayısı göstermek için
+    renk_sayisi = urunler.values('urunRengi').annotate(renk_sayisi=Count('urunRengi')) #Filtrede renk sayısı göstermek için
+    kaplama_sayisi = urunler.values('ayakKaplama').annotate(kaplama_sayisi=Count('ayakKaplama')) #Filtrede kaplama sayısı göstermek için
     anakategori = Anakategori.objects.all()
     wrapperOne = Wrapperone.objects.all()
     sort_option = request.GET.get('sort_option')
@@ -89,6 +96,9 @@ def allProduct(request):
         'search_query': search_query,
         'footer' : footer,
         'social_media' : socail_media,
+        'urun_sayisi': urun_sayisi, #filtrede ürün sayısı göstermek için 
+        'renk_sayisi': renk_sayisi, #filtrede renk sayısı göstermek için
+        'kaplama_sayisi': kaplama_sayisi, #filtrede kaplama sayısı göstermek için'
 
         # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
         'sepetim': sepetim,
