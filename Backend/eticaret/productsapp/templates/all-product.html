@@ -77,8 +77,93 @@
             
 
             <div class="row mt-2">
-                {% for urun in urunler %}
-                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-3">
+                <div class="col-3 mt-3">
+                    <div class="filtre_section p-3">
+                        <h6>Ürünleri Filtrele</h6>
+                        <hr>
+                        <h6>Modeller</h6>
+                        <ul>
+                        
+                        {% for urun in urun_sayisi %}
+                            {% if urun.sayi == 1 %}
+                                <li>
+                                    <input type="checkbox">
+                                    <label for="">{{ urun.isim }}</label>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <input type="checkbox">
+                                    <label for="">{{ urun.isim }} ({{ urun.urun_sayisi }})</label>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        </ul>
+
+                        <hr>
+
+                        <h6>Şapka Rengi</h6>
+                        <ul>
+                            {% for renk in renk_sayisi %}
+                                {% if renk.renk_sayisi == 1 %}
+                                    <li>
+                                        <input type="checkbox">
+                                        <label for="">{{ renk.urunRengi }}</label>
+                                    </li>
+                                {% else %}
+                                    <li>
+                                        <input type="checkbox">
+                                        <label for="">{{ renk.urunRengi }} ({{ renk.renk_sayisi }})</label>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+
+                        <hr>
+
+                        <h6>Ayak Kaplama</h6>
+                        <ul>
+                            {% for kaplama in kaplama_sayisi %}
+                                {% if kaplama.kaplama_sayisi == 1 %}
+                                    <li>
+                                        <input type="checkbox">
+                                        <label class="text-uppercase" for="">{{ kaplama.ayakKaplama }}</label>
+                                    </li>
+                                {% else %}
+                                    <li>
+                                        <input type="checkbox">
+                                        <label class="text-uppercase" for="">{{ kaplama.ayakKaplama }} ({{ kaplama.kaplama_sayisi }})</label>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                        <hr>
+                        <h6>İndirimli Ürünler</h6>
+                        <ul>
+                            <li>
+                                <input type="checkbox">
+                                <label for="">Şu an indirimde olanlar (4)</label>
+                            </li>
+                        </ul>
+                        <hr>
+                        <h6>Fiyat Aralığı</h6>
+                        <ul>
+                            <li>
+                                <label for="" style="width: 45px;">En az:</label>
+                                <input type="number">
+                            </li>
+                            <li class="mt-2">
+                                <label for="" style="width: 45px;">En çok:</label>
+                                <input type="number">
+                            </li>
+                        </ul>
+                        <button type="submit" class="btn btn-primary py-2">Ürünleri Getir</button>
+
+                    </div>
+                </div>
+                <div class="col-9">
+                    <div class="row">
+                        {% for urun in urunler %}
+                    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mt-3">
                         <a class="card" href="{% url 'product' urun.id %}">
                             {% if urun.indirimli_fiyat %}
                             <div class="sale">
@@ -104,7 +189,9 @@
                             </div>
                         </a>
                     </div>
-                {% endfor %}
+                    {% endfor %}
+                    </div>
+                </div>
             </div>
 
             {% if no_results %}
