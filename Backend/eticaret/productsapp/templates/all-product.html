@@ -83,55 +83,44 @@
                         <hr>
                         <h6>Modeller</h6>
                         <ul>
-                        
-                        {% for urun in urun_sayisi %}
-                            {% if urun.sayi == 1 %}
-                                <li>
-                                    <input type="checkbox">
-                                    <label for="">{{ urun.isim }}</label>
-                                </li>
-                            {% else %}
-                                <li>
-                                    <input type="checkbox">
-                                    <label for="">{{ urun.isim }} ({{ urun.urun_sayisi }})</label>
-                                </li>
-                            {% endif %}
-                        {% endfor %}
+                            {% for urun in urun_sayisi %}
+                                {% if urun.urun_sayisi == 1 %}
+                                    <li>
+                                        <a href="?search_query={{ urun.isim }}">{{ urun.isim }}</a>
+                                    </li>
+                                {% else %}
+                                    <li>
+                                        <a href="?search_query={{ urun.isim }}">{{ urun.isim }} ({{ urun.urun_sayisi }})</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
                         </ul>
-
                         <hr>
-
                         <h6>Şapka Rengi</h6>
                         <ul>
                             {% for renk in renk_sayisi %}
                                 {% if renk.renk_sayisi == 1 %}
                                     <li>
-                                        <input type="checkbox">
-                                        <label for="">{{ renk.urunRengi }}</label>
+                                        <a href="?search_query={{ renk.urunRengi }}">{{ renk.urunRengi }}</a>
                                     </li>
                                 {% else %}
                                     <li>
-                                        <input type="checkbox">
-                                        <label for="">{{ renk.urunRengi }} ({{ renk.renk_sayisi }})</label>
+                                        <a href="?search_query={{ renk.urunRengi }}">{{ renk.urunRengi }} ({{ renk.renk_sayisi }})</a>
                                     </li>
                                 {% endif %}
                             {% endfor %}
                         </ul>
-
                         <hr>
-
                         <h6>Ayak Kaplama</h6>
                         <ul>
                             {% for kaplama in kaplama_sayisi %}
                                 {% if kaplama.kaplama_sayisi == 1 %}
                                     <li>
-                                        <input type="checkbox">
-                                        <label class="text-uppercase" for="">{{ kaplama.ayakKaplama }}</label>
+                                        <a class="text-uppercase" href="?ayak_kaplama={{ kaplama.ayakKaplama }}">{{ kaplama.ayakKaplama }}</a>
                                     </li>
                                 {% else %}
                                     <li>
-                                        <input type="checkbox">
-                                        <label class="text-uppercase" for="">{{ kaplama.ayakKaplama }} ({{ kaplama.kaplama_sayisi }})</label>
+                                        <a class="text-uppercase" href="?ayak_kaplama={{ kaplama.ayakKaplama }}">{{ kaplama.ayakKaplama }} ({{ kaplama.kaplama_sayisi }})</a>
                                     </li>
                                 {% endif %}
                             {% endfor %}
@@ -140,29 +129,38 @@
                         <h6>İndirimli Ürünler</h6>
                         <ul>
                             <li>
-                                <input type="checkbox">
-                                <label for="">Şu an indirimde olanlar (4)</label>
+                                <a href="?indirimli_urunler=true">Şu An İndirimde Olanlar: ({{ indirimli_urun_sayisi }})</a>
                             </li>
                         </ul>
+
                         <hr>
-                        <h6>Fiyat Aralığı</h6>
-                        <ul>
-                            <li>
-                                <label for="" style="width: 45px;">En az:</label>
-                                <input type="number">
-                            </li>
-                            <li class="mt-2">
-                                <label for="" style="width: 45px;">En çok:</label>
-                                <input type="number">
-                            </li>
-                        </ul>
-                        <button type="submit" class="btn btn-primary py-2">Ürünleri Getir</button>
+
+                        <form method="GET" action="{% url 'allProduct' %}">
+                            <h6>Fiyat Aralığı</h6>
+                            <ul>
+                                <li>
+                                    <label for="min_fiyat" style="width: 45px;">En az:</label>
+                                    <input type="number" id="min_fiyat" name="min_fiyat" value="{{ request.GET.min_fiyat }}">
+                                </li>
+                                <li class="mt-2">
+                                    <label for="max_fiyat" style="width: 45px;">En çok:</label>
+                                    <input type="number" id="max_fiyat" name="max_fiyat" value="{{ request.GET.max_fiyat }}">
+                                </li>
+                            </ul>
+                            <button type="submit" class="btn btn-primary py-2">Ürünleri Getir</button>
+                        </form>
 
                     </div>
                 </div>
                 <div class="col-9">
+                    {% if urun_bulunamadi %}
+                    <p class="mt-3">Belirtmiş olduğunuz fiyat aralığında ürün bulunamamıştır.</p>
+                    {% endif %}
+                    {% if no_results %}
+                    <p class="mt-3">Arama sorgunuz için sonuç bulunamadı.</p>
+                    {% endif %}
                     <div class="row">
-                        {% for urun in urunler %}
+                    {% for urun in urunler %}
                     <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mt-3">
                         <a class="card" href="{% url 'product' urun.id %}">
                             {% if urun.indirimli_fiyat %}
@@ -193,10 +191,6 @@
                     </div>
                 </div>
             </div>
-
-            {% if no_results %}
-                <p>Arama sorgunuz için sonuç bulunamadı.</p>
-            {% endif %}
 
             <div class="row mt-5 collection-parent wrapperone">
                 <div class="col-lg-12 mt-3">
