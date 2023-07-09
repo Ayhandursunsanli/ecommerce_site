@@ -277,11 +277,21 @@ header
         &:hover
             box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px
     .filtre_section
+        height: 600px
+        position: sticky
+        top: 20px
+        overflow-y: scroll
         border: 1px solid rgb(0 0 0 / 18%)
         border-radius: 10px
         ul
             li
                 list-style-type: none
+                a
+                    text-decoration: none
+                    color: black
+                    &:hover
+                        color: gray
+                    
     .collection-parent
         position: relative
         .text-box

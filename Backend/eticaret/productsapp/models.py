@@ -34,7 +34,7 @@ class Urun(models.Model):
     kategori = models.CharField(max_length=100, blank=False, default='')
     stokKodu = models.CharField(max_length=100, blank=False, default='')
     urunRengi = models.CharField(max_length=100, blank=False, default='')
-    ayakKaplama = models.CharField(max_length=100, blank=True, null=True)
+    ayakKaplama = models.CharField(max_length=100, blank=False, null=True,)
     isim = models.CharField(max_length= 100)
     aciklama = models.TextField(max_length=500)
     fiyat = models.DecimalField(max_digits=8, decimal_places=2)
