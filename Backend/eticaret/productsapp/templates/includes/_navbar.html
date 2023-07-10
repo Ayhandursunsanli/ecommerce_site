@@ -80,12 +80,12 @@
                 {% if user.is_authenticated %}
                 <li class="nav-item ms-1">
                     <a href="{% url 'sepet' %}" class="btn btn-primary shopping-button" type="button"><i
-                            class="fa-solid fa-cart-shopping"></i> SEPET: {{ toplam_urun_sayisi }} / {{ toplam_tutar }} TL </a>
+                            class="fa-solid fa-cart-shopping"></i> ({{ toplam_urun_sayisi }} / {{ toplam_tutar }} TL) </a>
                 </li>
                 {% else %}
                 <li class="nav-item ms-1">
                     <a href="{% url 'login' %}" class="btn btn-primary shopping-button" type="button"><i
-                            class="fa-solid fa-cart-shopping"></i> SEPET </a>
+                            class="fa-solid fa-cart-shopping"></i> SEPEPTİNİZ </a>
                 </li>
                 {% endif %}
             </ul>
