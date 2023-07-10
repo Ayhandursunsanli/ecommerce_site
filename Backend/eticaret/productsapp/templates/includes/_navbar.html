@@ -68,7 +68,7 @@
                         
                         {% if user.is_authenticated %}
                         <!-- eğer giriş yapmış ise display flex olacak if döndürücez -->
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user"></i>PROFİLİ GÖSTER</a></li>
+                        <li><a class="dropdown-item" href="{% url 'hesabim' %}"><i class="fa-solid fa-user"></i>PROFİLİ GÖSTER</a></li>
                         <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="fa-solid fa-power-off"></i> ÇIKIŞ YAP</a></li>
 
                         {% else %}
@@ -85,7 +85,7 @@
                 {% else %}
                 <li class="nav-item ms-1">
                     <a href="{% url 'login' %}" class="btn btn-primary shopping-button" type="button"><i
-                            class="fa-solid fa-cart-shopping"></i> SEPEPTİNİZ </a>
+                            class="fa-solid fa-cart-shopping"></i> SEPETİNİZ </a>
                 </li>
                 {% endif %}
             </ul>

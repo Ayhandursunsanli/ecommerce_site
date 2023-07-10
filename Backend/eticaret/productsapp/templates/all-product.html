@@ -74,8 +74,6 @@
                 </div>
             </div>
 
-            
-
             <div class="row mt-2">
                 <div class="col-3 mt-3">
                     <div class="filtre_section p-3">
@@ -86,11 +84,11 @@
                             {% for urun in urun_sayisi %}
                                 {% if urun.urun_sayisi == 1 %}
                                     <li>
-                                        <a href="?search_query={{ urun.isim }}">{{ urun.isim }}</a>
+                                        <a class="fw-light" href="?search_query={{ urun.isim }}">{{ urun.isim }}</a>
                                     </li>
                                 {% else %}
                                     <li>
-                                        <a href="?search_query={{ urun.isim }}">{{ urun.isim }} ({{ urun.urun_sayisi }})</a>
+                                        <a class="fw-light" href="?search_query={{ urun.isim }}">{{ urun.isim }} ({{ urun.urun_sayisi }})</a>
                                     </li>
                                 {% endif %}
                             {% endfor %}
@@ -101,11 +99,11 @@
                             {% for renk in renk_sayisi %}
                                 {% if renk.renk_sayisi == 1 %}
                                     <li>
-                                        <a href="?search_query={{ renk.urunRengi }}">{{ renk.urunRengi }}</a>
+                                        <a class="fw-light" href="?search_query={{ renk.urunRengi }}">{{ renk.urunRengi }}</a>
                                     </li>
                                 {% else %}
                                     <li>
-                                        <a href="?search_query={{ renk.urunRengi }}">{{ renk.urunRengi }} ({{ renk.renk_sayisi }})</a>
+                                        <a class="fw-light" href="?search_query={{ renk.urunRengi }}">{{ renk.urunRengi }} ({{ renk.renk_sayisi }})</a>
                                     </li>
                                 {% endif %}
                             {% endfor %}
@@ -116,11 +114,11 @@
                             {% for kaplama in kaplama_sayisi %}
                                 {% if kaplama.kaplama_sayisi == 1 %}
                                     <li>
-                                        <a class="text-uppercase" href="?ayak_kaplama={{ kaplama.ayakKaplama }}">{{ kaplama.ayakKaplama }}</a>
+                                        <a class="text-uppercase fw-light" href="?ayak_kaplama={{ kaplama.ayakKaplama }}">{{ kaplama.ayakKaplama }}</a>
                                     </li>
                                 {% else %}
                                     <li>
-                                        <a class="text-uppercase" href="?ayak_kaplama={{ kaplama.ayakKaplama }}">{{ kaplama.ayakKaplama }} ({{ kaplama.kaplama_sayisi }})</a>
+                                        <a class="text-uppercase fw-light" href="?ayak_kaplama={{ kaplama.ayakKaplama }}">{{ kaplama.ayakKaplama }} ({{ kaplama.kaplama_sayisi }})</a>
                                     </li>
                                 {% endif %}
                             {% endfor %}
@@ -129,7 +127,7 @@
                         <h6>İndirimli Ürünler</h6>
                         <ul>
                             <li>
-                                <a href="?indirimli_urunler=true">Şu An İndirimde Olanlar: ({{ indirimli_urun_sayisi }})</a>
+                                <a class="fw-light" href="?indirimli_urunler=true">Şu An İndirimde Olanlar: ({{ indirimli_urun_sayisi }})</a>
                             </li>
                         </ul>
 
