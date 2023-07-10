@@ -50,7 +50,6 @@ def index(request):
 
 def allProduct(request):
     urunler = Urun.objects.all()
-    
     urun_sayisi = urunler.values('isim').annotate(urun_sayisi=Count('isim')) #Filtrede ürün sayısı göstermek için
     renk_sayisi = urunler.values('urunRengi').annotate(renk_sayisi=Count('urunRengi')) #Filtrede renk sayısı göstermek için
     kaplama_sayisi = urunler.values('ayakKaplama').annotate(kaplama_sayisi=Count('ayakKaplama')) #Filtrede kaplama sayısı göstermek için
@@ -131,6 +130,10 @@ def allProduct(request):
 
 def category(request,categoryName):
     urunler = Urun.objects.filter(kategori=categoryName)
+    urun_sayisi = urunler.values('isim').annotate(urun_sayisi=Count('isim')) #Filtrede ürün sayısı göstermek için
+    renk_sayisi = urunler.values('urunRengi').annotate(renk_sayisi=Count('urunRengi')) #Filtrede renk sayısı göstermek için
+    kaplama_sayisi = urunler.values('ayakKaplama').annotate(kaplama_sayisi=Count('ayakKaplama')) #Filtrede kaplama sayısı göstermek için
+    indirimli_urun_sayisi = urunler.filter(indirimli_fiyat__isnull=False).count() #Filtrede indirimli öğe sayısı göstermek için
     anakategori = Anakategori.objects.all()
     wrapperOne = Wrapperone.objects.all()
     sort_option = request.GET.get('sort_option')
@@ -167,6 +170,17 @@ def category(request,categoryName):
         urunler = urunler.order_by('fiyat')
     elif sort_option == 'desc':
         urunler = urunler.order_by('-fiyat')
+    
+    ayak_kaplama = request.GET.get('ayak_kaplama')  # Ayak kaplaması filtresi için parametreyi al
+    if ayak_kaplama:
+        urunler = urunler.filter(ayakKaplama__iexact=ayak_kaplama)  # Ayak kaplaması filtresini uygula
+    indirimli_urunler = request.GET.get('indirimli_urunler')  # İndirimli ürünler filtresi için parametreyi al
+    if indirimli_urunler:
+        urunler = urunler.filter(indirimli_fiyat__isnull=False)  # İndirimli ürünler filtresini uygula
+    min_fiyat = request.GET.get('min_fiyat')  # Minimum fiyat parametresini al
+    max_fiyat = request.GET.get('max_fiyat')  # Maksimum fiyat parametresini al
+    if min_fiyat and max_fiyat:
+        urunler = urunler.filter(fiyat__gte=min_fiyat, fiyat__lte=max_fiyat)  # Fiyat aralığı filtresini uygula
 
 
     context = {
@@ -178,6 +192,10 @@ def category(request,categoryName):
         'search_query': search_query,
         'footer' : footer,
         'social_media' : socail_media,
+        'urun_sayisi': urun_sayisi, #filtrede ürün sayısı göstermek için 
+        'renk_sayisi': renk_sayisi, #filtrede renk sayısı göstermek için
+        'kaplama_sayisi': kaplama_sayisi, #filtrede kaplama sayısı göstermek için
+        'indirimli_urun_sayisi': indirimli_urun_sayisi, #filtrede indirimli öğe sayısı göstermek için
 
         # Navbardaki aktif menüyü göstermek için
         'categoryName': categoryName,
@@ -189,10 +207,13 @@ def category(request,categoryName):
 
     }
 
+    if min_fiyat and max_fiyat and not urunler.exists():
+        context['urun_bulunamadi'] = True
+
     if search_query and not urunler.exists():
         context['no_results'] = True
 
-    return render(request, 'category.html',context)
+    return render(request, 'category.html', context)
 
 def productDetail(request, urunId):
     urunum = Urun.objects.get(id = urunId)
