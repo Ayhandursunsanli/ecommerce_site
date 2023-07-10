@@ -191,6 +191,7 @@ header .slogan {
   top: 80%;
   left: calc(50% - 125px);
   background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.18);
   border-radius: 10px;
 }
 .category .card .text-box p {
@@ -339,6 +340,8 @@ header .slogan {
 .products .filtre_section ul li a {
   text-decoration: none;
   color: black;
+  font-weight: lighter;
+  font-size: 14px;
 }
 .products .filtre_section ul li a:hover {
   color: gray;
@@ -583,6 +586,60 @@ header .slogan {
 .offcanvas-let-menu .offcanvas-body .navbar-nav .nav-item .nav-link.activemenu {
   color: #c19a83;
   font-weight: bold;
+}
+
+.user-account form {
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 10px;
+  padding: 2rem;
+}
+.user-account form h6 {
+  margin-bottom: 0;
+}
+.user-account form label {
+  margin-top: 1rem;
+}
+.user-account form .membership {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
+.user-account form .membership select {
+  padding: 0.3rem;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 10px;
+}
+.user-account form .membership input {
+  font-size: 14px;
+  margin-top: 0.2rem;
+  padding: 0.3rem;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 10px;
+}
+.user-account form .address-info {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+.user-account form .address-info select {
+  font-size: 14px;
+  margin-top: 0.3rem;
+  padding: 0.2rem;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 10px;
+}
+.user-account form .address-info input {
+  font-size: 14px;
+  margin-top: 0.2rem;
+  padding: 0.3rem;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 10px;
+}
+.user-account form .address-info textarea {
+  font-size: 14px;
+  margin-top: 0.2rem;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 10px;
 }
 
 footer .socail-media img {
