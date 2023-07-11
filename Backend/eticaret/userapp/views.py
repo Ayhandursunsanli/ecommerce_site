@@ -144,3 +144,13 @@ def logout_request(request):
     return redirect('index')
 
 
+def teslimat(request):
+    anakategori = Anakategori.objects.all()
+    socail_media = SocialMedia.objects.all()
+    footer = Footer.objects.first()
+    context = {
+        'anakategori' : anakategori,
+        'footer' : footer,
+        'social_media' : socail_media,
+    }
+    return render(request, 'teslimat-bilgileri.html', context)

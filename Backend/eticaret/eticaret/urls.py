@@ -32,5 +32,6 @@ urlpatterns = [
     path('about-us/', aboutUs, name='about-us'),
     path('contact-us/', contactUs, name='contact-us'),
     path('sepet/', sepet, name='sepet'),
-    path('hesabim/', hesabim, name='hesabim'),
+    path('hesabim/', hesabim, name='hesabim'), #userapp içindeki url yazılıp buraya çekilecek
+    path('teslimat/', teslimat, name='teslimat'), #userapp içindeki url yazılıp buraya çekilecek
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

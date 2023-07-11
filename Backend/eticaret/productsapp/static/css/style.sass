@@ -92,8 +92,32 @@ header
                 color: $temacolororange
                 border-bottom: 1px solid $temacolororange
         .shopping-button
-                    font-size: 0.9rem
-                    padding: .8rem
+            width: 140px
+            font-size: 0.9rem
+            padding: .8rem
+            i
+                position: relative
+                .number-of-products
+                    display: flex
+                    align-items: center
+                    justify-content: center
+                    position: absolute
+                    top: -10px
+                    left: 19px
+                    width: 20px
+                    height: 20px
+                    border-radius: 50%
+                    background-color: crimson
+                    color: white
+                    font-size: 10px
+                    font-weight: 300
+                    transition: .2s all
+        .shopping-button:hover i .number-of-products 
+            background-color: $temacolororange
+            border: 1px solid white
+
+                    
+                
         .dropdown
             .dropdown-menu
                 top: 54px !important

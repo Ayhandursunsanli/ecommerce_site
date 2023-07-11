@@ -79,8 +79,15 @@
                 </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item ms-1">
-                    <a href="{% url 'sepet' %}" class="btn btn-primary shopping-button" type="button"><i
-                            class="fa-solid fa-cart-shopping"></i> ({{ toplam_urun_sayisi }} / {{ toplam_tutar }} TL) </a>
+                    <a href="{% url 'sepet' %}" class="btn btn-primary shopping-button d-flex justify-content-center align-items-center" type="button">
+                        <i class="fa-solid fa-cart-shopping">
+                            <span class="number-of-products">{{ toplam_urun_sayisi }}</span>
+                        </i>
+
+                        <p class="mb-0 ps-4">
+                            : {{ toplam_tutar }} TL
+                        </p> 
+                    </a>
                 </li>
                 {% else %}
                 <li class="nav-item ms-1">
