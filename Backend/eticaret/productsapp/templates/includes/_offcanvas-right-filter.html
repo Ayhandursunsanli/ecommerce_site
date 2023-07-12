@@ -1,0 +1,89 @@
+{% load static %}
+
+
+
+<div class="offcanvas offcanvas-end right-filter" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasRightLabel">Ürünleri Filtrele</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="col-12 mt-3 col-filtre-section">
+            <div class="filtre_section p-3">
+                <h6>Ürünleri Filtrele</h6>
+                <hr>
+                <h6>Modeller</h6>
+                <ul>
+                    {% for urun in urun_sayisi %}
+                        {% if urun.urun_sayisi == 1 %}
+                            <li>
+                                <a class="fw-light" href="?search_query={{ urun.isim }}">{{ urun.isim }}</a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a class="fw-light" href="?search_query={{ urun.isim }}">{{ urun.isim }} ({{ urun.urun_sayisi }})</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                <hr>
+                <h6>Şapka Rengi</h6>
+                <ul>
+                    {% for renk in renk_sayisi %}
+                        {% if renk.renk_sayisi == 1 %}
+                            <li>
+                                <a class="fw-light" href="?search_query={{ renk.urunRengi }}">{{ renk.urunRengi }}</a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a class="fw-light" href="?search_query={{ renk.urunRengi }}">{{ renk.urunRengi }} ({{ renk.renk_sayisi }})</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                <hr>
+                <h6>Ayak Kaplama</h6>
+                <ul>
+                    {% for kaplama in kaplama_sayisi %}
+                        {% if kaplama.kaplama_sayisi == 1 %}
+                            <li>
+                                <a class="text-uppercase fw-light" href="?ayak_kaplama={{ kaplama.ayakKaplama }}">{{ kaplama.ayakKaplama }}</a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a class="text-uppercase fw-light" href="?ayak_kaplama={{ kaplama.ayakKaplama }}">{{ kaplama.ayakKaplama }} ({{ kaplama.kaplama_sayisi }})</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                {% if indirimli_urun_sayisi %}
+                <hr>
+                <h6>İndirimli Ürünler</h6>
+                <ul>
+                    <li>
+                        <a href="?indirimli_urunler=true">Şu An İndirimde Olanlar: ({{ indirimli_urun_sayisi }})</a>
+                    </li>
+                </ul>
+                {% endif %}
+
+                <hr>
+
+                <form method="GET" action="{% url 'allProduct' %}">
+                    <h6>Fiyat Aralığı</h6>
+                    <ul>
+                        <li>
+                            <label for="min_fiyat" style="width: 45px;">En az:</label>
+                            <input type="number" id="min_fiyat" name="min_fiyat" value="{{ request.GET.min_fiyat }}">
+                        </li>
+                        <li class="mt-2">
+                            <label for="max_fiyat" style="width: 45px;">En çok:</label>
+                            <input type="number" id="max_fiyat" name="max_fiyat" value="{{ request.GET.max_fiyat }}">
+                        </li>
+                    </ul>
+                    <button type="submit" class="btn btn-primary py-2">Ürünleri Getir</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

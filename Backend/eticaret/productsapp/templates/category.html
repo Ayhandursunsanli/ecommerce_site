@@ -59,7 +59,7 @@
                         <button type="submit" class="btn btn-primary pb-2 pt-2 ps-4 pe-4">Ara</button>
                     </form>
                 </div>
-                <div class="col-md-6 sort-options-right my-3 d-flex align-items-center justify-content-md-end">
+                <div class="col-6 sort-options-right my-3 d-flex align-items-center justify-content-md-end">
                     <ul class="nav-item dropdown m-0 p-0">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -72,12 +72,15 @@
                         </ul>
                     </ul>
                 </div>
+                <div class="col-6 responsive-filter-button my-3">
+                    <button class="btn btn-primary py-2 px-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fa-solid fa-list-ul"></i></button>
+                </div>
             </div>
 
             
 
             <div class="row mt-2">
-                <div class="col-3 mt-3">
+                <div class="col-3 mt-3 col-filtre-section">
                     <div class="filtre_section p-3">
                         <h6>Ürünleri Filtrele</h6>
                         <hr>
@@ -125,6 +128,7 @@
                                 {% endif %}
                             {% endfor %}
                         </ul>
+                        {% if indirimli_urun_sayisi %}
                         <hr>
                         <h6>İndirimli Ürünler</h6>
                         <ul>
@@ -132,7 +136,7 @@
                                 <a href="?indirimli_urunler=true">Şu An İndirimde Olanlar: ({{ indirimli_urun_sayisi }})</a>
                             </li>
                         </ul>
-
+                        {% endif %}
                         <hr>
 
                         <form method="GET" action="{% url 'category' categoryName=categoryName %}">
@@ -151,7 +155,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="col-9">
+                <div class="col-lg-9">
                     {% if urun_bulunamadi %}
                     <p class="mt-3">Belirtmiş olduğunuz fiyat aralığında ürün bulunamamıştır.</p>
                     {% endif %}
@@ -260,6 +264,9 @@
         </div>
     </section>
 
+    <!-- offcanvas-rigth-filter -->
+
+    {% include 'includes/_offcanvas-right-filter.html' %}
 
     <!-- footer -->
     {% include 'includes/_footer.html' %}
