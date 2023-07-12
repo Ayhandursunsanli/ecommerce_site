@@ -350,7 +350,7 @@ header .slogan {
 .products .card:hover {
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
-.products .filtre_section {
+.products .col-filtre-section .filtre_section {
   height: 600px;
   position: sticky;
   top: 20px;
@@ -358,16 +358,16 @@ header .slogan {
   border: 1px solid rgba(0, 0, 0, 0.18);
   border-radius: 10px;
 }
-.products .filtre_section ul li {
+.products .col-filtre-section .filtre_section ul li {
   list-style-type: none;
 }
-.products .filtre_section ul li a {
+.products .col-filtre-section .filtre_section ul li a {
   text-decoration: none;
   color: black;
   font-weight: lighter;
   font-size: 14px;
 }
-.products .filtre_section ul li a:hover {
+.products .col-filtre-section .filtre_section ul li a:hover {
   color: gray;
 }
 .products .collection-parent {
@@ -666,6 +666,30 @@ header .slogan {
   border-radius: 10px;
 }
 
+.right-filter .filtre_section {
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 10px;
+}
+.right-filter .filtre_section ul li {
+  list-style-type: none;
+}
+.right-filter .filtre_section ul li a {
+  text-decoration: none;
+  color: black;
+  font-weight: lighter;
+  font-size: 14px;
+}
+.right-filter .filtre_section ul li a:hover {
+  color: gray;
+}
+
+.responsive-filter-button {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  display: none !important;
+}
+
 footer .socail-media img {
   filter: grayscale(100%);
   transition: 0.3s all ease;
@@ -674,7 +698,18 @@ footer .socail-media img:hover {
   filter: none;
 }
 
+@media screen and (max-width: 1050px) {
+  .navbar-collapse .nav-item a {
+    font-size: 12px !important;
+  }
+}
 @media screen and (max-width: 992px) {
+  .products .col-filtre-section {
+    display: none;
+  }
+  .responsive-filter-button {
+    display: flex !important;
+  }
   .mission-vision .mycard {
     height: 100%;
   }
@@ -690,5 +725,10 @@ footer .socail-media img:hover {
     font-size: 0.9rem;
     transition: all 0.2s linear;
     text-transform: uppercase;
+  }
+}
+@media screen and (max-width: 768px) {
+  .responsive-filter-button {
+    justify-content: end;
   }
 }/*# sourceMappingURL=style.css.map */
