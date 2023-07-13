@@ -1,9 +1,9 @@
 from django.contrib import messages
 from django.shortcuts import redirect,render
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
 import re
 import phonenumbers
+from .models import MyUser
 from productsapp.models import Anakategori
 from productsapp.models import SocialMedia
 from productsapp.models import Footer
@@ -75,7 +75,7 @@ def register(request):
             })
 
         if password == repassword:
-            if User.objects.filter(username=username).exists():
+            if MyUser.objects.filter(username=username).exists():
                 return render(request, 'register.html', 
                 {
                     'error': 'Bu kullanıcı adı daha önce alınmış',
@@ -86,7 +86,7 @@ def register(request):
                     'phone': phone,
                 })
             else:
-                if User.objects.filter(email=email).exists():
+                if MyUser.objects.filter(email=email).exists():
                     return render(request, 'register.html', 
                     {
                         'error': 'Bu email daha önce alınmış',
@@ -119,7 +119,7 @@ def register(request):
                             'phone': phone,
                         })
 
-                    user = User.objects.create_user(username=username, email=email, first_name=firstname, last_name=lastname, password=password, phone=phone)
+                    user = MyUser.objects.create_user(username=username, email=email, first_name=firstname, last_name=lastname, password=password, phone=phone)
                     user.save()
                     return redirect('login')
         else:

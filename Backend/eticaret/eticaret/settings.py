@@ -137,3 +137,4 @@ MEDIA_ROOT= os.path.join(
 #SESSION_COOKIE_AGE = 3600  # Oturum süresi (saniye cinsinden). Örnekte 1 saat (3600 saniye) olarak ayarlandı.
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Tarayıcı kapandığında otomatik olarak oturumu sonlandırır.
 
+AUTH_USER_MODEL = 'userapp.MyUser'
