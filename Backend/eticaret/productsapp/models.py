@@ -14,8 +14,10 @@ class Slogan(models.Model):
     aciklama = models.CharField(max_length=100)
 
 class Anakategori(models.Model):
-    anakategoriGorsel = models.ImageField(upload_to='headerphoto/', blank=False, null=False)
+    anakategoriGorsel = models.ImageField(upload_to='anakategoriphoto/', blank=False, null=False)
     anakategoriBaslik = models.CharField(max_length=50)
+    def __str__(self):
+        return self.anakategoriBaslik
 
 class Wrapperone(models.Model):
     wrapperResim1 = models.ImageField(upload_to='wrapperphoto/', blank=False, null=False)

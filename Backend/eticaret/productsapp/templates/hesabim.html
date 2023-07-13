@@ -53,21 +53,31 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <form class="" action="">
+                    <form action="{% url 'update_profile' %}" method="POST">
+                        {% csrf_token %}
+                        
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert {% if message.tags %}{% if 'error' in message.tags %}alert-danger{% else %}alert-{{ message.tags }}{% endif %}{% endif %}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
                         <div class="row">
                             <div class="col-md-6 membership">
                                 <h6 class="fw-bold"><i class="fa-solid fa-user"></i> Üyelik Bilgilerim</h6>
                                 <hr>
-                                <label for="">Kullanıcı Adı:</label>
-                                <input type="text">
-                                <label for="">Adı:</label>
-                                <input type="text">
-                                <label for="">Soyadı:</label>
-                                <input type="text">
-                                <label for="">Email:</label>
-                                <input type="email">
-                                <label for="">Telefon:</label>
-                                <input type="tel" name="" id="">
+                                <label for="username">Kullanıcı Adı:</label>
+                                <input type="text" name="username" value="{{ user.username }}">
+                                <label for="firstname">Adı:</label>
+                                <input type="text" name="firstname" value="{{ user.first_name }}">
+                                <label for="lastname">Soyadı:</label>
+                                <input type="text" name="lastname" value="{{ user.last_name }}">
+                                <label for="email">Email:</label>
+                                <input type="email" name="email" value="{{ user.email }}">
+                                <label for="phone">Telefon:</label>
+                                <input type="number" name="phone" value="{{ user.phone }}">
                             </div>
                             <div class="col-md-6 address-info">
                                 <h6 class="fw-bold"><i class="fa-solid fa-location-dot"></i> Adres Bilgilerim</h6>
@@ -164,10 +174,11 @@
                                 </select>
                                 <label for="">İlçe: </label>
                                 <input type="text">
-                                <label for="">Adres: </label>
-                                <textarea class="p-3" name="" id="" cols="30" rows="3"></textarea>
+                                <label for="address">Adres: </label>
+                                <textarea class="p-3" name="address" cols="30" rows="3">{{ user.address }}</textarea>
                             </div>
                         </div>
+                        <button type="submit" class="btn btn-primary">Kaydet</button>
                     </form>
                 </div>
             </div>
