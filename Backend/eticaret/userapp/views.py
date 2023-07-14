@@ -362,6 +362,14 @@ def new_password(request):
     toplam_tutar = Decimal('0.00')
     toplam_urun_sayisi = 0
 
+    if user.is_authenticated:  # Kullanıcı girişi yapılmışsa
+        sepetim = Sepet.objects.filter(user=user)
+        for sepet in sepetim:
+            toplam_tutar += sepet.hesapla_toplam()
+            toplam_urun_sayisi += sepet.adet
+    else:  # Kullanıcı girişi yapılmamışsa, boş bir sepet listesi oluştur
+        sepetim = []
+
     context = {
         'anakategori' : anakategori,
         'footer' : footer,
