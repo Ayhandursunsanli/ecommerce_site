@@ -351,6 +351,9 @@ def sepet(request):
     sepetim = Sepet.objects.filter(user=user)
     toplam_tutar = Decimal('0.00')
     toplam_urun_sayisi = 0
+    kdv = int(toplam_tutar * Decimal('0.2'))
+    araToplam = int(toplam_tutar - Decimal(kdv))
+
 
 
     if request.method == 'POST':
@@ -376,6 +379,9 @@ def sepet(request):
     for sepet in sepetim:
         toplam_tutar += sepet.hesapla_toplam()
         toplam_urun_sayisi += sepet.adet
+        
+    kdv = toplam_tutar * Decimal('0.2')
+    araToplam = toplam_tutar - kdv
 
     context = {
         'anakategori' : anakategori,
@@ -383,7 +389,9 @@ def sepet(request):
         'social_media' : socail_media,
         'sepetim': sepetim,
         'toplam_tutar': toplam_tutar,
-        'toplam_urun_sayisi': toplam_urun_sayisi
+        'toplam_urun_sayisi': toplam_urun_sayisi,
+        'kdv': kdv,
+        'araToplam': araToplam
     }
     return render(request, 'sepet.html', context)
 
