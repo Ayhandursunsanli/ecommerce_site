@@ -666,6 +666,25 @@ header .slogan {
   border-radius: 10px;
 }
 
+.new-password form {
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 10px;
+  padding: 2rem;
+}
+.new-password form h6 {
+  margin-bottom: 0;
+}
+.new-password form label {
+  margin-top: 1rem;
+}
+.new-password form input {
+  font-size: 14px;
+  margin-top: 0.2rem;
+  padding: 0.3rem;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 10px;
+}
+
 .right-filter .filtre_section {
   border: 1px solid rgba(0, 0, 0, 0.18);
   border-radius: 10px;
