@@ -10,6 +10,8 @@ from productsapp.models import Footer
 from productsapp.models import *
 from .forms import UserProfileForm
 from decimal import Decimal
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
 
 def is_valid_phone_number(phone_number, country_code):
     try:
@@ -71,104 +73,104 @@ def register(request):
 
         if not username.strip() or not email or not accept_terms or not accept_privacy:
             return render(request, 'register.html',
-                        {
-                            'error': 'Kullanıcı adı, e-posta, üyelik sözleşmesi ve kişisel veri aydınlatma metni kabul edilmelidir.',
-                            'username': username,
-                            'email': email,
-                            'firstname': firstname,
-                            'lastname': lastname,
-                            'phone': phone,
-                            'anakategori': anakategori,
-                            'footer': footer,
-                            'social_media': socail_media,
-                        })
+            {
+                'error': 'Kullanıcı adı, e-posta, üyelik sözleşmesi ve kişisel veri aydınlatma metni kabul edilmelidir.',
+                'username': username,
+                'email': email,
+                'firstname': firstname,
+                'lastname': lastname,
+                'phone': phone,
+                'anakategori': anakategori,
+                'footer': footer,
+                'social_media': socail_media,
+            })
 
         if ' ' in username or re.search(r'[ğüşıöçĞÜŞİÖÇ]', username):
             return render(request, 'register.html',
-                        {
-                            'error': 'Kullanıcı adı boşluk içeremez ve Türkçe karakterler içeremez.',
-                            'username': username,
-                            'email': email,
-                            'firstname': firstname,
-                            'lastname': lastname,
-                            'phone': phone,
-                            'anakategori': anakategori,
-                            'footer': footer,
-                            'social_media': socail_media,
-                        })
+            {
+                'error': 'Kullanıcı adı boşluk içeremez ve Türkçe karakterler içeremez.',
+                'username': username,
+                'email': email,
+                'firstname': firstname,
+                'lastname': lastname,
+                'phone': phone,
+                'anakategori': anakategori,
+                'footer': footer,
+                'social_media': socail_media,
+            })
 
         if password == repassword:
             if MyUser.objects.filter(username=username).exists():
                 return render(request, 'register.html',
-                            {
-                                'error': 'Bu kullanıcı adı daha önce alınmış',
-                                'username': username,
-                                'email': email,
-                                'firstname': firstname,
-                                'lastname': lastname,
-                                'phone': phone,
-                                'anakategori': anakategori,
-                                'footer': footer,
-                                'social_media': socail_media,
-                            })
+                {
+                    'error': 'Bu kullanıcı adı daha önce alınmış',
+                    'username': username,
+                    'email': email,
+                    'firstname': firstname,
+                    'lastname': lastname,
+                    'phone': phone,
+                    'anakategori': anakategori,
+                    'footer': footer,
+                    'social_media': socail_media,
+                })
             else:
                 if MyUser.objects.filter(email=email).exists():
                     return render(request, 'register.html',
-                                {
-                                    'error': 'Bu email daha önce alınmış',
-                                    'username': username,
-                                    'email': email,
-                                    'firstname': firstname,
-                                    'lastname': lastname,
-                                    'phone': phone,
-                                    'anakategori': anakategori,
-                                    'footer': footer,
-                                    'social_media': socail_media,
-                                })
+                    {
+                        'error': 'Bu email daha önce alınmış',
+                        'username': username,
+                        'email': email,
+                        'firstname': firstname,
+                        'lastname': lastname,
+                        'phone': phone,
+                        'anakategori': anakategori,
+                        'footer': footer,
+                        'social_media': socail_media,
+                    })
                 else:
                     if not re.search(r'^(?=.*[a-z])(?=.*[A-Z]).{8,}$', password):
                         return render(request, 'register.html',
-                                    {
-                                        'error': 'Parola en az 8 karakter uzunluğunda olmalı ve en az bir büyük harf ve bir küçük harf içermelidir.',
-                                        'username': username,
-                                        'email': email,
-                                        'firstname': firstname,
-                                        'lastname': lastname,
-                                        'phone': phone,
-                                        'anakategori': anakategori,
-                                        'footer': footer,
-                                        'social_media': socail_media,
-                                    })
+                        {
+                            'error': 'Parola en az 8 karakter uzunluğunda olmalı ve en az bir büyük harf ve bir küçük harf içermelidir.',
+                            'username': username,
+                            'email': email,
+                            'firstname': firstname,
+                            'lastname': lastname,
+                            'phone': phone,
+                            'anakategori': anakategori,
+                            'footer': footer,
+                            'social_media': socail_media,
+                        })
 
                     if not is_valid_phone_number(phone, 'TR'):  # Telefon numarasını geçerlilik kontrolü yapmak için ülke kodunu uygun şekilde ayarlayın
                         return render(request, 'register.html',
-                                    {
-                                        'error': 'Geçersiz telefon numarası',
-                                        'username': username,
-                                        'email': email,
-                                        'firstname': firstname,
-                                        'lastname': lastname,
-                                        'phone': phone,
-                                        'anakategori': anakategori,
-                                        'footer': footer,
-                                        'social_media': socail_media,
-                                    })
+                        {
+                            'error': 'Geçersiz telefon numarası',
+                            'username': username,
+                            'email': email,
+                            'firstname': firstname,
+                            'lastname': lastname,
+                            'phone': phone,
+                            'anakategori': anakategori,
+                            'footer': footer,
+                            'social_media': socail_media,
+                        })
                     user = MyUser.objects.create_user(username=username, email=email, first_name=firstname,last_name=lastname, password=password, phone=phone)
                     user.save()
                     return redirect('login')
         else:
             return render(request, 'register.html',
-                        {
-                            'error': 'Parolalar eşleşmiyor',
-                            'username': username,
-                            'email': email,
-                            'firstname': firstname,
-                            'lastname': lastname,
-                            'phone': phone,
-                            'anakategori': anakategori,
-                            'footer': footer,
-                            'social_media': socail_media,
-                        })
+            {
+                'error': 'Parolalar eşleşmiyor',
+                'username': username,
+                'email': email,
+                'firstname': firstname,
+                'lastname': lastname,
+                'phone': phone,
+                'anakategori': anakategori,
+                'footer': footer,
+                'social_media': socail_media,
+            })
 
     context = {
         'anakategori': anakategori,
@@ -194,6 +196,90 @@ def teslimat(request):
     return render(request, 'teslimat-bilgileri.html', context)
 
 def update_profile(request):
+
+    city_options = [
+        {"value": "1", "label": "Adana"},
+        {"value": "2", "label": "Adıyaman"},
+        {"value": "3", "label": "Afyonkarahisar"},
+        {"value": "4", "label": "Ağrı"},
+        {"value": "5", "label": "Amasya"},
+        {"value": "6", "label": "Ankara"},
+        {"value": "7", "label": "Antalya"},
+        {"value": "8", "label": "Artvin"},
+        {"value": "9", "label": "Aydın"},
+        {"value": "10", "label": "Balıkesir"},
+        {"value": "11", "label": "Bilecik"},
+        {"value": "12", "label": "Bingöl"},
+        {"value": "13", "label": "Bitlis"},
+        {"value": "14", "label": "Bolu"},
+        {"value": "15", "label": "Burdur"},
+        {"value": "16", "label": "Bursa"},
+        {"value": "17", "label": "Çanakkale"},
+        {"value": "18", "label": "Çankırı"},
+        {"value": "19", "label": "Çorum"},
+        {"value": "20", "label": "Denizli"},
+        {"value": "21", "label": "Diyarbakır"},
+        {"value": "22", "label": "Edirne"},
+        {"value": "23", "label": "Elazığ"},
+        {"value": "24", "label": "Erzincan"},
+        {"value": "25", "label": "Erzurum"},
+        {"value": "26", "label": "Eskişehir"},
+        {"value": "27", "label": "Gaziantep"},
+        {"value": "28", "label": "Giresun"},
+        {"value": "29", "label": "Gümüşhane"},
+        {"value": "30", "label": "Hakkâri"},
+        {"value": "31", "label": "Hatay"},
+        {"value": "32", "label": "Isparta"},
+        {"value": "33", "label": "Mersin"},
+        {"value": "34", "label": "İstanbul"},
+        {"value": "35", "label": "İzmir"},
+        {"value": "36", "label": "Kars"},
+        {"value": "37", "label": "Kastamonu"},
+        {"value": "38", "label": "Kayseri"},
+        {"value": "39", "label": "Kırklareli"},
+        {"value": "40", "label": "Kırşehir"},
+        {"value": "41", "label": "Kocaeli"},
+        {"value": "42", "label": "Konya"},
+        {"value": "43", "label": "Kütahya"},
+        {"value": "44", "label": "Malatya"},
+        {"value": "45", "label": "Manisa"},
+        {"value": "46", "label": "Kahramanmaraş"},
+        {"value": "47", "label": "Mardin"},
+        {"value": "48", "label": "Muğla"},
+        {"value": "49", "label": "Muş"},
+        {"value": "50", "label": "Nevşehir"},
+        {"value": "51", "label": "Niğde"},
+        {"value": "52", "label": "Ordu"},
+        {"value": "53", "label": "Rize"},
+        {"value": "54", "label": "Sakarya"},
+        {"value": "55", "label": "Samsun"},
+        {"value": "56", "label": "Siirt"},
+        {"value": "57", "label": "Sinop"},
+        {"value": "58", "label": "Sivas"},
+        {"value": "59", "label": "Tekirdağ"},
+        {"value": "60", "label": "Tokat"},
+        {"value": "61", "label": "Trabzon"},
+        {"value": "62", "label": "Tunceli"},
+        {"value": "63", "label": "Şanlıurfa"},
+        {"value": "64", "label": "Uşak"},
+        {"value": "65", "label": "Van"},
+        {"value": "66", "label": "Yozgat"},
+        {"value": "67", "label": "Zonguldak"},
+        {"value": "68", "label": "Aksaray"},
+        {"value": "69", "label": "Bayburt"},
+        {"value": "70", "label": "Karaman"},
+        {"value": "71", "label": "Kırıkkale"},
+        {"value": "72", "label": "Batman"},
+        {"value": "73", "label": "Şırnak"},
+        {"value": "74", "label": "Bartın"},
+        {"value": "75", "label": "Ardahan"},
+        {"value": "76", "label": "Iğdır"},
+        {"value": "77", "label": "Yalova"},
+        {"value": "78", "label": "Karabük"},
+        {"value": "79", "label": "Kilis"},
+        {"value": "80", "label": "Osmaniye"},
+        {"value": "81", "label": "Düzce"},
+    ]   
 
     anakategori = Anakategori.objects.all()
     socail_media = SocialMedia.objects.all()
@@ -231,6 +317,9 @@ def update_profile(request):
                 user.last_name = form.cleaned_data['lastname']
                 user.phone = form.cleaned_data['phone']
                 user.address = form.cleaned_data['address']
+                user.country = form.cleaned_data['country'] 
+                user.city = form.cleaned_data['city']
+                user.district = form.cleaned_data['district']
                 user.save()
                 messages.success(request, 'Profiliniz güncellendi.')
                 return redirect('update_profile')
@@ -241,7 +330,10 @@ def update_profile(request):
             'firstname': request.user.first_name,
             'lastname': request.user.last_name,
             'phone': request.user.phone,
-            'address': request.user.address
+            'address': request.user.address,
+            'country': request.user.country,
+            'city': request.user.city,
+            'district': request.user.district,
         })
 
     context = {
@@ -249,6 +341,7 @@ def update_profile(request):
         'footer' : footer,
         'social_media' : socail_media,
         'form':form,
+        'city_options': city_options,
 
         # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
         'toplam_tutar': toplam_tutar,
@@ -256,3 +349,58 @@ def update_profile(request):
 
     }
     return render(request, 'hesabim.html', context)
+
+
+@login_required
+def new_password(request):
+    anakategori = Anakategori.objects.all()
+    socail_media = SocialMedia.objects.all()
+    footer = Footer.objects.first()
+
+    # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
+    user = request.user
+    toplam_tutar = Decimal('0.00')
+    toplam_urun_sayisi = 0
+
+    context = {
+        'anakategori' : anakategori,
+        'footer' : footer,
+        'social_media' : socail_media,
+
+        # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
+        'toplam_tutar': toplam_tutar,
+        'toplam_urun_sayisi': toplam_urun_sayisi
+    }
+
+    if request.method == 'POST':
+        old_password = request.POST['oldpassword']
+        new_password = request.POST['password']
+        confirm_password = request.POST['repassword']
+
+        # Eski parolayı kontrol et
+        if not request.user.check_password(old_password):
+            messages.error(request, 'Eski parolayı yanlış girdiniz.')
+            return redirect('new_password')
+
+        # Yeni parolaların eşleştiğini kontrol et
+        if new_password != confirm_password:
+            messages.error(request, 'Yeni parolalar eşleşmiyor.')
+            return redirect('new_password')
+
+        # Parola karmaşıklığını kontrol et
+        if not re.search(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$', new_password):
+            messages.error(request, 'Parola en az 8 karakter uzunluğunda, en az bir büyük harf, bir küçük harf ve bir sayı içermelidir.')
+            return redirect('new_password')
+
+        # Yeni parolayı güncelle
+        user = request.user
+        user.set_password(new_password)
+        user.save()
+
+        # Oturum kimliğini güncelle
+        update_session_auth_hash(request, user)
+
+        messages.success(request, 'Parolanız başarıyla güncellendi.')
+        return redirect('new_password')
+
+    return render(request, 'new_password.html', context)
