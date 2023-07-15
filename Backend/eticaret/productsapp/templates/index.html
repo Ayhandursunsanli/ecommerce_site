@@ -38,6 +38,9 @@
 
 
 <body>
+    <!-- Loading ekranını dahil et -->
+    {% include 'includes/_loading.html' %}
+
     <!-- header  -->
     <header>
         <img class="header-img" src="{{ slogan.gorsel.url }}" alt="">
@@ -49,6 +52,7 @@
             <a class="btn-primary" href="{% url 'allProduct' %}"> ALIŞVERİŞE BAŞLA</a>
         </div>
     </header>
+
 
     <!-- offcanvas Menu -->
     {% include 'includes/_offcanvas-menu.html' %}
@@ -211,6 +215,9 @@
         </div>
     </section>
 
+
+    
+
     <!-- footer -->
     {% include 'includes/_footer.html' %}
 
@@ -232,8 +239,14 @@
     <!-- owl-carousel-js (silme)-->
     <script src="{% static 'js/owl-carousel.js' %}"></script>
 
+    <!-- loading.js -->
+    <script src="{% static 'js/loading.js' %}"></script>
+
+
     <!-- app js -->
     <script src="{% static 'js/app.js' %}"></script>
+
+
 </body>
 
 </html>

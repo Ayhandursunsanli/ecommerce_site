@@ -3,6 +3,8 @@ from django.contrib import messages
 from .models import *
 from decimal import Decimal
 from collections import Counter
+from django.db.models.functions import Coalesce
+
 
 
 from django.db.models import Q
@@ -84,9 +86,19 @@ def allProduct(request):
         )
 
     if sort_option == 'asc':
-        urunler = urunler.order_by('fiyat')
+        if urunler.filter(indirimli_fiyat__isnull=False).exists():
+            urunler = urunler.annotate(
+                indirimli_fiyat_sira=Coalesce('indirimli_fiyat', 'fiyat')
+            ).order_by('indirimli_fiyat_sira')
+        else:
+            urunler = urunler.order_by('fiyat')
     elif sort_option == 'desc':
-        urunler = urunler.order_by('-fiyat')
+        if urunler.filter(indirimli_fiyat__isnull=False).exists():
+            urunler = urunler.annotate(
+                indirimli_fiyat_sira=Coalesce('indirimli_fiyat', 'fiyat')
+            ).order_by('-indirimli_fiyat_sira')
+        else:
+            urunler = urunler.order_by('-fiyat')
     
     ayak_kaplama = request.GET.get('ayak_kaplama')  # Ayak kaplaması filtresi için parametreyi al
     if ayak_kaplama:
@@ -167,9 +179,19 @@ def category(request,categoryName):
         )
 
     if sort_option == 'asc':
-        urunler = urunler.order_by('fiyat')
+        if urunler.filter(indirimli_fiyat__isnull=False).exists():
+            urunler = urunler.annotate(
+                indirimli_fiyat_sira=Coalesce('indirimli_fiyat', 'fiyat')
+            ).order_by('indirimli_fiyat_sira')
+        else:
+            urunler = urunler.order_by('fiyat')
     elif sort_option == 'desc':
-        urunler = urunler.order_by('-fiyat')
+        if urunler.filter(indirimli_fiyat__isnull=False).exists():
+            urunler = urunler.annotate(
+                indirimli_fiyat_sira=Coalesce('indirimli_fiyat', 'fiyat')
+            ).order_by('-indirimli_fiyat_sira')
+        else:
+            urunler = urunler.order_by('-fiyat')
     
     ayak_kaplama = request.GET.get('ayak_kaplama')  # Ayak kaplaması filtresi için parametreyi al
     if ayak_kaplama:
@@ -231,6 +253,12 @@ def productDetail(request, urunId):
             adet = int(adet)
             #eklenecek ürün
             urunum = Urun.objects.get(id = urunId)
+
+            # İndirimli fiyatı hesapla
+            fiyat = urunum.fiyat
+            if urunum.indirimli_fiyat:
+                fiyat = urunum.indirimli_fiyat
+
             if Sepet.objects.filter(user = request.user, urun = urunum).exists():
                 sepetim = Sepet.objects.get(user = request.user, urun=urunum)
                 sepetim.adet += adet
@@ -243,7 +271,7 @@ def productDetail(request, urunId):
                     urun = urunum,
                     user = request.user,
                     adet = adet,
-                    toplam = urunum.fiyat * adet
+                    toplam=fiyat * adet  # İndirimli fiyatı kullan
                 )
                 sepetim.save()
                 messages.success(request, 'Ürün Sepete Eklendi')
@@ -265,6 +293,7 @@ def productDetail(request, urunId):
     else:  # Kullanıcı girişi yapılmamışsa, boş bir sepet listesi oluştur
         sepetim = []
 
+
     context = {
         'anakategori' : anakategori,
         'urun' : urunum,
@@ -275,7 +304,8 @@ def productDetail(request, urunId):
 
         # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
         'toplam_tutar': toplam_tutar,
-        'toplam_urun_sayisi': toplam_urun_sayisi
+        'toplam_urun_sayisi': toplam_urun_sayisi,
+        
     }
 
 
@@ -364,7 +394,11 @@ def sepet(request):
 
             if yeniAdet > '0':
                 sepet.adet = yeniAdet
-                sepet.toplam = sepet.urun.fiyat * int(yeniAdet)
+                if sepet.urun.indirimli_fiyat:
+                    sepet.toplam = sepet.urun.indirimli_fiyat * int(yeniAdet)
+                else:
+                    sepet.toplam = sepet.urun.fiyat * int(yeniAdet)
+                
                 sepet.save()
                 messages.success(request, f'{sepet.urun.isim} Ürününün Adedi Güncellendi')
             else:
@@ -379,7 +413,7 @@ def sepet(request):
     for sepet in sepetim:
         toplam_tutar += sepet.hesapla_toplam()
         toplam_urun_sayisi += sepet.adet
-        
+    
     kdv = toplam_tutar * Decimal('0.2')
     araToplam = toplam_tutar - kdv
 
@@ -426,4 +460,5 @@ def hesabim(request):
     }
     return render(request, 'hesabim.html', context)
 
-
+def loading_page(request):
+    return render(request, 'includes/_loading.html')

@@ -75,7 +75,7 @@ class Sepet(models.Model):
     urun = models.ForeignKey(Urun, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     adet = models.IntegerField(default=1)
-    toplam = models.FloatField(null=True)
+    toplam = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     # toplam = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     odendiMi = models.BooleanField(default=False)
 
@@ -83,6 +83,10 @@ class Sepet(models.Model):
         return self.user.username
     
     def hesapla_toplam(self):
-        return self.adet * self.urun.fiyat
+        fiyat = self.urun.fiyat
+        if self.urun.indirimli_fiyat:
+            fiyat = self.urun.indirimli_fiyat
+        return self.adet * fiyat
+    
     
     
