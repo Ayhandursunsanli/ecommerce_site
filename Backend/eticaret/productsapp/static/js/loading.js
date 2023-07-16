@@ -10,7 +10,7 @@ window.addEventListener('load', function() {
     setTimeout(function() {
         var loadingScreen = document.getElementById('loading-screen');
         loadingScreen.style.display = 'none';
-    }, 3000);
+    }, 1000);
 });
 
 //ekran ne zaman yüklenirse o zaman kaybolması için -- ya bu seçilecek
