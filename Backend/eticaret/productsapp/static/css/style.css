@@ -51,11 +51,44 @@
   border: 1px solid #c7662e;
 }
 
-.alert-error {
-  background-color: red;
+.alert-danger {
+  background: crimson;
+  border: none;
   color: white;
+  margin: 0;
+  padding: 0.4rem;
+  font-size: 15px !important;
+  font-weight: 300;
+  animation: fadeInOut 1s cubic-bezier(0.39, 0.575, 0.565, 1) 3s forwards;
 }
 
+@keyframes fadeInOut {
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.alert-success {
+  background: green;
+  border: none;
+  color: white;
+  margin: 0;
+  padding: 0.4rem;
+  font-size: 15px !important;
+  font-weight: 300;
+  animation: fadeInOut 1s cubic-bezier(0.39, 0.575, 0.565, 1) 3s forwards;
+}
+
+@keyframes fadeInOut {
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 .sepet p {
   margin-bottom: 0;
 }
