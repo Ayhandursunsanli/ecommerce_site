@@ -17,7 +17,7 @@
 
                                 
                 {% for mesaj in messages %}
-                    <div class="alert alert-{{ mesaj.tags }} text-center mt-3" id='mesaj'>
+                    <div class="alert alert-success text-center mt-3" id='mesaj'>
                         {{ mesaj }}
                     </div>
                 {% endfor %}
@@ -114,7 +114,7 @@
                             <div class="col-6 ">
                                 <p class="fw-bold" style="color: crimson;">{{ toplam_urun_sayisi }}</p>
                                 <p class="fw-bold" style="color: crimson;">{{ araToplam }} TL</p>
-                                <p class="fw-bold" style="color: crimson;">{{ kdv }} </p>
+                                <p class="fw-bold" style="color: crimson;">{{ kdv }} TL</p>
                                 <p class="fw-bold" style="color: crimson;">{{ toplam_tutar }} TL</p>
                             </div>
                             <a href="{% url 'teslimat' %}" class="d-inline ms-auto mt-3 btn btn-primary py-2 me-5" style="width: 150px;">Ödeme Yap</a>
