@@ -65,17 +65,30 @@
                     <input type="submit" value="Sepete Ekle" class="btn btn-primary p-2" style="width: 150px; ">
                 </form>
                 {% if messages %}
-
-                                
                     {% for mesaj in messages %}
                         <div class="alert-success text-center mt-3" id='mesaj'>
                             {{ mesaj }}
                         </div>
                     {% endfor %}
-            
-
                 {% endif %}
-
+            </div>
+        </div>
+        <div class="row my-5">
+            <div class="col-12">
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed text-center bg-body-tertiary" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                Detaylı Ürün Bilgileri
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample" style="border: 1px solid dimgrey;">
+                            <div class="accordion-body">
+                                Ürün Detay Bilgileri
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

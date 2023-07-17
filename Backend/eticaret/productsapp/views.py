@@ -2,13 +2,10 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from .models import *
 from decimal import Decimal
-from collections import Counter
 from django.db.models.functions import Coalesce
-
-
-
 from django.db.models import Q
 from django.db.models import Count
+
 
 
 # Create your views here.
@@ -265,7 +262,7 @@ def productDetail(request, urunId):
                 sepetim.toplam = urunum.fiyat * sepetim.adet
                 sepetim.save()
                 messages.success(request, 'Ürün Sepette Güncellendi')
-                # return redirect('index')
+                
             else:
                 sepetim = Sepet.objects.create(
                     urun = urunum,
@@ -275,7 +272,8 @@ def productDetail(request, urunId):
                 )
                 sepetim.save()
                 messages.success(request, 'Ürün Sepete Eklendi')
-                # return redirect('index')
+                
+            return redirect('product', urunId=urunId)
         else:
             messages.error(request, 'Giriş Yapmanız Gerekiyor')
             return redirect('login')
@@ -462,3 +460,5 @@ def hesabim(request):
 
 def loading_page(request):
     return render(request, 'includes/_loading.html')
+
+
