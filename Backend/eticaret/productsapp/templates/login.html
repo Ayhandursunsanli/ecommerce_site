@@ -22,6 +22,14 @@
                                 {{ error }}
                             </div>
                         {% endif %}
+
+                        {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert {% if message.tags %}{% if 'error' in message.tags %}alert-danger{% else %}alert-{{ message.tags }}{% endif %}{% endif %}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
                         
                         <label for="username">Kullanıcı Adı:</label>
                         <input class="register-input" type="text" placeholder="Kullanıcı Adınızı Giriniz" name="username">
