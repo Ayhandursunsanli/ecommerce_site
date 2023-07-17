@@ -16,12 +16,21 @@ class SepetAdmin(admin.ModelAdmin):
 
     get_urun_image.short_description = 'Ürün Resmi'
 
-    
+class UrunAdmin(admin.ModelAdmin):
+    list_display = ('kategori', 'isim', 'get_urun_image', 'fiyat', 'indirimli_fiyat', 'is_special')  # Gösterilecek sütunlar
+    list_filter = ('kategori',)  # Kategoriye göre filtreleme 
+
+    def get_urun_image(self, obj):
+        return format_html('<img src="{}" width="75px" />', obj.urunresmi.url)
+
+    get_urun_image.short_description = 'Ürün Resmi'
+
 
 admin.site.register(Slogan)
 admin.site.register(Anakategori)
-admin.site.register(Urun)
+admin.site.register(Urun, UrunAdmin)
 admin.site.register(Wrapperone)
 admin.site.register(SocialMedia)
 admin.site.register(Footer)
 admin.site.register(Sepet, SepetAdmin)
+
