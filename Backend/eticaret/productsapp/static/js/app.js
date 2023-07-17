@@ -3,9 +3,9 @@
 const adetInputs = document.getElementsByClassName("adetInput");
 
 for (let i = 0; i < adetInputs.length; i++) {
-    adetInputs[i].addEventListener("input", function() {
+    adetInputs[i].addEventListener("input", function () {
         if (adetInputs[i].value <= 0) {
-        adetInputs[i].value = 1; // 0 veya eksi değerleri 1 olarak değiştirin veya başka bir varsayılan değer belirleyin
+            adetInputs[i].value = 1; // 0 veya eksi değerleri 1 olarak değiştirin veya başka bir varsayılan değer belirleyin
         }
     });
 }
@@ -29,34 +29,6 @@ smallimg[2].onclick = function () {
 }
 
 
-// document.addEventListener("DOMContentLoaded", function () {
-//     var defaultRenk = "black";
-//     renkDegistir(defaultRenk);
-// });
-
-// function renkDegistir(renk) {
-//     var urunGorsel = document.getElementById("product-image").querySelector("img");
-//     var renkButonlari = document.getElementsByClassName("color-button");
-//     var price = document.querySelector(".price");
-
-//     for (var i = 0; i < renkButonlari.length; i++) {
-//         renkButonlari[i].classList.remove("activebutton");
-//     }
-
-//     if (renk === "black") {
-//         urunGorsel.src = "https://st3.myideasoft.com/idea/ha/74/myassets/products/920/vinner-oslo-siyah-kaplama-tek-ayakli-metal-lambader-siyah-25869.jpeg?revision=1683469743";
-//         price.innerHTML = "1.500 TL";
-//     } else if (renk === "white") {
-//         urunGorsel.src = "https://st.myideasoft.com/idea/ha/74/myassets/products/919/vinner-oslo-siyah-kaplama-tek-ayakli-metal-lambader-krom-seritli-hasir-beyaz-25840.jpeg?revision=1683469591";
-//         price.innerHTML = "1.750 TL";
-//     } else if (renk === "orange") {
-//         urunGorsel.src = "https://st1.myideasoft.com/idea/ha/74/myassets/products/045/vinner-ottowa-eskitme-tekli-kure-burgulu-metal-lambader-gold-seritli-mataro-vizon-7454.jpeg?revision=1685720664";
-//         price.innerHTML = "2.000 TL";
-//     }
-// }
-
-
-// product details
 
 
 

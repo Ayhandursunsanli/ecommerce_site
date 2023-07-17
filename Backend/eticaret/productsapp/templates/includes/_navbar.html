@@ -82,10 +82,10 @@
                 <li class="nav-item ms-1">
                     <a href="{% url 'sepet' %}" class="btn btn-primary shopping-button d-flex justify-content-center align-items-center" type="button">
                         <i class="fa-solid fa-cart-shopping">
-                            <span class="number-of-products">{{ toplam_urun_sayisi }}</span>
+                            <span id="sepet-ozet-urun-sayisi" class="number-of-products">{{ toplam_urun_sayisi }}</span>
                         </i>
 
-                        <p class="mb-0 ps-4">
+                        <p id="sepet-ozet-toplam-tutar" class="mb-0 ps-4">
                             : {{ toplam_tutar }} TL
                         </p> 
                     </a>
