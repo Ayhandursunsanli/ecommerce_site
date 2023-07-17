@@ -30,21 +30,22 @@ class Wrapperone(models.Model):
 
 
 class Urun(models.Model):
-    urunresmi = models.ImageField(upload_to='urunphoto/', blank=False, null=False, default='')
-    urunresmiTwo = models.ImageField(upload_to='urunphoto/', blank=True, null=False, default='')
-    urunresmiThree = models.ImageField(upload_to='urunphoto/', blank=True, null=False, default='')
-    urunresmiFour = models.ImageField(upload_to='urunphoto/', blank=True, null=False, default='')
+    urunresmi = models.ImageField(upload_to='urunphoto/', blank=False, null=False, default='', verbose_name='1. Ürün Resmi (Zorunlu)')
+    urunresmiTwo = models.ImageField(upload_to='urunphoto/', blank=True, null=False, default='', verbose_name='2. Ürün Resmi')
+    urunresmiThree = models.ImageField(upload_to='urunphoto/', blank=True, null=False, default='', verbose_name='3. Ürün Resmi')
+    urunresmiFour = models.ImageField(upload_to='urunphoto/', blank=True, null=False, default='',verbose_name='4. Ürün Resmi')
     kategori = models.CharField(max_length=100, blank=False, default='')
-    stokKodu = models.CharField(max_length=100, blank=False, default='')
-    urunRengi = models.CharField(max_length=100, blank=False, default='')
-    ayakKaplama = models.CharField(max_length=100, blank=False, null=True,)
-    isim = models.CharField(max_length= 100)
-    aciklama = models.TextField(max_length=500)
+    stokKodu = models.CharField(max_length=100, blank=False, default='', verbose_name='Stok Kodu')
+    urunRengi = models.CharField(max_length=100, blank=False, default='', verbose_name='Şapka Rengi veya Deseni')
+    ayakKaplama = models.CharField(max_length=100, blank=False, null=True, verbose_name='Ayak Kaplama Rengi')
+    isim = models.CharField(max_length= 100, verbose_name='Model İsmi')
+    aciklama = models.TextField(max_length=500, verbose_name='Açıklama')
     fiyat = models.DecimalField(max_digits=8, decimal_places=2)
-    indirimli_fiyat = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
-    is_special = models.BooleanField(default=False)
+    indirimli_fiyat = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True, verbose_name='İndirimli Fiyat')
+    is_special = models.BooleanField(default=False, verbose_name='Ana Sayfada Göster')
 
-    # __str__ : admin panelinde göstermek istediğimiz bilgi.
+    class Meta:
+        verbose_name_plural = 'Ürünler' 
     def __str__(self):
         return self.isim
 
@@ -52,6 +53,9 @@ class SocialMedia(models.Model):
     name = models.CharField(max_length=50, blank=True, null= True)
     photo = models.ImageField(upload_to='footersocialmedia_photos/')
     link = models.URLField(max_length=1000)
+
+    class Meta:
+        verbose_name_plural = 'Sosyal Medyalar' 
 
     def __str__(self):
         return self.name
