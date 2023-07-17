@@ -4,14 +4,17 @@ from django.contrib.auth import authenticate, login, logout
 import re
 import phonenumbers
 from .models import MyUser
-from productsapp.models import Anakategori
-from productsapp.models import SocialMedia
-from productsapp.models import Footer
 from productsapp.models import *
 from .forms import UserProfileForm
 from decimal import Decimal
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
+from .tokens import account_activation_token
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
 
 def is_valid_phone_number(phone_number, country_code):
     try:
@@ -34,24 +37,77 @@ def login_request(request):
 
         user = authenticate(request, username=username, password=password)
 
+        # if user is not None:
+        #     login(request, user)
+        #     if remember_me:
+        #         request.session.set_expiry(3600)
+        #     return redirect('index')
+        # else:
+        #     return render(request, "login.html", {
+        #         'error': 'Kullanıcı adı veya parola hatalı',
+        #         'anakategori': anakategori,
+        #         'footer': footer,
+        #         'social_media': socail_media,
+        #     })
+
         if user is not None:
-            login(request, user)
-            if remember_me:
-                request.session.set_expiry(3600)
-            return redirect('index')
+            if user.is_active:
+                login(request, user)
+                return redirect('index')
+            else:
+                messages.error(request, 'Hesabınız aktif değil. Lütfen e-posta onayınızı tamamlayın.')
+                return redirect('login')
         else:
-            return render(request, "login.html", {
-                'error': 'Kullanıcı adı veya parola hatalı',
-                'anakategori': anakategori,
-                'footer': footer,
-                'social_media': socail_media,
-            })
+            user = MyUser.objects.filter(username=username).first()
+            if user is not None and not user.is_active:
+                messages.error(request, 'Hesabınız aktif değil. Lütfen e-posta onayınızı tamamlayın.')
+            else:
+                messages.error(request, 'Kullanıcı adı veya parola hatalı')
+            return redirect('login')
     context = {
         'anakategori' : anakategori,
         'footer' : footer,
         'social_media' : socail_media,
     }
     return render(request, 'login.html', context)
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = MyUser.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, MyUser.DoesNotExist):
+        user = None
+
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+
+        messages.success(request, 'Hesabınız başarıyla etkinleştirildi!')
+        return redirect('login')
+    else:
+        messages.error(request, 'Aktivasyon bağlantısı geçersiz!')
+        return render(request, 'login.html')
+
+def activateEmail(request, user, to_email):
+    mail_subject = 'Activate your account.'
+    message = render_to_string('activate_account.html', {
+        'user': user.username,
+        'domain': get_current_site(request).domain,
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': account_activation_token.make_token(user),
+        'protokol': 'https://' if request.is_secure() else 'http://'
+    })
+    email = EmailMessage(mail_subject, message, to=[to_email])
+
+    # Kullanıcı adını ekle
+    email.from_email = f"{user.username} <from@example.com>"
+
+    if email.send():
+        messages.success(request, f"Sayın {user.username}, lütfen e-postanızdaki {to_email} gelen kutusuna gidin ve kaydı onaylamak için alınan aktivasyon bağlantısına tıklayın.")
+        return redirect('login')  # Login sayfasına yönlendirme
+    else:
+        messages.error(request, f"Sayın {user.username}, e-postaya aktivasyon bağlantısı gönderilirken bir hata oluştu.")
+        return redirect('login')  # Login sayfasına yönlendirme
 
 def register(request):
     anakategori = Anakategori.objects.all()
@@ -141,6 +197,19 @@ def register(request):
                             'footer': footer,
                             'social_media': socail_media,
                         })
+                    
+                    if MyUser.objects.filter(phone=phone).exists():
+                        return render(request, 'register.html', {
+                            'error': 'Bu telefon numarası daha önce alınmış',
+                            'username': username,
+                            'email': email,
+                            'firstname': firstname,
+                            'lastname': lastname,
+                            'phone': phone,
+                            'anakategori': anakategori,
+                            'footer': footer,
+                            'social_media': socail_media,
+                        })
 
                     if not is_valid_phone_number(phone, 'TR'):  # Telefon numarasını geçerlilik kontrolü yapmak için ülke kodunu uygun şekilde ayarlayın
                         return render(request, 'register.html',
@@ -156,7 +225,9 @@ def register(request):
                             'social_media': socail_media,
                         })
                     user = MyUser.objects.create_user(username=username, email=email, first_name=firstname,last_name=lastname, password=password, phone=phone)
+                    user.is_active = False
                     user.save()
+                    activateEmail(request, user, email)
                     return redirect('login')
         else:
             return render(request, 'register.html',

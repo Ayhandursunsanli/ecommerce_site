@@ -138,3 +138,15 @@ MEDIA_ROOT= os.path.join(
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Tarayıcı kapandığında otomatik olarak oturumu sonlandırır.
 
 AUTH_USER_MODEL = 'userapp.MyUser'
+
+#email onayı 
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_FROM = 'soyaltunfatih@gmail.com'
+EMAIL_HOST_USER = 'soyaltunfatih@gmail.com'
+EMAIL_HOST_PASSWORD = 'xpnjllgjuqjstfac'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+PASSWORD_RESET_TIMEOUT = 14400
