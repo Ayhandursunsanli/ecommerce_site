@@ -18,7 +18,8 @@ class SepetAdmin(admin.ModelAdmin):
 
 class UrunAdmin(admin.ModelAdmin):
     list_display = ('kategori', 'isim', 'get_urun_image', 'fiyat', 'indirimli_fiyat', 'is_special')  # Gösterilecek sütunlar
-    list_filter = ('kategori',)  # Kategoriye göre filtreleme 
+    list_filter = ('kategori', 'is_special')  # Kategoriye göre filtreleme 
+    list_editable = ('is_special',) 
 
     def get_urun_image(self, obj):
         return format_html('<img src="{}" width="75px" />', obj.urunresmi.url)
