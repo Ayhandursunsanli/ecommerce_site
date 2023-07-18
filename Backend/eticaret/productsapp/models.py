@@ -15,9 +15,19 @@ class Slogan(models.Model):
     buyukBaslik = models.CharField(max_length=100)
     aciklama = models.CharField(max_length=100)
 
+    class Meta:
+        verbose_name_plural = 'Ana Sayfa Header'
+
+    def __str__(self):
+        return self.buyukBaslik
+
 class Anakategori(models.Model):
     anakategoriGorsel = models.ImageField(upload_to='anakategoriphoto/', blank=False, null=False)
     anakategoriBaslik = models.CharField(max_length=50)
+
+    class Meta:
+        verbose_name_plural = 'Anakategoriler'
+
     def __str__(self):
         return self.anakategoriBaslik
 
