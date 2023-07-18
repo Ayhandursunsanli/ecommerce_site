@@ -475,6 +475,14 @@ header .slogan {
   transition: 0.4s;
 }
 
+.product-tecnic-details .accordion-item .accordion-header button:focus {
+  box-shadow: none;
+}
+.product-tecnic-details .accordion-item .accordion-collapse {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  transition: 0.3s all ease;
+}
+
 .chooseus .chooseus-box {
   display: flex;
   flex-direction: column;
