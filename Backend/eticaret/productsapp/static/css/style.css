@@ -482,6 +482,9 @@ header .slogan {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   transition: 0.3s all ease;
 }
+.product-tecnic-details .accordion-item .accordion-collapse .accordion-body {
+  padding: 3rem;
+}
 
 .chooseus .chooseus-box {
   display: flex;
@@ -775,6 +778,12 @@ footer .socail-media img:hover {
   }
   .mission-vision .imgbox {
     height: 100%;
+  }
+  footer .socail-media img {
+    filter: grayscale(0%);
+  }
+  .product-tecnic-details .accordion-item .accordion-collapse .accordion-body {
+    padding: 1rem;
   }
 }
 @media screen and (max-width: 991.9px) {

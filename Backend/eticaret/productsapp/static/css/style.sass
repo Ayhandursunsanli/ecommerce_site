@@ -1,7 +1,6 @@
 $temacolororange: #c19a83
 
 *
-    // font-family: 'Open Sans', sans-serif
     font-family: 'Oswald',sans-serif
 
 .minihead
@@ -76,13 +75,11 @@ $temacolororange: #c19a83
         opacity: 1
     100%
         opacity: 0
-    
-
 
 .sepet
     p
         margin-bottom: 0
-        
+
 header
     height: 100vh
     position: relative
@@ -457,6 +454,8 @@ header
         .accordion-collapse
             box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px
             transition: .3s all ease
+            .accordion-body
+                padding: 3rem
 
 .chooseus
     .chooseus-box
@@ -698,8 +697,6 @@ footer
 
 
 
-
-
 //MEDIA SCREEN
 
 @media screen and (max-width: 1050px)
@@ -719,7 +716,15 @@ footer
             height: 100%
         .imgbox
             height: 100%
-    
+    footer
+        .socail-media
+            img
+                filter: grayscale(0%)
+    .product-tecnic-details
+        .accordion-item
+            .accordion-collapse
+                .accordion-body
+                    padding: 1rem
 
 @media screen and (max-width: 991.9px)
     .public-navbar
