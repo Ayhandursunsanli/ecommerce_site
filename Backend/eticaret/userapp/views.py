@@ -483,3 +483,4 @@ def new_password(request):
         return redirect('new_password')
 
     return render(request, 'new_password.html', context)
+
