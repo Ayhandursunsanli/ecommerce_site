@@ -19,6 +19,8 @@ from productsapp.views import *
 from django.conf.urls.static import static
 from django.conf import settings
 from userapp.views import *
+from productsapp.views import index, payment, result, success, fail
+# from unittest import result
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,6 +35,12 @@ urlpatterns = [
     path('contact-us/', contactUs, name='contact-us'),
     path('sepet/', sepet, name='sepet'),
     path('loading/', loading_page, name='loading'),
+    path('payment/', payment, name='payment'),
+    path('result/', result, name='result'),
+    path('success/', success, name='success'),
+    path('failure/', fail, name='failure'),
+    
+
     # path('hesabim/', hesabim, name='hesabim'), #userapp içindeki url yazılıp buraya çekilecek
     # path('teslimat/', teslimat, name='teslimat'), #userapp içindeki url yazılıp buraya çekilecek
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
