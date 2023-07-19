@@ -785,6 +785,25 @@ footer .socail-media img:hover {
   .product-tecnic-details .accordion-item .accordion-collapse .accordion-body {
     padding: 1rem;
   }
+  .sepet .col-2, .sepet .col-3 {
+    padding: 0.2rem !important;
+  }
+  .sepet p {
+    margin-bottom: 0;
+    font-size: 12px;
+  }
+  .sepet h6 {
+    font-size: 12px;
+  }
+  .sepet img {
+    width: 30px;
+  }
+  .sepet input {
+    font-size: 12px;
+  }
+  .sepet .birim-fiyat-responsive {
+    display: none;
+  }
 }
 @media screen and (max-width: 991.9px) {
   .public-navbar .responsive-login-register {

@@ -1,5 +1,5 @@
 
-//inputtaki ürün adetlerinin 0 ve eksi değere düşmesi engellnir
+// inputtaki ürün adetlerinin 0 ve eksi değere düşmesi engellnir
 const adetInputs = document.getElementsByClassName("adetInput");
 
 for (let i = 0; i < adetInputs.length; i++) {

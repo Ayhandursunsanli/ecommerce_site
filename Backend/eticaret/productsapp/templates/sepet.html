@@ -34,17 +34,17 @@
                     <div class="col-2">
                         <h6>Ürün İsmi</h6>
                     </div>
-                    <div class="col-2">
+                    <div class="col-2  birim-fiyat-responsive">
                         <h6>Birim Fiyatı</h6>
                     </div>
-                    <div class="col-2">
-                        <h6>Adet</h6>
+                    <div class="col-lg-2 col-3">
+                        <h6 class="text-center text-lg-start">Adet</h6>
                     </div>
-                    <div class="col-2">
+                    <div class="col-lg-2 col-3">
                         <h6>Toplam</h6>
                     </div>
                     <div class="col-2">
-                        <h6>Sepetten Çıkar</h6>
+                        <h6>Çıkar</h6>
                     </div>
                 </div>
                 <hr>
@@ -60,7 +60,7 @@
                         <div class="col-2">
                             <p>{{ urun.urun.isim }}</p>
                         </div>
-                        <div class="col-2">
+                        <div class="col-2 birim-fiyat-responsive">
                             <p>
                                 {% if urun.urun.indirimli_fiyat %}
                                 <sup class="text-danger"><del>{{ urun.urun.fiyat }} TL</del></sup>
@@ -70,17 +70,17 @@
                                 {% endif %}
                             </p>
                         </div>
-                        <div class="col-2">
+                        <div class="col-lg-2 col-3 d-flex justify-content-center">
                             <!-- <p>{{ urun.adet }} Adet</p> -->
                             <form action="" method="POST">
                                 {% csrf_token %}
                                 <input type="hidden" name="urunId" value="{{ urun.id }}">
                                 <!-- <label for="">Adet: </label> -->
-                                <input type="number" name="yeniAdet" value="{{ urun.adet }}" class="border-0 adetInput " style="width: 50px;">
-                                <input type="submit" value="Güncelle" name="guncelle" class="btn btn-primary py-1 px-2 fw-light">
+                                <input type="number" name="yeniAdet" value="{{ urun.adet }}" class="border-0 adetInput responsive-adet " style="width: 40px;" min="0" max="5">
+                                <input type="submit" value="🗸" name="guncelle" class="btn btn-primary py-1 px-2 fw-light">
                             </form>
                         </div>
-                        <div class="col-2">
+                        <div class="col-lg-2 col-3">
                             <p>{{ urun.toplam|floatformat:2}} TL</p>
                         </div>
                         <div class="col-2">
@@ -103,7 +103,7 @@
                     <div class="col-6">
                     </div>
                 {% if sepetim.exists %}
-                    <div class="col-6 mb-3 d-flex justify-content-end">
+                    <div class="col-md-6 mb-3 d-flex justify-content-lg-end justify-content-center">
                         <div class="row">
                             <div class="col-6 text-end">
                                 <p>Ürün Sayısı : </p>
@@ -117,7 +117,7 @@
                                 <p class="fw-bold" style="color: crimson;">{{ kdv }} TL</p>
                                 <p class="fw-bold" style="color: crimson;">{{ toplam_tutar }} TL</p>
                             </div>
-                            <a href="{% url 'teslimat' %}" class="d-inline ms-auto mt-3 btn btn-primary py-2 me-5" style="width: 150px;">Ödeme Yap</a>
+                            <a href="{% url 'teslimat' %}" class="d-inline ms-lg-auto m-auto mt-3 btn btn-primary py-2 me-lg-5" style="width: 150px;">Ödeme Yap</a>
                             
                         </div>
                         <!-- <p class="fw-bolder"><span class=" fw-light">Toplam Ürün Sayısı:</span> {{ toplam_urun_sayisi }}</p>
