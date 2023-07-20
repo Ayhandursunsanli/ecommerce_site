@@ -20,8 +20,8 @@ import pprint
 
 #iyizipay 1
 
-api_key = 'sandbox-gmQGS3EM379jztu7mDeccBVK7PE2b5sv'
-secret_key = 'emXpU9qBcYaGoROkq2ZMnnwgKLS76rgH'
+api_key = 'sandbox-mDxD5xa2K87j1qVrSZWuuZePxuQ4rAsP'
+secret_key = 'sandbox-usRpErugCXKrEp2qFJV0fBFh3URAILWq'
 base_url = 'sandbox-api.iyzipay.com'
 
 
@@ -108,7 +108,7 @@ def payment(request):
 
     checkout_form_initialize = iyzipay.CheckoutFormInitialize().create(request, options)
 
-    #print(checkout_form_initialize.read().decode('utf-8'))
+    # print(checkout_form_initialize.read().decode('utf-8'))
     page = checkout_form_initialize
     header = {'Content-Type': 'application/json'}
     content = checkout_form_initialize.read().decode('utf-8')
@@ -162,8 +162,6 @@ def result(request):
 
     return HttpResponse(url)
 
-
-
 def success(request):
     context = dict()
     context['success'] = 'İşlem Başarılı'
@@ -172,7 +170,6 @@ def success(request):
     template = 'ok.html'
     return render(request, template, context)
     # return redirect('index')
-
 
 def fail(request):
     context = dict()
