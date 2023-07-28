@@ -89,6 +89,67 @@
     opacity: 0;
   }
 }
+.input-number-group {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  display: flex;
+  align-items: center;
+}
+.input-number-group .input-group-button {
+  line-height: calc(76px/2 - 5px);
+  margin-right: 0;
+  margin-left: 0;
+}
+.input-number-group .input-number {
+  width: 50px;
+  padding: 0 5px;
+  vertical-align: top;
+  text-align: center;
+  outline: none;
+  display: block;
+  margin: 0;
+  border-top: 1px solid rgba(197, 197, 197, 0.6117647059);
+  border-bottom: 1px solid rgba(197, 197, 197, 0.6117647059);
+  border-left: none;
+  border-right: none;
+}
+.input-number-group .input-number,
+.input-number-group .input-number-decrement,
+.input-number-group .input-number-increment {
+  height: 38px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.input-number-group .input-number-decrement,
+.input-number-group .input-number-increment {
+  display: inline-block;
+  width: 38px;
+  background: rgba(197, 197, 197, 0.6117647059);
+  color: black;
+  text-align: center;
+  cursor: pointer;
+  font-size: 25px;
+  font-weight: 200;
+  transition: 0.3s;
+}
+.input-number-group .input-number-decrement:hover,
+.input-number-group .input-number-increment:hover {
+  background: #c19a83;
+  color: white;
+}
+.input-number-group .input-number-decrement {
+  margin-right: 0;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.input-number-group .input-number-increment {
+  margin-left: 0;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
 .sepet p {
   margin-bottom: 0;
 }
