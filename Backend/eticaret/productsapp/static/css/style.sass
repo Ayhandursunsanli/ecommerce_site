@@ -76,6 +76,73 @@ $temacolororange: #c19a83
     100%
         opacity: 0
 
+$input-number-size: 76px
+
+.input-number-group
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button
+    appearance: none
+    display: flex
+    align-items: center
+    
+
+
+    .input-group-button
+        line-height: calc(#{$input-number-size}/2 - 5px)
+        margin-right: 0
+        margin-left: 0
+        
+
+        // margin-bottom: .4rem
+
+    .input-number
+        width: 50px
+        padding: 0 5px
+        vertical-align: top
+        text-align: center
+        outline: none
+        display: block
+        margin: 0
+        border-top: 1px solid #c5c5c59c
+        border-bottom: 1px solid #c5c5c59c
+        border-left: none
+        border-right: none
+
+    .input-number,
+    .input-number-decrement,
+    .input-number-increment
+        height: $input-number-size/2
+        user-select: none
+        
+        
+
+    .input-number-decrement,
+    .input-number-increment
+        display: inline-block
+        width: $input-number-size/2
+        background: #c5c5c59c
+        color: black
+        text-align: center
+        cursor: pointer
+        font-size: 25px
+        font-weight: 200
+        transition: .3s
+        &:hover
+            background: $temacolororange
+            color: white
+        
+
+    .input-number-decrement
+        margin-right: 0
+        border-top-left-radius: 10px
+        border-bottom-left-radius: 10px
+        
+
+    .input-number-increment
+        margin-left: 0
+        border-top-right-radius: 10px
+        border-bottom-right-radius: 10px
+
 .sepet
     p
         margin-bottom: 0
