@@ -859,11 +859,75 @@ footer .socail-media img:hover {
   .sepet img {
     width: 30px;
   }
-  .sepet input {
-    font-size: 12px;
-  }
   .sepet .birim-fiyat-responsive {
     display: none;
+  }
+  .sepet .input-number-group-responsive {
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    display: flex;
+    align-items: center;
+  }
+  .sepet .input-number-group-responsive .input-group-button {
+    line-height: calc(45px/2 - 3px);
+    margin-right: 0;
+    margin-left: 0;
+  }
+  .sepet .input-number-group-responsive .input-number {
+    width: 20px;
+    padding: 0 5px;
+    vertical-align: top;
+    text-align: center;
+    outline: none;
+    display: block;
+    margin: 0;
+    border-top: 1px solid rgba(197, 197, 197, 0.6117647059);
+    border-bottom: 1px solid rgba(197, 197, 197, 0.6117647059);
+    border-left: none;
+    border-right: none;
+    font-size: 10px;
+  }
+  .sepet .input-number-group-responsive .input-number,
+  .sepet .input-number-group-responsive .input-number-decrement,
+  .sepet .input-number-group-responsive .input-number-increment {
+    height: 22.5px;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+  }
+  .sepet .input-number-group-responsive .input-number-decrement,
+  .sepet .input-number-group-responsive .input-number-increment {
+    display: inline-block;
+    width: 22.5px;
+    background: rgba(197, 197, 197, 0.6117647059);
+    color: black;
+    text-align: center;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 200;
+    transition: 0.3s;
+  }
+  .sepet .input-number-group-responsive .input-number-decrement:hover,
+  .sepet .input-number-group-responsive .input-number-increment:hover {
+    background: #c19a83;
+    color: white;
+  }
+  .sepet .input-number-group-responsive .input-number-decrement {
+    margin-right: 0;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+  .sepet .input-number-group-responsive .input-number-increment {
+    margin-left: 0;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  .sepet .input-number-group-responsive .btn-primary {
+    font-size: 10px;
+    width: 20px;
+    height: 20px;
+    padding: 0 !important;
   }
 }
 @media screen and (max-width: 991.9px) {

@@ -71,13 +71,22 @@
                             </p>
                         </div>
                         <div class="col-lg-2 col-3 d-flex justify-content-center">
-                            <!-- <p>{{ urun.adet }} Adet</p> -->
                             <form action="" method="POST">
                                 {% csrf_token %}
-                                <input type="hidden" name="urunId" value="{{ urun.id }}">
-                                <!-- <label for="">Adet: </label> -->
+                                <!-- <input type="hidden" name="urunId" value="{{ urun.id }}">
                                 <input type="number" name="yeniAdet" value="{{ urun.adet }}" class="border-0 adetInput responsive-adet " style="width: 40px;" min="0" max="5">
-                                <input type="submit" value="🗸" name="guncelle" class="btn btn-primary py-1 px-2 fw-light">
+                                <input type="submit" value="🗸" name="guncelle" class="btn btn-primary py-1 px-2 fw-light"> -->
+                                <div class="input-number-group input-number-group-responsive me-3">
+                                    <div class="input-group-button">
+                                        <span class="input-number-decrement">-</span>
+                                    </div>
+                                    <input type="hidden" name="urunId" value="{{ urun.id }}">
+                                    <input class="input-number adetInput responsive-adet" type="text" name="yeniAdet" value="{{ urun.adet }}" min="1" max="5">
+                                    <div class="input-group-button">
+                                        <span class="input-number-increment">+</span>
+                                    </div>
+                                    <input type="submit" value="🗸" name="guncelle" class="btn btn-primary ms-1 fw-light px-2 py-1">
+                                </div>
                             </form>
                         </div>
                         <div class="col-lg-2 col-3">
