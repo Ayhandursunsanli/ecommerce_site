@@ -209,8 +209,6 @@ header
             background-color: $temacolororange
             border: 1px solid white
 
-                    
-                
         .dropdown
             .dropdown-menu
                 top: 54px !important
@@ -226,9 +224,8 @@ header
                         color: $temacolororange
                         background: none
     .responsive-login-register
-        display: none
+        display: none !important
         width: 50%
-        display: none
         justify-content: space-evenly
         align-items: center
         a
@@ -757,7 +754,12 @@ footer
             &:hover
                 filter: none
 
-
+.site-description
+    p
+        color: rgba(33, 37, 41, 0.75)
+        font-weight: 400
+    h1, h2
+        margin-bottom: 20px
 
 //MEDIA SCREEN
 
@@ -870,11 +872,14 @@ footer
 @media screen and (max-width: 991.9px)
     .public-navbar
         .responsive-login-register
-            display: flex
+            display: flex !important
             a
-                font-size: .9rem
+                font-size: .7rem
                 transition: all .2s linear
                 text-transform: uppercase
+                i
+                    font-size: .7rem
+                    width: 20px
 
 @media screen and (max-width: 768px)
     .responsive-filter-button

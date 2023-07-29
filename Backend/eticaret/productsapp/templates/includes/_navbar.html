@@ -7,20 +7,46 @@
         </a>
 
         <!-- responsive login/register/exit -->
-        <div class="responsive-login-register">
+        <div class="responsive-login-register d-flex justify-content-center align-items-center">
             
             {% if user.is_authenticated %}
-            <!-- eğer giriş yapmış ise display flex olacak if döndürücez -->
-            <a class="nav-link" href="#">{{ user.get_full_name }}</a>
-            <a class="nav-link" href="{% url 'logout' %}"><i class="fa-solid fa-power-off"></i></a>
-            <a href="{% url 'sepet' %}" class="nav-link" type="button"><i class="fa-solid fa-cart-shopping mt-1"></i>:  {{ toplam_urun_sayisi }}</a>
+            <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ user.get_full_name }}
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'sepet' %}" class="dropdown-item"><i class="fa-solid fa-cart-shopping mt-1"></i> Sepetim:  {{ toplam_urun_sayisi }} / {{ toplam_tutar }} TL</a></li>
+                    <li><a class="dropdown-item" href="{% url 'update_profile' %}"><i class="fa-solid fa-user"></i> Profili Göster</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-tags"></i> Siparişlerim</a></li>
+                    <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="fa-solid fa-power-off"></i> Çıkış Yap</a></li>
+                </ul>
+            </div>
 
             {% else %}
-            <a class="nav-link" href="{% url 'login' %}"><i class="fa-solid fa-right-to-bracket"></i></a>
-            <a class="nav-link" href="{% url 'register' %}"><i class="fa-solid fa-user-plus"></i></a>
+            <button type="button" class="btn d-flex align-items-center justify-content-center" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width: 40px; height: 40px;">
+                <i class="fa-solid fa-user-plus"></i>
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <img src="{% static 'img/lampadalogo2.png' %}" width="50px" alt="">
+                            <h3 class="modal-title fs-5 ms-3" id="exampleModalLabel">Hoşgeldniz</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                        <div class="modal-body">
+                            <p class="text-black"><i>Sepete ürün ekleme ve satın alma işlemleri yapabilmeniz için giriş yapmanız gerekmektedir. Üyeliğiniz yok ise giriş yapmak için lütfen üye olunuz.</i></p>
+                        </div>
+                        <div class="modal-footer">
+                        <a href="{% url 'login' %}" type="button" class="btn btn-secondary me-auto d-flex align-items-center justify-content-center" style="background-color: #c19a83; border: none; width: 110px; height: 40px;"><i class="fa-solid fa-right-to-bracket"></i> Giriş Yap</a>
+                        <a href="{% url 'register' %}" type="button" class="btn btn-secondary d-flex align-items-center justify-content-center"style="background-color: #c19a83; border: none; width: 110px; height: 40px"><i class="fa-solid fa-user-plus"></i> Üye Ol</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             {% endif %}
-
-        </div>
+        </div> 
 
         <button class="btn btn-close-white navbar-toggler " type="button" data-bs-toggle="offcanvas"
             data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
@@ -96,6 +122,5 @@
         </div>
     </div>
 </nav>
-
 
 
