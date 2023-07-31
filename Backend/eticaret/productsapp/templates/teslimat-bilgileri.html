@@ -144,22 +144,26 @@
                             </div>
                         </div>
                         <button class="btn btn-primary" type="submit">Ödeme İşlemlerine Geç</button>
-                        <a href="{% url 'index' %}" class="btn btn-primary" type="submit">Vazgeç</a>
+                        <a href="{% url 'sepet' %}" class="btn btn-primary" type="submit">Vazgeç</a>
                     </form>
                 </div>
                 <div class="col-md-4 card p-4">
                     <h5 class="mb-0 text-center mt-2"><i class="fa-solid fa-cart-shopping"></i> Sepet Özeti</h5>
                     <hr>
                     <div class="d-flex justify-content-between">
-                        <h6 class="mb-0">Ara Toplam: </h6> <h6 class="mb-0"> 950,00 TL</h6>
+                        <h6 class="mb-0">Ürün Sayısı: </h6> <h6 class="mb-0"> {{ toplam_urun_sayisi }} </h6>
                     </div>
                     <hr>
                     <div class="d-flex justify-content-between">
-                        <h6 class="mb-0">KDV Tutarı (%20) : </h6> <h6 class="mb-0">250,00 TL</h6>
+                        <h6 class="mb-0">Ara Toplam: </h6> <h6 class="mb-0"> {{ araToplam }} TL </h6>
                     </div>
                     <hr>
                     <div class="d-flex justify-content-between">
-                        <h6 class="mb-0">Ara Toplam + KDV: </h6> <h6 class="mb-0">1300,00 TL</h6>
+                        <h6 class="mb-0">KDV Tutarı (%20) : </h6> <h6 class="mb-0">{{ kdv }} TL</h6>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="mb-0">Ara Toplam + KDV: </h6> <h6 class="mb-0"> {{ toplam_tutar }} TL</h6>
                     </div>
                     <hr>
                     <div class="d-flex justify-content-between">
@@ -167,7 +171,7 @@
                     </div>
                     <hr>
                     <div class="d-flex justify-content-between">
-                        <h5 class="mb-0">Genel Toplam: </h5> <h5 class="mb-0 text-danger">1300,00 TL</h5>
+                        <h5 class="mb-0">Genel Toplam: </h5> <h5 class="mb-0 text-danger">{{ toplam_tutar }} TL</h5>
                     </div>
                 </div>
             </div>

@@ -73,9 +73,6 @@
                         <div class="col-lg-2 col-3 d-flex justify-content-center">
                             <form action="" method="POST">
                                 {% csrf_token %}
-                                <!-- <input type="hidden" name="urunId" value="{{ urun.id }}">
-                                <input type="number" name="yeniAdet" value="{{ urun.adet }}" class="border-0 adetInput responsive-adet " style="width: 40px;" min="0" max="5">
-                                <input type="submit" value="🗸" name="guncelle" class="btn btn-primary py-1 px-2 fw-light"> -->
                                 <div class="input-number-group input-number-group-responsive me-3">
                                     <div class="input-group-button">
                                         <span class="input-number-decrement">-</span>
@@ -112,29 +109,40 @@
                     <div class="col-6">
                     </div>
                 {% if sepetim.exists %}
-                    <div class="col-md-6 mb-3 d-flex justify-content-lg-end justify-content-center">
-                        <div class="row">
-                            <div class="col-6 text-end">
-                                <p>Ürün Sayısı : </p>
-                                <p>Ara Toplam : </p>
-                                <p>KDV (%20) : </p>
-                                <p>Genel Toplam : </p>
+                    <form action="{% url 'teslimat' %}" method="POST" class='d-flex justify-content-lg-end justify-content-center'>
+                        {% csrf_token %}
+                        <div class="col-md-6 mb-3 d-flex justify-content-lg-end justify-content-center">
+                            <div class="row">
+                                <div class="col-6 text-end">
+                                    <p>Ürün Sayısı : </p>
+                                    <p>Ara Toplam : </p>
+                                    <p>KDV (%20) : </p>
+                                    <p>Genel Toplam : </p>
+                                </div>
+                                <div class="col-6 ">
+                                    <p class="fw-bold" style="color: crimson;">{{ toplam_urun_sayisi }}</p>
+                                    <p class="fw-bold" style="color: crimson;">{{ araToplam }} TL</p>
+                                    <p class="fw-bold" style="color: crimson;">{{ kdv }} TL</p>
+                                    <p class="fw-bold" style="color: crimson;">{{ toplam_tutar }} TL</p>
+
+                                    <!-- teslimat sayfasına bilgileri aktarmak için -->
+                                    <input type="hidden" name="toplam_tutar" value="{{ toplam_tutar }}">
+                                    <input type="hidden" name="toplam_urun_sayisi" value="{{ toplam_urun_sayisi }}">
+                                    <input type="hidden" name="kdv" value="{{ kdv }}">
+                                    <input type="hidden" name="araToplam" value="{{ araToplam }}">
+                                </div>
+                                <input type="submit" value="Teslimata Adımı"  class="d-inline ms-lg-auto m-auto mt-3 btn btn-primary py-2 me-lg-5" style="width: 150px;">
+
+                                <!-- <a href="{% url 'teslimat' %} " class="d-inline ms-lg-auto m-auto mt-3 btn btn-primary py-2 me-lg-5" style="width: 150px;">Teslimata Adımı</a> -->
+                                
                             </div>
-                            <div class="col-6 ">
-                                <p class="fw-bold" style="color: crimson;">{{ toplam_urun_sayisi }}</p>
-                                <p class="fw-bold" style="color: crimson;">{{ araToplam }} TL</p>
-                                <p class="fw-bold" style="color: crimson;">{{ kdv }} TL</p>
-                                <p class="fw-bold" style="color: crimson;">{{ toplam_tutar }} TL</p>
-                            </div>
-                            <a href="{% url 'teslimat' %}" class="d-inline ms-lg-auto m-auto mt-3 btn btn-primary py-2 me-lg-5" style="width: 150px;">Ödeme Yap</a>
-                            
+                            <!-- <p class="fw-bolder"><span class=" fw-light">Toplam Ürün Sayısı:</span> {{ toplam_urun_sayisi }}</p>
+                            <p class="fw-bolder"><span class="fw-light">Toplam Tutar:</span> {{ toplam_tutar }} TL</p> -->
                         </div>
-                        <!-- <p class="fw-bolder"><span class=" fw-light">Toplam Ürün Sayısı:</span> {{ toplam_urun_sayisi }}</p>
-                        <p class="fw-bolder"><span class="fw-light">Toplam Tutar:</span> {{ toplam_tutar }} TL</p> -->
-                    </div>
-                    {% else %}
-                        <p></p>
-                    {% endif %}
+                        {% else %}
+                            <p></p>
+                        {% endif %}
+                    </form>
                 </div>
             </div>
         </div>

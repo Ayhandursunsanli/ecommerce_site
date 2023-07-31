@@ -600,36 +600,37 @@ def sepet(request):
     }
     return render(request, 'sepet.html', context)
 
-def hesabim(request):
-    anakategori = Anakategori.objects.all()
-    socail_media = SocialMedia.objects.all()
-    footer = Footer.objects.first()
+# bu alan userapp içindeki viewste update_profile altında zaten mevcut
+# def hesabim(request):
+#     anakategori = Anakategori.objects.all()
+#     socail_media = SocialMedia.objects.all()
+#     footer = Footer.objects.first()
 
-    # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
-    user = request.user
-    toplam_tutar = Decimal('0.00')
-    toplam_urun_sayisi = 0
+#     # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
+#     user = request.user
+#     toplam_tutar = Decimal('0.00')
+#     toplam_urun_sayisi = 0
 
-    if user.is_authenticated:  # Kullanıcı girişi yapılmışsa
-        sepetim = Sepet.objects.filter(user=user)
-        for sepet in sepetim:
-            toplam_tutar += sepet.hesapla_toplam()
-            toplam_urun_sayisi += sepet.adet
-    else:  # Kullanıcı girişi yapılmamışsa, boş bir sepet listesi oluştur
-        sepetim = []
+#     if user.is_authenticated:  # Kullanıcı girişi yapılmışsa
+#         sepetim = Sepet.objects.filter(user=user)
+#         for sepet in sepetim:
+#             toplam_tutar += sepet.hesapla_toplam()
+#             toplam_urun_sayisi += sepet.adet
+#     else:  # Kullanıcı girişi yapılmamışsa, boş bir sepet listesi oluştur
+#         sepetim = []
 
 
-    context = {
-        'anakategori' : anakategori,
-        'footer' : footer,
-        'social_media' : socail_media,
+#     context = {
+#         'anakategori' : anakategori,
+#         'footer' : footer,
+#         'social_media' : socail_media,
 
-        # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
-        'sepetim': sepetim,
-        'toplam_tutar': toplam_tutar,
-        'toplam_urun_sayisi': toplam_urun_sayisi
-    }
-    return render(request, 'hesabim.html', context)
+#         # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
+#         'sepetim': sepetim,
+#         'toplam_tutar': toplam_tutar,
+#         'toplam_urun_sayisi': toplam_urun_sayisi
+#     }
+#     return render(request, 'hesabim.html', context)
 
 def loading_page(request):
     return render(request, 'includes/_loading.html')
