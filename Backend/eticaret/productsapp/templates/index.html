@@ -46,8 +46,17 @@
     {% include 'includes/_offcanvas-menu.html' %}
 
     {% include 'includes/_navbar.html' %}
+
+    <div id="progress">
+        <span id="progress-value">
+            <i class="fa-solid fa-caret-up"></i>
+            <img src="{% static 'img/table-lamp.png' %}" alt="">
+        </span>
+    </div>
     
     {% block content %}
+
+
 
     <header>
         <img class="header-img" src="{{ slogan.gorsel.url }}" alt="">
@@ -293,10 +302,12 @@
     <!-- loading.js -->
     <script src="{% static 'js/loading.js' %}"></script>
 
+    <!-- Progress.js (Sayfa Yukarı Yönlendirme) -->
+
+    <script src="{% static 'js/progress.js' %}"></script>
 
     <!-- app js -->
     <script src="{% static 'js/app.js' %}"></script>
-
 
 </body>
 
