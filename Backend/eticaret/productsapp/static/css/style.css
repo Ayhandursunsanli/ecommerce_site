@@ -847,7 +847,7 @@ footer .socail-media img:hover {
   gap: 5px;
   height: calc(100% - 5px);
   width: calc(100% - 5px);
-  background: #1e1414;
+  background: black;
   border-radius: 50%;
   display: grid;
   place-items: center;

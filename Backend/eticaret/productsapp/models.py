@@ -44,7 +44,6 @@ class Wrapperone(models.Model):
     def __str__(self):
         return self.wrapperText
 
-
 class Urun(models.Model):
     urunresmi = models.ImageField(upload_to='urunphoto/', blank=False, null=False, default='', verbose_name='1. Ürün Resmi (Zorunlu)')
     urunresmiTwo = models.ImageField(upload_to='urunphoto/', blank=True, null=False, default='', verbose_name='2. Ürün Resmi')
@@ -77,7 +76,6 @@ class SocialMedia(models.Model):
     def __str__(self):
         return self.name
 
-
 class Footer(models.Model):
     site_description = models.CharField(max_length=200)
     company_address = models.CharField(max_length=200)
@@ -89,8 +87,6 @@ class Footer(models.Model):
 
     def __str__(self):
         return self.site_description
-
-
 
 class Sepet(models.Model):
     urun = models.ForeignKey(Urun, on_delete=models.CASCADE)
@@ -112,6 +108,14 @@ class Sepet(models.Model):
         if self.urun.indirimli_fiyat:
             fiyat = self.urun.indirimli_fiyat
         return self.adet * fiyat
-    
-    
-    
+
+class Hakkimizda(models.Model):
+    vizyonResim = models.ImageField(upload_to='hakkimzda/', blank=False, null=False, verbose_name='Vizyon Resim')
+    vizyon = RichTextField(blank=True, null=True, verbose_name='Vizyonumuz')
+    misyonResim = models.ImageField(upload_to='hakkimzda/', blank=False, null=False, verbose_name='Misyon Resim')
+    misyon = RichTextField(blank=True, null=True, verbose_name='Misyonumuz')
+    degerlerimizResim = models.ImageField(upload_to='hakkimzda/', blank=False, null=False, verbose_name='Değerlerimiz Resim')
+    degerlerimiz = RichTextField(blank=True, null=True, verbose_name='Degerlerimiz')
+
+    class Meta:
+        verbose_name_plural = 'Hakkımızda'
