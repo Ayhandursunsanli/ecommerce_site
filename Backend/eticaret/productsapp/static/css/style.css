@@ -829,6 +829,46 @@ footer .socail-media img:hover {
   margin-bottom: 20px;
 }
 
+#progress {
+  position: fixed;
+  bottom: 20px;
+  right: 10px;
+  height: 55px;
+  width: 55px;
+  display: none;
+  place-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 9999;
+}
+#progress #progress-value {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  height: calc(100% - 5px);
+  width: calc(100% - 5px);
+  background: black;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #000000;
+  position: relative;
+  transition: 0.4s;
+}
+#progress #progress-value i {
+  font-size: 18px;
+  position: absolute;
+  top: 2px;
+  color: #ac003a;
+}
+#progress #progress-value img {
+  width: 30px;
+  position: absolute;
+  top: 13px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 @media screen and (max-width: 1050px) {
   .navbar-collapse .nav-item a {
     font-size: 12px !important;

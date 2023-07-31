@@ -761,6 +761,48 @@ footer
     h1, h2
         margin-bottom: 20px
 
+#progress
+    position: fixed
+    bottom: 20px
+    right: 10px
+    height: 55px
+    width: 55px
+    display: none
+    place-items: center
+    border-radius: 50%
+    //box-shadow: 0 0 10px rgba(0, 0, 0, 0.2)
+    cursor: pointer
+    z-index: 9999
+    #progress-value
+        display: flex
+        flex-direction: column
+        gap: 5px
+        height: calc(100% - 5px)
+        width: calc(100% - 5px)
+        
+        background: black
+        border-radius: 50%
+        display: grid
+        place-items: center
+        color: #000000
+        position: relative
+        transition: .4s
+        i
+            font-size: 18px
+            position: absolute
+            top: 2px
+            color: #ac003a
+        img
+            width: 30px
+            position: absolute
+            top: 13px
+            left: 50%
+            transform: translateX(-50%)
+    // &:hover #progress-value
+    //     // box-shadow: rgba(240, 233, 46, 0.4) -5px 5px, rgba(214, 240, 46, 0.3) -10px 10px, rgba(221, 240, 46, 0.2) -15px 15px, rgba(240, 233, 46, 0.1) -20px 20px, rgba(240, 224, 46, 0.05) -25px 25px
+    //     background: #d9ff00
+        
+
 //MEDIA SCREEN
 
 @media screen and (max-width: 1050px)

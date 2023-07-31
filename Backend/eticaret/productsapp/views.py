@@ -486,6 +486,7 @@ def aboutUs(request):
     anakategori = Anakategori.objects.all()
     socail_media = SocialMedia.objects.all()
     footer = Footer.objects.first()
+    hakkimizda = Hakkimizda.objects.first()
 
     # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
     user = request.user
@@ -505,6 +506,7 @@ def aboutUs(request):
         'anakategori' : anakategori,
         'footer' : footer,
         'social_media' : socail_media,
+        'hakkimizda' : hakkimizda,
 
         # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
         'sepetim': sepetim,

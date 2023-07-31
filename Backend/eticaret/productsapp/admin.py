@@ -34,4 +34,6 @@ admin.site.register(Wrapperone)
 admin.site.register(SocialMedia)
 admin.site.register(Footer)
 admin.site.register(Sepet, SepetAdmin)
+admin.site.register(Hakkimizda)
+
 
