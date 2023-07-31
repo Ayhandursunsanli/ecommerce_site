@@ -254,15 +254,24 @@ def logout_request(request):
     logout(request)
     return redirect('index')
 
-
 def teslimat(request):
     anakategori = Anakategori.objects.all()
     socail_media = SocialMedia.objects.all()
     footer = Footer.objects.first()
+    if request.method == 'POST':
+        toplam_tutar = request.POST.get('toplam_tutar', '0.00')
+        toplam_urun_sayisi = request.POST.get('toplam_urun_sayisi', '0')
+        kdv = request.POST.get('kdv', '0.00')
+        araToplam = request.POST.get('araToplam', '0.00')
+
     context = {
         'anakategori' : anakategori,
         'footer' : footer,
         'social_media' : socail_media,
+        'toplam_tutar': toplam_tutar,
+        'toplam_urun_sayisi': toplam_urun_sayisi,
+        'kdv': kdv,
+        'araToplam': araToplam
     }
     return render(request, 'teslimat-bilgileri.html', context)
 
@@ -420,7 +429,6 @@ def update_profile(request):
 
     }
     return render(request, 'hesabim.html', context)
-
 
 @login_required
 def new_password(request):
