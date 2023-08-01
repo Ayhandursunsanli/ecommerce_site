@@ -36,25 +36,25 @@
                                 <h6 class="fw-bold"><i class="fa-solid fa-user"></i> Üyelik Bilgilerim</h6>
                                 <hr>
                                 <label for="username">Kullanıcı Adı:</label>
-                                <input type="text" name="username" value="{{ user.username }}">
-                                <label for="firstname">Adı:</label>
-                                <input type="text" name="firstname" value="{{ user.first_name }}">
+                                <input type="text" name="username" value="{{ user.username }}" required>
+                                <label for="firstname"></label>
+                                <input type="text" name="firstname" value="{{ user.first_name }}" required>
                                 <label for="lastname">Soyadı:</label>
-                                <input type="text" name="lastname" value="{{ user.last_name }}">
+                                <input type="text" name="lastname" value="{{ user.last_name }}" required>
                                 <label for="email">Email:</label>
-                                <input type="email" name="email" value="{{ user.email }}">
+                                <input type="email" name="email" value="{{ user.email }}" required>
                                 <label for="phone">Telefon:</label>
-                                <input type="number" name="phone" value="{{ user.phone }}">
+                                <input type="number" name="phone" value="{{ user.phone }}" required>
                             </div>
                             <div class="col-md-6 address-info">
                                 <h6 class="fw-bold"><i class="fa-solid fa-location-dot"></i> Adres Bilgilerim</h6>
                                 <hr>
                                 <label for="country">Ülke: </label>
-                                <select name="country" id="country">
+                                <select name="country" id="country" required>
                                     <option value="turkey">Türkiye</option>
                                 </select>
                                 <label for="city">Şehir: </label>
-                                <select name="city">
+                                <select name="city" required>
                                     <option value="">Seçiniz</option>
                                     {% for option in city_options %}
                                     <option value="{{ option.value }}"
@@ -63,9 +63,9 @@
                                     {% endfor %}
                                 </select>
                                 <label for="district">İlçe: </label>
-                                <input type="text" name="district" value="{{ user.district }}">
+                                <input type="text" name="district" value="{{ user.district }}" required>
                                 <label for="address">Adres: </label>
-                                <textarea class="p-3" name="address" cols="30" rows="3">{{ user.address }}</textarea>
+                                <textarea class="p-3" name="address" cols="30" rows="3" required>{{ user.address }}</textarea>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Kaydet</button>
