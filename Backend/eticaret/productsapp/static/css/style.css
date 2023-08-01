@@ -731,6 +731,7 @@ header .slogan {
   display: flex;
   flex-direction: column;
   padding: 2rem;
+  position: relative;
 }
 .user-account form .membership select {
   padding: 0.3rem;

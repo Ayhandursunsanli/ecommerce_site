@@ -154,7 +154,7 @@
                         {% if messages %}
                         {% for message in messages %}
                         <div
-                            class="alert text-center {% if message.tags %}{% if 'error' in message.tags %}alert-danger{% else %}alert-{{ message.tags }}{% endif %}{% endif %}">
+                            class="alert text-center mb-3 {% if message.tags %}{% if 'error' in message.tags %}alert-danger{% else %}alert-{{ message.tags }}{% endif %}{% endif %}">
                             {{ message }}
                         </div>
                         {% endfor %}
@@ -163,7 +163,8 @@
                         <h5 class="text-center"><i class="fa-solid fa-truck"></i> Teslimat Bilgilerini Düzenle</h5>
                         <hr>
                         <div class="row">
-                            <div class="col-md-6 membership">
+                            <div class="col-md-6 membership" 
+                                <p class="text-danger mb-0 position-absolute" style="top: 5px;">Kullanıcı bilgilerinizi hesabınızdan değiştirebilirsiniz</p>
                                 <label  for="username">Kullanıcı Adı:</label>
                                 <input type="text" name="username" value="{{ user.username }}" readonly>
                                 <label for="firstname">Adı:</label>
@@ -181,7 +182,7 @@
                                     <option value="turkey">Türkiye</option>
                                 </select>
                                 <label for="city">Şehir: </label>
-                                <select name="city">
+                                <select name="city" required>
                                     <option value="">Seçiniz</option>
                                     {% for option in city_options %}
                                     <option value="{{ option.value }}"
@@ -190,13 +191,13 @@
                                     {% endfor %}
                                 </select>
                                 <label for="district">İlçe: </label>
-                                <input type="text" name="district" value="{{ user.district }}">
+                                <input type="text" name="district" value="{{ user.district }}" required>
                                 <label for="address">Adres: </label>
-                                <textarea class="p-3" name="address" cols="30" rows="3">{{ user.address }}</textarea>
+                                <textarea class="p-3" name="address" cols="30" rows="3" required>{{ user.address }}</textarea>
                             </div>
                         </div>
                     
-                        <button type="submit" class="btn btn-primary">Kaydet</button>
+                        <button type="submit" class="btn btn-primary mt-5">Kaydet</button>
                     </form>
                     
                 </div>
