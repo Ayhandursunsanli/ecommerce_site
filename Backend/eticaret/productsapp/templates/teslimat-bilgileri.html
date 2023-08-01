@@ -150,20 +150,30 @@
 
                     <form  method="POST">
                         {% csrf_token %}
+
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div
+                            class="alert text-center {% if message.tags %}{% if 'error' in message.tags %}alert-danger{% else %}alert-{{ message.tags }}{% endif %}{% endif %}">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+
                         <h5 class="text-center"><i class="fa-solid fa-truck"></i> Teslimat Bilgilerini Düzenle</h5>
                         <hr>
                         <div class="row">
                             <div class="col-md-6 membership">
-                                <label for="username">Kullanıcı Adı:</label>
-                                <input type="text" name="username" value="{{ user.username }}">
+                                <label  for="username">Kullanıcı Adı:</label>
+                                <input type="text" name="username" value="{{ user.username }}" readonly>
                                 <label for="firstname">Adı:</label>
-                                <input type="text" name="firstname" value="{{ user.first_name }}">
+                                <input type="text" name="firstname" value="{{ user.first_name }}" readonly>
                                 <label for="lastname">Soyadı:</label>
-                                <input type="text" name="lastname" value="{{ user.last_name }}">
+                                <input type="text" name="lastname" value="{{ user.last_name }}" readonly>
                                 <label for="email">Email:</label>
-                                <input type="email" name="email" value="{{ user.email }}">
+                                <input type="email" name="email" value="{{ user.email }}" readonly>
                                 <label for="phone">Telefon:</label>
-                                <input type="number" name="phone" value="{{ user.phone }}">
+                                <input type="number" name="phone" value="{{ user.phone }}" readonly>
                             </div>
                             <div class="col-md-6 address-info">
                                 <label for="country">Ülke: </label>

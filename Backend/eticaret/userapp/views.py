@@ -381,9 +381,12 @@ def teslimat(request):
                 user.country = form.cleaned_data['country'] 
                 user.city = form.cleaned_data['city']
                 user.district = form.cleaned_data['district']
+
+
                 user.save()
                 messages.success(request, 'Profiliniz güncellendi.')
                 return redirect('teslimat')
+
     else:
         form = UserProfileForm(initial={
             'username': request.user.username,
