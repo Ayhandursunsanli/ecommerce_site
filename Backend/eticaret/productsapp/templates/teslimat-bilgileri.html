@@ -32,7 +32,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
-                    <form class="" action="">
+                    <!-- <form action="{% url 'teslimat' %}" method="POST">
                         <h5 class="text-center"><i class="fa-solid fa-truck"></i> Teslimat Bilgilerini Düzenle</h5>
                         <hr>
                         <div class="row">
@@ -145,7 +145,50 @@
                         </div>
                         <button class="btn btn-primary" type="submit">Ödeme İşlemlerine Geç</button>
                         <a href="{% url 'sepet' %}" class="btn btn-primary" type="submit">Vazgeç</a>
+                    </form> -->
+
+
+                    <form  method="POST">
+                        {% csrf_token %}
+                        <h5 class="text-center"><i class="fa-solid fa-truck"></i> Teslimat Bilgilerini Düzenle</h5>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6 membership">
+                                <label for="username">Kullanıcı Adı:</label>
+                                <input type="text" name="username" value="{{ user.username }}">
+                                <label for="firstname">Adı:</label>
+                                <input type="text" name="firstname" value="{{ user.first_name }}">
+                                <label for="lastname">Soyadı:</label>
+                                <input type="text" name="lastname" value="{{ user.last_name }}">
+                                <label for="email">Email:</label>
+                                <input type="email" name="email" value="{{ user.email }}">
+                                <label for="phone">Telefon:</label>
+                                <input type="number" name="phone" value="{{ user.phone }}">
+                            </div>
+                            <div class="col-md-6 address-info">
+                                <label for="country">Ülke: </label>
+                                <select name="country" id="country">
+                                    <option value="turkey">Türkiye</option>
+                                </select>
+                                <label for="city">Şehir: </label>
+                                <select name="city">
+                                    <option value="">Seçiniz</option>
+                                    {% for option in city_options %}
+                                    <option value="{{ option.value }}"
+                                        {% if user.city == option.value %}selected{% endif %}>{{ option.label }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                                <label for="district">İlçe: </label>
+                                <input type="text" name="district" value="{{ user.district }}">
+                                <label for="address">Adres: </label>
+                                <textarea class="p-3" name="address" cols="30" rows="3">{{ user.address }}</textarea>
+                            </div>
+                        </div>
+                    
+                        <button type="submit" class="btn btn-primary">Kaydet</button>
                     </form>
+                    
                 </div>
                 <div class="col-md-4 card p-4">
                     <h5 class="mb-0 text-center mt-2"><i class="fa-solid fa-cart-shopping"></i> Sepet Özeti</h5>
