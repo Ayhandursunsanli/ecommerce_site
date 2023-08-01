@@ -384,7 +384,7 @@ def teslimat(request):
 
 
                 user.save()
-                messages.success(request, 'Profiliniz güncellendi.')
+                messages.success(request, 'Teslimat Bilgileriniz Güncellendi.')
                 return redirect('teslimat')
 
     else:
