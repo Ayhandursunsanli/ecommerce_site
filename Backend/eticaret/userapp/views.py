@@ -345,11 +345,19 @@ def teslimat(request):
 
 
 
-    if request.method == 'POST':
-        toplam_tutar = request.POST.get('toplam_tutar', '0.00')
-        toplam_urun_sayisi = request.POST.get('toplam_urun_sayisi', '0')
-        kdv = request.POST.get('kdv', '0.00')
-        araToplam = request.POST.get('araToplam', '0.00')
+    user = request.user
+    toplam_tutar = Decimal('0.00')
+    toplam_urun_sayisi = 0
+
+    if user.is_authenticated:  # Kullanıcı girişi yapılmışsa
+        sepetim = Sepet.objects.filter(user=user)
+        for sepet in sepetim:
+            toplam_tutar += sepet.hesapla_toplam()
+            toplam_urun_sayisi += sepet.adet
+        kdv = toplam_tutar * Decimal('0.2')
+        araToplam = toplam_tutar - kdv
+    else:  # Kullanıcı girişi yapılmamışsa, boş bir sepet listesi oluştur
+        sepetim = []
 
     if request.method == 'POST':
         form = UserProfileForm(request.POST)
@@ -373,9 +381,12 @@ def teslimat(request):
                 user.country = form.cleaned_data['country'] 
                 user.city = form.cleaned_data['city']
                 user.district = form.cleaned_data['district']
+
+
                 user.save()
                 messages.success(request, 'Profiliniz güncellendi.')
-                return redirect('index')
+                return redirect('teslimat')
+
     else:
         form = UserProfileForm(initial={
             'username': request.user.username,
