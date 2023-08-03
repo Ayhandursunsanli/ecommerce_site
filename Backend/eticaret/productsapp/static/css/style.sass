@@ -676,7 +676,6 @@ header
         .membership
             display: flex
             flex-direction: column
-            padding: 2rem
             position: relative
             select
                 padding: .3rem
@@ -695,7 +694,6 @@ header
                 
                 
         .address-info
-            padding: 2rem
             display: flex
             flex-direction: column
             select
@@ -825,8 +823,23 @@ footer
     &:hover p
         display: flex
 
-
-
+.help-section
+    .accordion
+        .accordion-item
+            .accordion-header
+                .accordion-button:focus
+                    box-shadow: none
+                .accordion-button:not(.collapsed) 
+                    background-color: $temacolororange
+                    color: white
+                    font-weight: 500
+            .accordion-collapse
+                .accordion-body
+                    font-size: 12px
+                    border: 1px solid #d6d6d6ee
+                    padding: 1rem
+                    height: 60vh
+                    overflow: scroll
 //MEDIA SCREEN
 
 @media screen and (max-width: 1050px)

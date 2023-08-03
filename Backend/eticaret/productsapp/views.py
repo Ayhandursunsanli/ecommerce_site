@@ -638,3 +638,46 @@ def loading_page(request):
     return render(request, 'includes/_loading.html')
 
 
+def yardim(request):
+    anakategori = Anakategori.objects.all()
+    socail_media = SocialMedia.objects.all()
+    footer = Footer.objects.first()
+    uyelikMetni = Uyelikmetni.objects.first()
+    kvkkMetni = Kvkkmetni.objects.first()
+    mesafeli_satis_sozlesmesi = Mesafelisatisozlesmesi.objects.first()
+    gizlilikSozlesmesi = Gizliliksozlesmesi.objects.first()
+    iptalveiade = Iptalveiade.objects.first()
+    kurulum = Kurulum.objects.first()
+
+    # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
+    user = request.user
+    toplam_tutar = Decimal('0.00')
+    toplam_urun_sayisi = 0
+
+    if user.is_authenticated:  # Kullanıcı girişi yapılmışsa
+        sepetim = Sepet.objects.filter(user=user)
+        for sepet in sepetim:
+            toplam_tutar += sepet.hesapla_toplam()
+            toplam_urun_sayisi += sepet.adet
+    else:  # Kullanıcı girişi yapılmamışsa, boş bir sepet listesi oluştur
+        sepetim = []
+
+
+
+    context = {
+        'anakategori' : anakategori,
+        'footer' : footer,
+        'social_media' : socail_media,
+        'uyelikMetni' : uyelikMetni,
+        'kvkkMetni' : kvkkMetni,
+        'mesafeli_satis_sozlesmesi' : mesafeli_satis_sozlesmesi,
+        'gizlilikSozlesmesi' : gizlilikSozlesmesi,
+        'iptalveiade' : iptalveiade,
+        'kurulum' : kurulum,
+
+        # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
+        'sepetim': sepetim,
+        'toplam_tutar': toplam_tutar,
+        'toplam_urun_sayisi': toplam_urun_sayisi
+    }
+    return render(request, 'yardim.html', context)

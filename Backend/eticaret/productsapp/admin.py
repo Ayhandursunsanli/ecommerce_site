@@ -75,5 +75,11 @@ admin.site.register(SocialMedia)
 admin.site.register(Footer)
 admin.site.register(Sepet, SepetAdmin)
 admin.site.register(Hakkimizda)
+admin.site.register(Uyelikmetni)
+admin.site.register(Kvkkmetni)
+admin.site.register(Mesafelisatisozlesmesi)
+admin.site.register(Gizliliksozlesmesi)
+admin.site.register(Iptalveiade)
+admin.site.register(Kurulum)
 
 
