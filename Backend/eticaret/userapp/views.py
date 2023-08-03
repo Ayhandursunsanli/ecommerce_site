@@ -113,6 +113,9 @@ def register(request):
     anakategori = Anakategori.objects.all()
     socail_media = SocialMedia.objects.all()
     footer = Footer.objects.first()
+    uyelikMetni = Uyelikmetni.objects.first()
+    kvkkMetni = Kvkkmetni.objects.first()
+
     if request.user.is_authenticated:
         return redirect('index')
 
@@ -139,6 +142,8 @@ def register(request):
                 'anakategori': anakategori,
                 'footer': footer,
                 'social_media': socail_media,
+                'uyelikMetni' : uyelikMetni,
+                'kvkkMetni' : kvkkMetni
             })
 
         if ' ' in username or re.search(r'[ğüşıöçĞÜŞİÖÇ]', username):
@@ -153,6 +158,8 @@ def register(request):
                 'anakategori': anakategori,
                 'footer': footer,
                 'social_media': socail_media,
+                'uyelikMetni' : uyelikMetni,
+                'kvkkMetni' : kvkkMetni
             })
 
         if password == repassword:
@@ -168,6 +175,8 @@ def register(request):
                     'anakategori': anakategori,
                     'footer': footer,
                     'social_media': socail_media,
+                    'uyelikMetni' : uyelikMetni,
+                    'kvkkMetni' : kvkkMetni
                 })
             else:
                 if MyUser.objects.filter(email=email).exists():
@@ -182,6 +191,8 @@ def register(request):
                         'anakategori': anakategori,
                         'footer': footer,
                         'social_media': socail_media,
+                        'uyelikMetni' : uyelikMetni,
+                        'kvkkMetni' : kvkkMetni
                     })
                 else:
                     if not re.search(r'^(?=.*[a-z])(?=.*[A-Z]).{8,}$', password):
@@ -196,6 +207,8 @@ def register(request):
                             'anakategori': anakategori,
                             'footer': footer,
                             'social_media': socail_media,
+                            'uyelikMetni' : uyelikMetni,
+                            'kvkkMetni' : kvkkMetni
                         })
                     
                     if MyUser.objects.filter(phone=phone).exists():
@@ -209,6 +222,8 @@ def register(request):
                             'anakategori': anakategori,
                             'footer': footer,
                             'social_media': socail_media,
+                            'uyelikMetni' : uyelikMetni,
+                            'kvkkMetni' : kvkkMetni
                         })
 
                     if not is_valid_phone_number(phone, 'TR'):  # Telefon numarasını geçerlilik kontrolü yapmak için ülke kodunu uygun şekilde ayarlayın
@@ -223,6 +238,8 @@ def register(request):
                             'anakategori': anakategori,
                             'footer': footer,
                             'social_media': socail_media,
+                            'uyelikMetni' : uyelikMetni,
+                            'kvkkMetni' : kvkkMetni
                         })
                     user = MyUser.objects.create_user(username=username, email=email, first_name=firstname,last_name=lastname, password=password, phone=phone)
                     user.is_active = False
@@ -241,12 +258,16 @@ def register(request):
                 'anakategori': anakategori,
                 'footer': footer,
                 'social_media': socail_media,
+                'uyelikMetni' : uyelikMetni,
+                'kvkkMetni' : kvkkMetni
             })
 
     context = {
         'anakategori': anakategori,
         'footer': footer,
         'social_media': socail_media,
+        'uyelikMetni' : uyelikMetni,
+        'kvkkMetni' : kvkkMetni
     }
     return render(request, 'register.html', context)
 

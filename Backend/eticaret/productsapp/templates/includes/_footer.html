@@ -48,8 +48,21 @@
                         <a href="{% url 'contact-us' %}" class="text-reset text-decoration-none">İletişim</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset text-decoration-none">Yardım</a>
+                        <a href="{% url 'yardim' %}" class="text-reset text-decoration-none">Yardım</a>
                     </p>
+                    {% if user.is_authenticated %}
+                    <p> </p>
+
+                    {% else %}
+                    
+                    <p>
+                        <a href="{% url 'register' %}" class="text-reset text-decoration-none">Yeni Üyelik</a>
+                    </p>
+                    <p>
+                        <a href="{% url 'login' %}" class="text-reset text-decoration-none">Üye Girişi</a>
+                    </p>
+
+                    {% endif %}
                 </div>
                 <!-- Grid column -->
 

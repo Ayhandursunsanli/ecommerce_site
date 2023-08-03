@@ -730,7 +730,6 @@ header .slogan {
 .user-account form .membership {
   display: flex;
   flex-direction: column;
-  padding: 2rem;
   position: relative;
 }
 .user-account form .membership select {
@@ -746,7 +745,6 @@ header .slogan {
   border-radius: 10px;
 }
 .user-account form .address-info {
-  padding: 2rem;
   display: flex;
   flex-direction: column;
 }
@@ -886,6 +884,22 @@ footer .socail-media img:hover {
 }
 .membership-teslimat:hover p {
   display: flex;
+}
+
+.help-section .accordion .accordion-item .accordion-header .accordion-button:focus {
+  box-shadow: none;
+}
+.help-section .accordion .accordion-item .accordion-header .accordion-button:not(.collapsed) {
+  background-color: #c19a83;
+  color: white;
+  font-weight: 500;
+}
+.help-section .accordion .accordion-item .accordion-collapse .accordion-body {
+  font-size: 12px;
+  border: 1px solid rgba(214, 214, 214, 0.9333333333);
+  padding: 1rem;
+  height: 60vh;
+  overflow: scroll;
 }
 
 @media screen and (max-width: 1050px) {

@@ -36,26 +36,24 @@
                         <label for="phone">Telefon:</label>
                         <input class="register-input" type="tel" id="phone-input" placeholder="Telefon numarası" name="phone" value="{{ phone }}">
                         <input type="checkbox" class="register-checkbox me-2" name="accept_terms">
-                        <label for="" data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor: pointer; font-size: 14px; text-decoration:underline;">Üyelik Sözleşmesini Kabul Ediyorum</label><br>
+                        <label for="" data-bs-toggle="modal" data-bs-target="#exampleModal1" style="cursor: pointer; font-size: 14px; text-decoration:underline;">Üyelik Sözleşmesini Kabul Ediyorum</label><br>
                         <input type="checkbox" class="register-checkbox me-2" name="accept_privacy">
                         <label for="" data-bs-toggle="modal" data-bs-target="#exampleModal2" class="d-inline" style="cursor: pointer;font-size: 14px; text-decoration:underline;">Kişisel verilerin işlenmesine ilişkin Aydınlatma Metnini okudum.</label> 
                         <button type="submit" value="Register" class="btn btn-primary d-block mt-5">Kayıt Ol</button>
                     </form>
 
                     <!-- Modal-Body Üyelik -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel"
                         aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Üyelik Sözleşmesi</h1>
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel"> {{ uyelikMetni.uyelikBaslik }}</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body">
-                                    <p>
-                                        Üyelik Metni Gelecek
-                                    </p>
+                                <div class="modal-body" style="font-size: 12px; font-weight: 300; font-family: 'Times New Roman', Times, serif;">
+                                    {{ uyelikMetni.uyelikmetni | safe}}
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
@@ -67,24 +65,22 @@
                     <!-- Modal-Body Kvkk -->
                     <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Üye ve Ziyaretçi Kişisel Veri Aydınlatma Metni</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p>
-                                    Kvkk Metni Gelecek
-                                </p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary"
-                                    data-bs-dismiss="modal">Okudum Anladım</button>
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel"> {{ kvkkMetni.kvkkBaslik }} </h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body" style="font-size: 12px; font-weight: 300; font-family: 'Times New Roman', Times, serif;">
+                                    {{ kvkkMetni.kvkkmetni | safe }}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Okudum Anladım</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>

@@ -119,3 +119,45 @@ class Hakkimizda(models.Model):
 
     class Meta:
         verbose_name_plural = 'Hakkımızda'
+
+class Uyelikmetni(models.Model):
+    uyelikBaslik = models.CharField(max_length=100, blank=False, null=True, verbose_name='Üyelik Metni Başlığı')
+    uyelikmetni = RichTextField(blank=True, null=True, verbose_name='Üyelik Metni')
+
+    class Meta:
+        verbose_name_plural = 'Üyelik Metni'
+
+class Kvkkmetni(models.Model):
+    kvkkBaslik = models.CharField(max_length=100, blank=False, null=True, verbose_name='KVKK Metni Başlığı')
+    kvkkmetni = RichTextField(blank=True, null=True, verbose_name='KVKK Metni')
+
+    class Meta:
+        verbose_name_plural = 'KVKK Metni'
+
+class Mesafelisatisozlesmesi(models.Model):
+    mesafeliBaslik = models.CharField(max_length=150, blank=False, null=True, verbose_name='Mesafeli Satış Sözleşmesi Başlığı')
+    mesafelimetni = RichTextField(blank=True, null=True, verbose_name='Mesafeli Satış Sözleşmesi Metni')
+
+    class Meta:
+        verbose_name_plural = 'Mesafeli Satış Sözleşmesi'
+
+class Gizliliksozlesmesi(models.Model):
+    gizlilikBaslik = models.CharField(max_length=150, blank=False, null=True, verbose_name='Gizlilik ve Güvenlik Başlığı')
+    gizlilikmetni = RichTextField(blank=True, null=True, verbose_name='Gizlilik ve Güvenlik Metni')
+
+    class Meta:
+        verbose_name_plural = 'Gizlilik ve Güvenlik Sözleşmesi'
+
+class Iptalveiade(models.Model):
+    iptalveiadeBaslik = models.CharField(max_length=150, blank=False, null=True, verbose_name='İptal ve İade Koşulları Metni Başlığı')
+    iptalveiademetni = RichTextField(blank=True, null=True, verbose_name='İptal ve İade Koşulları Metni')
+
+    class Meta:
+        verbose_name_plural = 'İptal ve İade Koşulları Metni'
+
+class Kurulum(models.Model):
+    video_url = models.URLField(blank=False, null=True,)
+    kurulumAciklamasi = RichTextField(blank=True, null=True, verbose_name='Kurulum Açıklaması')
+
+    class Meta:
+        verbose_name_plural = 'Kurulum Bilgilendirme'

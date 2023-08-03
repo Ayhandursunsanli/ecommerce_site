@@ -25,7 +25,7 @@
                         <a class="nav-link {% if '/contact-us/' in request.path %}activemenu{% endif %}" href="{% url 'contact-us' %}">İLETİŞİM</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">YARDIM</a>
+                        <a class="nav-link {% if '/yardim/' in request.path %}activemenu{% endif %}" href="{% url 'yardim' %}">YARDIM</a>
                     </li>
                 </ul>
             </div>
