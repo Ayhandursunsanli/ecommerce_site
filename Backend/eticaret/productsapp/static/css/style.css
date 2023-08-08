@@ -52,7 +52,11 @@
 }
 
 .alert-danger {
-  background: crimson;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  background: radial-gradient(circle, rgb(226, 90, 72) 31%, rgb(145, 23, 7) 64%);
   border: none;
   color: white;
   margin: 0;
@@ -60,18 +64,28 @@
   font-size: 15px !important;
   font-weight: 300;
   animation: fadeInOut 1s cubic-bezier(0.39, 0.575, 0.565, 1) 3s forwards;
+  position: fixed !important;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
 }
 
 @keyframes fadeInOut {
   50% {
     opacity: 1;
+    bottom: 20px;
   }
   100% {
     opacity: 0;
+    bottom: -50px;
   }
 }
 .alert-success {
-  background: green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  background: radial-gradient(circle, rgb(38, 148, 3) 31%, rgb(5, 90, 20) 64%);
   border: none;
   color: white;
   margin: 0;
@@ -79,14 +93,20 @@
   font-size: 15px !important;
   font-weight: 300;
   animation: fadeInOut 1s cubic-bezier(0.39, 0.575, 0.565, 1) 3s forwards;
+  position: fixed !important;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
 }
 
 @keyframes fadeInOut {
   50% {
     opacity: 1;
+    bottom: 20px;
   }
   100% {
     opacity: 0;
+    bottom: -50px;
   }
 }
 .input-number-group {
