@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from ckeditor.fields import RichTextField
+from userapp.forms import UserProfileForm
 
 
 
@@ -161,3 +162,39 @@ class Kurulum(models.Model):
 
     class Meta:
         verbose_name_plural = 'Kurulum Bilgilendirme'
+
+class Siparis(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Kullanıcı Adı')
+    urunler = models.ManyToManyField(Urun, through='SiparisUrun', verbose_name='Satın Alınan Ürünler')
+    toplam_fiyat = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Toplam Fiyat')
+    satinalma_tarihi = models.DateTimeField(auto_now_add=True, verbose_name='Satın Alma Tarihi')
+    odeme_bilgisi = models.BooleanField(default=False, verbose_name='Ödeme Bilgisi')
+    gonderim_bilgisi = models.BooleanField(default=False, verbose_name='Ürün Gönderim Bilgisi')
+    teslimat_bilgileri_adi = models.CharField(max_length=200, blank=False, null=True, verbose_name='Adı')
+    teslimat_bilgileri_soyadi = models.CharField(max_length=200, blank=False, null=True, verbose_name='Soyadı')
+    teslimat_bilgileri_telefon = models.CharField(max_length=200, blank=False, null=True, verbose_name='Telefon')
+    teslimat_bilgileri_adres = models.TextField(max_length=200, blank=False, null=True, verbose_name='Adress')
+    teslimat_bilgileri_ulke = models.CharField(max_length=200, blank=False, null=True, verbose_name='Ülke')
+    teslimat_bilgileri_sehir = models.CharField(max_length=200, blank=False, null=True, verbose_name='Şehir')
+    teslimat_bilgileri_ilce = models.CharField(max_length=200, blank=False, null=True, verbose_name='İlçe')
+
+
+    class Meta:
+        verbose_name_plural = 'Siparişler'
+
+    def __str__(self):
+        return f"Sipariş - {self.user.username}"
+
+class SiparisUrun(models.Model):
+    siparis = models.ForeignKey(Siparis, on_delete=models.CASCADE)
+    urun = models.ForeignKey(Urun, on_delete=models.CASCADE)
+    urun_stok_kodu = models.CharField(max_length=50, null=True, verbose_name='Ürün Stok Kodu')
+    adet = models.PositiveIntegerField(default=1, verbose_name='Adet')
+    birim_fiyat = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='Birim Fiyat')
+    urun_resmi = models.ImageField(upload_to='siparis_urun_resimleri/', blank=True, null=True, verbose_name='Ürün Resmi')
+
+    class Meta:
+        verbose_name_plural = 'Sipariş Ürünleri'
+    
+    def toplam_fiyat(self):
+        return self.adet * self.birim_fiyat

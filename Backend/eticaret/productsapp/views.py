@@ -7,6 +7,7 @@ from django.db.models import Q
 from django.db.models import Count
 from userapp.forms import UserProfileForm
 from userapp.models import MyUser
+import datetime
 
 #iyizipay importlar
 import iyzipay
@@ -584,6 +585,7 @@ def sepet(request):
             sepet.delete()
             messages.success(request, 'Ürün sepetten kaldırıldı.')
             return redirect('sepet')
+        
 
     for sepet in sepetim:
         toplam_tutar += sepet.hesapla_toplam()
@@ -604,41 +606,8 @@ def sepet(request):
     }
     return render(request, 'sepet.html', context)
 
-# bu alan userapp içindeki viewste update_profile altında zaten mevcut
-# def hesabim(request):
-#     anakategori = Anakategori.objects.all()
-#     socail_media = SocialMedia.objects.all()
-#     footer = Footer.objects.first()
-
-#     # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
-#     user = request.user
-#     toplam_tutar = Decimal('0.00')
-#     toplam_urun_sayisi = 0
-
-#     if user.is_authenticated:  # Kullanıcı girişi yapılmışsa
-#         sepetim = Sepet.objects.filter(user=user)
-#         for sepet in sepetim:
-#             toplam_tutar += sepet.hesapla_toplam()
-#             toplam_urun_sayisi += sepet.adet
-#     else:  # Kullanıcı girişi yapılmamışsa, boş bir sepet listesi oluştur
-#         sepetim = []
-
-
-#     context = {
-#         'anakategori' : anakategori,
-#         'footer' : footer,
-#         'social_media' : socail_media,
-
-#         # Navbardaki Sepet Kısmında adet ve fiyat göstermek için
-#         'sepetim': sepetim,
-#         'toplam_tutar': toplam_tutar,
-#         'toplam_urun_sayisi': toplam_urun_sayisi
-#     }
-#     return render(request, 'hesabim.html', context)
-
 def loading_page(request):
     return render(request, 'includes/_loading.html')
-
 
 def yardim(request):
     anakategori = Anakategori.objects.all()
@@ -684,101 +653,103 @@ def yardim(request):
     }
     return render(request, 'yardim.html', context)
 
-
 def teslimat(request):
     anakategori = Anakategori.objects.all()
     socail_media = SocialMedia.objects.all()
     footer = Footer.objects.first()
 
     city_options = [
-        {"value": "1", "label": "Adana"},
-        {"value": "2", "label": "Adıyaman"},
-        {"value": "3", "label": "Afyonkarahisar"},
-        {"value": "4", "label": "Ağrı"},
-        {"value": "5", "label": "Amasya"},
-        {"value": "6", "label": "Ankara"},
-        {"value": "7", "label": "Antalya"},
-        {"value": "8", "label": "Artvin"},
-        {"value": "9", "label": "Aydın"},
-        {"value": "10", "label": "Balıkesir"},
-        {"value": "11", "label": "Bilecik"},
-        {"value": "12", "label": "Bingöl"},
-        {"value": "13", "label": "Bitlis"},
-        {"value": "14", "label": "Bolu"},
-        {"value": "15", "label": "Burdur"},
-        {"value": "16", "label": "Bursa"},
-        {"value": "17", "label": "Çanakkale"},
-        {"value": "18", "label": "Çankırı"},
-        {"value": "19", "label": "Çorum"},
-        {"value": "20", "label": "Denizli"},
-        {"value": "21", "label": "Diyarbakır"},
-        {"value": "22", "label": "Edirne"},
-        {"value": "23", "label": "Elazığ"},
-        {"value": "24", "label": "Erzincan"},
-        {"value": "25", "label": "Erzurum"},
-        {"value": "26", "label": "Eskişehir"},
-        {"value": "27", "label": "Gaziantep"},
-        {"value": "28", "label": "Giresun"},
-        {"value": "29", "label": "Gümüşhane"},
-        {"value": "30", "label": "Hakkâri"},
-        {"value": "31", "label": "Hatay"},
-        {"value": "32", "label": "Isparta"},
-        {"value": "33", "label": "Mersin"},
-        {"value": "34", "label": "İstanbul"},
-        {"value": "35", "label": "İzmir"},
-        {"value": "36", "label": "Kars"},
-        {"value": "37", "label": "Kastamonu"},
-        {"value": "38", "label": "Kayseri"},
-        {"value": "39", "label": "Kırklareli"},
-        {"value": "40", "label": "Kırşehir"},
-        {"value": "41", "label": "Kocaeli"},
-        {"value": "42", "label": "Konya"},
-        {"value": "43", "label": "Kütahya"},
-        {"value": "44", "label": "Malatya"},
-        {"value": "45", "label": "Manisa"},
-        {"value": "46", "label": "Kahramanmaraş"},
-        {"value": "47", "label": "Mardin"},
-        {"value": "48", "label": "Muğla"},
-        {"value": "49", "label": "Muş"},
-        {"value": "50", "label": "Nevşehir"},
-        {"value": "51", "label": "Niğde"},
-        {"value": "52", "label": "Ordu"},
-        {"value": "53", "label": "Rize"},
-        {"value": "54", "label": "Sakarya"},
-        {"value": "55", "label": "Samsun"},
-        {"value": "56", "label": "Siirt"},
-        {"value": "57", "label": "Sinop"},
-        {"value": "58", "label": "Sivas"},
-        {"value": "59", "label": "Tekirdağ"},
-        {"value": "60", "label": "Tokat"},
-        {"value": "61", "label": "Trabzon"},
-        {"value": "62", "label": "Tunceli"},
-        {"value": "63", "label": "Şanlıurfa"},
-        {"value": "64", "label": "Uşak"},
-        {"value": "65", "label": "Van"},
-        {"value": "66", "label": "Yozgat"},
-        {"value": "67", "label": "Zonguldak"},
-        {"value": "68", "label": "Aksaray"},
-        {"value": "69", "label": "Bayburt"},
-        {"value": "70", "label": "Karaman"},
-        {"value": "71", "label": "Kırıkkale"},
-        {"value": "72", "label": "Batman"},
-        {"value": "73", "label": "Şırnak"},
-        {"value": "74", "label": "Bartın"},
-        {"value": "75", "label": "Ardahan"},
-        {"value": "76", "label": "Iğdır"},
-        {"value": "77", "label": "Yalova"},
-        {"value": "78", "label": "Karabük"},
-        {"value": "79", "label": "Kilis"},
-        {"value": "80", "label": "Osmaniye"},
-        {"value": "81", "label": "Düzce"},
-    ]   
+        {"value": "Adana", "label": "Adana"},
+        {"value": "Adıyaman", "label": "Adıyaman"},
+        {"value": "Afyonkarahisar", "label": "Afyonkarahisar"},
+        {"value": "Ağrı", "label": "Ağrı"},
+        {"value": "Amasya", "label": "Amasya"},
+        {"value": "Ankara", "label": "Ankara"},
+        {"value": "Antalya", "label": "Antalya"},
+        {"value": "Artvin", "label": "Artvin"},
+        {"value": "Aydın", "label": "Aydın"},
+        {"value": "Balıkesir", "label": "Balıkesir"},
+        {"value": "Bilecik", "label": "Bilecik"},
+        {"value": "Bingöl", "label": "Bingöl"},
+        {"value": "Bitlis", "label": "Bitlis"},
+        {"value": "Bolu", "label": "Bolu"},
+        {"value": "Burdur", "label": "Burdur"},
+        {"value": "Bursa", "label": "Bursa"},
+        {"value": "Çanakkale", "label": "Çanakkale"},
+        {"value": "Çankırı", "label": "Çankırı"},
+        {"value": "Çorum", "label": "Çorum"},
+        {"value": "Denizli", "label": "Denizli"},
+        {"value": "Diyarbakır", "label": "Diyarbakır"},
+        {"value": "Edirne", "label": "Edirne"},
+        {"value": "Elazığ", "label": "Elazığ"},
+        {"value": "Erzincan", "label": "Erzincan"},
+        {"value": "Erzurum", "label": "Erzurum"},
+        {"value": "Eskişehir", "label": "Eskişehir"},
+        {"value": "Gaziantep", "label": "Gaziantep"},
+        {"value": "Giresun", "label": "Giresun"},
+        {"value": "Gümüşhane", "label": "Gümüşhane"},
+        {"value": "Hakkâri", "label": "Hakkâri"},
+        {"value": "Hatay", "label": "Hatay"},
+        {"value": "Isparta", "label": "Isparta"},
+        {"value": "Mersin", "label": "Mersin"},
+        {"value": "İstanbul", "label": "İstanbul"},
+        {"value": "İzmir", "label": "İzmir"},
+        {"value": "Kars", "label": "Kars"},
+        {"value": "Kastamonu", "label": "Kastamonu"},
+        {"value": "Kayseri", "label": "Kayseri"},
+        {"value": "Kırklareli", "label": "Kırklareli"},
+        {"value": "Kırşehir", "label": "Kırşehir"},
+        {"value": "Kocaeli", "label": "Kocaeli"},
+        {"value": "Konya", "label": "Konya"},
+        {"value": "Kütahya", "label": "Kütahya"},
+        {"value": "Malatya", "label": "Malatya"},
+        {"value": "Manisa", "label": "Manisa"},
+        {"value": "Kahramanmaraş", "label": "Kahramanmaraş"},
+        {"value": "Mardin", "label": "Mardin"},
+        {"value": "Muğla", "label": "Muğla"},
+        {"value": "Muş", "label": "Muş"},
+        {"value": "Nevşehir", "label": "Nevşehir"},
+        {"value": "Niğde", "label": "Niğde"},
+        {"value": "Ordu", "label": "Ordu"},
+        {"value": "Rize", "label": "Rize"},
+        {"value": "Sakarya", "label": "Sakarya"},
+        {"value": "Samsun", "label": "Samsun"},
+        {"value": "Siirt", "label": "Siirt"},
+        {"value": "Sinop", "label": "Sinop"},
+        {"value": "Sivas", "label": "Sivas"},
+        {"value": "Tekirdağ", "label": "Tekirdağ"},
+        {"value": "Tokat", "label": "Tokat"},
+        {"value": "Trabzon", "label": "Trabzon"},
+        {"value": "Tunceli", "label": "Tunceli"},
+        {"value": "Şanlıurfa", "label": "Şanlıurfa"},
+        {"value": "Uşak", "label": "Uşak"},
+        {"value": "Van", "label": "Van"},
+        {"value": "Yozgat", "label": "Yozgat"},
+        {"value": "Zonguldak", "label": "Zonguldak"},
+        {"value": "Aksaray", "label": "Aksaray"},
+        {"value": "Bayburt", "label": "Bayburt"},
+        {"value": "Karaman", "label": "Karaman"},
+        {"value": "Kırıkkale", "label": "Kırıkkale"},
+        {"value": "Batman", "label": "Batman"},
+        {"value": "Şırnak", "label": "Şırnak"},
+        {"value": "Bartın", "label": "Bartın"},
+        {"value": "Ardahan", "label": "Ardahan"},
+        {"value": "Iğdır", "label": "Iğdır"},
+        {"value": "Yalova", "label": "Yalova"},
+        {"value": "Karabük", "label": "Karabük"},
+        {"value": "Kilis", "label": "Kilis"},
+        {"value": "Osmaniye", "label": "Osmaniye"},
+        {"value": "Düzce", "label": "Düzce"},
+    ]  
 
-
+    # if not request.META.get('HTTP_REFERER') or '/sepet/' not in request.META.get('HTTP_REFERER'):
+    #     # Eğer sayfa refereri sepet sayfasına değilse veya referer yoksa, buraya erişim engellenir
+    #     return redirect('sepet')
 
     user = request.user
     toplam_tutar = Decimal('0.00')
     toplam_urun_sayisi = 0
+
 
     if user.is_authenticated:  # Kullanıcı girişi yapılmışsa
         sepetim = Sepet.objects.filter(user=user)
@@ -817,6 +788,40 @@ def teslimat(request):
                 user.save()
                 messages.success(request, 'Teslimat Bilgileriniz Güncellendi.')
                 return redirect('teslimat')
+            
+
+        if 'odeme' in request.POST:
+            
+            siparis = Siparis.objects.create(
+                user=user,
+                toplam_fiyat=toplam_tutar,
+                odeme_bilgisi=False,
+                gonderim_bilgisi=False,
+                teslimat_bilgileri_adi = user.first_name,
+                teslimat_bilgileri_soyadi = user.last_name,
+                teslimat_bilgileri_telefon = user.phone,
+                teslimat_bilgileri_adres = user.address,
+                teslimat_bilgileri_ulke = user.country,
+                teslimat_bilgileri_sehir = user.city,
+                teslimat_bilgileri_ilce = user.district
+
+            )
+
+            
+            for sepet in sepetim:
+                SiparisUrun.objects.create(
+                    siparis=siparis,
+                    urun=sepet.urun,
+                    urun_stok_kodu=sepet.urun.stokKodu,
+                    adet=sepet.adet,
+                    birim_fiyat=sepet.urun.fiyat if not sepet.urun.indirimli_fiyat else sepet.urun.indirimli_fiyat,
+                    urun_resmi=sepet.urun.urunresmi
+                )
+            
+            sepetim.delete()
+            
+            messages.success(request, 'Siparişiniz alındı. Ödeme yapabilirsiniz.')
+            return redirect('teslimat')
 
     else:
         form = UserProfileForm(initial={
@@ -831,7 +836,32 @@ def teslimat(request):
             'district': request.user.district,
         })
 
+        # if 'odeme' in request.POST:
+        #     siparis = Siparis.objects.create(
+        #         user=user,
+        #         toplam_fiyat=toplam_tutar,
+        #         odeme_bilgisi=False,
+        #         teslimat_bilgileri_adi = request.user.first_name.get(),
+        #         teslimat_bilgileri_soyadi = form.cleaned_data.get('country'),
+        #         teslimat_bilgileri_telefon = form.cleaned_data.get('country'),
+        #         teslimat_bilgileri_adres = form.cleaned_data.get('country'),
+        #         teslimat_bilgileri_ulke = form.cleaned_data.get('country'),
+        #         teslimat_bilgileri_sehir = form.cleaned_data.get('country'),
+        #         teslimat_bilgileri_ilce = form.cleaned_data.get('country')
 
+        #     )
+            
+        #     for sepet in sepetim:
+        #         SiparisUrun.objects.create(
+        #             siparis=siparis,
+        #             urun=sepet.urun,
+        #             adet=sepet.adet,
+        #             birim_fiyat=sepet.urun.fiyat if not sepet.urun.indirimli_fiyat else sepet.urun.indirimli_fiyat,
+        #             urun_resmi=sepet.urun.urunresmi
+        #         )
+            
+        #     messages.success(request, 'Siparişiniz alındı. Ödeme yapabilirsiniz.')
+        #     return redirect('teslimat')
 
     context = {
         'anakategori' : anakategori,

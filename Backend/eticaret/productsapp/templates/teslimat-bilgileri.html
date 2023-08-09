@@ -148,7 +148,7 @@
                     </form> -->
 
 
-                    <form  method="POST">
+                    <form action=""  method="POST">
                         {% csrf_token %}
 
                         {% if messages %}
@@ -199,9 +199,9 @@
                     
                         <button type="submit" class="btn btn-primary mt-5">Kaydet</button>
                     </form>
-                    
+
                 </div>
-                <div class="col-md-4 card p-4">
+                <div class="col-md-4 card p-4 position-relative">
                     <h5 class="mb-0 text-center mt-2"><i class="fa-solid fa-cart-shopping"></i> Sepet Özeti</h5>
                     <hr>
                     <div class="d-flex justify-content-between">
@@ -227,6 +227,10 @@
                     <div class="d-flex justify-content-between">
                         <h5 class="mb-0">Genel Toplam: </h5> <h5 class="mb-0 text-danger">{{ toplam_tutar }} TL</h5>
                     </div>
+                    <form action="{% url 'teslimat' %}" method="POST" class="py-0 px-0" style="border: none; position: absolute; right: 32px; bottom: 32px; ">
+                        {% csrf_token %}
+                        <input type="submit" name="odeme" value="odemeye geç" class="btn btn-primary">
+                    </form>
                 </div>
             </div>
         </div>
