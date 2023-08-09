@@ -39,7 +39,8 @@ urlpatterns = [
     path('result/', result, name='result'),
     path('success/', success, name='success'),
     path('failure/', fail, name='failure'),
-    path('yardim/', yardim, name='yardim')
+    path('yardim/', yardim, name='yardim'),
+    path('teslimat/', teslimat, name='teslimat')
     
 
     # path('hesabim/', hesabim, name='hesabim'), #userapp içindeki url yazılıp buraya çekilecek
