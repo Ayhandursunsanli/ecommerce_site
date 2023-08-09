@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from .models import *
-
+from django.utils.safestring import mark_safe
 
 
 # Register your models here.
@@ -66,6 +66,51 @@ class UrunAdmin(admin.ModelAdmin):
 
     get_urun_image.short_description = 'Ürün Resmi'
 
+class SiparisUrunInline(admin.TabularInline):
+    model = SiparisUrun
+    extra = 0
+
+class SiparisUrunAdmin(admin.ModelAdmin):
+    list_display = ('siparis', 'urun', 'urun_stok_kodu', 'adet', 'birim_fiyat', 'urun_resmi_tag')
+
+    
+    def urun_resmi_tag(self, obj):
+        if obj.urun_resmi:
+            return format_html('<img src="{}" width="width="50" height="50" />', obj.urun_resmi.url)
+        return "Resim Yok"
+    urun_resmi_tag.short_description = 'Ürün Resmi'
+
+class SiparisAdmin(admin.ModelAdmin):
+    list_display = ('user', 'toplam_fiyat', 'satinalma_tarihi', 'odeme_bilgisi', 'gonderim_bilgisi')
+    inlines = [SiparisUrunInline]
+
+    # burası admin panelden değişiklik yapılmaması için/ değişiklik yapmak istenirse silinebilir
+    readonly_fields = ( 
+        'user',
+        'toplam_fiyat',
+        'teslimat_bilgileri_adi',
+        'teslimat_bilgileri_soyadi',
+        'teslimat_bilgileri_telefon',
+        'teslimat_bilgileri_adres',
+        'teslimat_bilgileri_ulke',
+        'teslimat_bilgileri_sehir',
+        'teslimat_bilgileri_ilce',
+    )
+
+    # def siparis_urun_resimleri(self, obj):
+    #     siparis_urunler = obj.siparisurun_set.all()
+    #     resimler = ''
+    #     for urun in siparis_urunler:
+    #         if urun.urun_resmi:
+    #             resimler += f'<img src="{urun.urun_resmi.url}" width="50" height="50" />'
+    #     return mark_safe(resimler)
+    # siparis_urun_resimleri.allow_tags = True
+    # siparis_urun_resimleri.short_description = 'Sipariş Ürün Resimleri'
+
+
+
+
+
 
 admin.site.register(Slogan)
 admin.site.register(Anakategori)
@@ -81,5 +126,6 @@ admin.site.register(Mesafelisatisozlesmesi)
 admin.site.register(Gizliliksozlesmesi)
 admin.site.register(Iptalveiade)
 admin.site.register(Kurulum)
-
+admin.site.register(SiparisUrun, SiparisUrunAdmin)
+admin.site.register(Siparis, SiparisAdmin)
 
