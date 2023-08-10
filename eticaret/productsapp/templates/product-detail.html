@@ -1,0 +1,207 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}
+Lampada | Ürün Detayı
+{% endblock %}
+
+{% block content %}
+<!-- ürün detay bölümü -->
+<section class="container sproduct py-5">
+    <div class="row mt-5">
+        <div class="col-lg-5 col-md-12 col-12">
+            <div class="sproduct-imgbox">
+                <img class="img-fluid pb-1" src="{{ urun.urunresmi.url }}" id="MainImg" alt="">
+            </div>
+            <div class="small-img-group">
+                <div class="small-img-col mt-3">
+                    <img src="{{ urun.urunresmi.url }}" width="100%" class="small-img" alt="">
+                </div>
+                {% if urun.urunresmiTwo %}
+                <div class="small-img-col mt-3">
+                    <img src="{{ urun.urunresmiTwo.url }}" width="100%" class="small-img" alt="">
+                </div>
+                {% endif %}
+                {% if urun.urunresmiThree %}
+                <div class="small-img-col mt-3">
+                    <img src="{{ urun.urunresmiThree.url }}" width="100%" class="small-img" alt="">
+                </div>
+                {% endif %}
+                {% if urun.urunresmiFour %}
+                <div class="small-img-col mt-3">
+                    <img src="{{ urun.urunresmiFour.url }}" width="100%" class="small-img" alt="">
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-12 col-12 mt-lg-0 mt-5">
+            <h6>Anasayfa / {{urun.kategori}}</h6>
+            <hr>
+            <h3 class="">{{urun.isim}}</h3>
+            <span>{{urun.aciklama}}</span>
+            <hr>
+            <div class="d-flex align-items-center justify-content-start mt-4">
+                {% if urun.indirimli_fiyat %}
+                <h2 class="text-muted fw-light"><del>{{ urun.fiyat }} TL</del></h2>
+                <h2 class="ms-4 text-danger">{{ urun.indirimli_fiyat }} TL</h2>
+                {% else %}
+                <h2 class="text-danger">{{ urun.fiyat }} TL</h2>
+                {% endif %}
+            </div>
+
+
+            <hr>
+            <h6 class="mt-3 text-uppercase">Kategori : {{urun.kategori}} </h6>
+            <h6 class="text-uppercase">Şapka Rengi : {{urun.urunRengi}} </h6>
+            <h6 class="text-uppercase">Ayak Kaplama : {{urun.ayakKaplama}} </h6>
+            <h6 class="text-uppercase">Stok Kodu : {{urun.stokKodu}} </h6>
+            <hr>
+
+            <form action="" method="POST" class="d-flex align-items-center">
+                {% csrf_token %}
+                <!-- <input type="number" name="adet" value="1" min="1" max="5" class="adetInput"> -->
+                
+                <div class="input-number-group me-3">
+                    <div class="input-group-button">
+                        <span class="input-number-decrement">-</span>
+                    </div>
+                    <input class="input-number adetInput" type="text" name="adet" value="1" min="1" max="5">
+                    <div class="input-group-button">
+                        <span class="input-number-increment">+</span>
+                    </div>
+                </div>
+                <input type="hidden" name="urunId" value="{{ urun.id }}">
+                <input type="submit" value="Sepete Ekle" class="btn btn-primary p-2" style="width: 150px; ">
+            </form>
+            {% if messages %}
+            {% for mesaj in messages %}
+            <div class="alert-success text-center mt-3" id='mesaj'>
+                {{ mesaj }}
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    {% if urun.teknikDetaylar %}
+    <div class="row my-5">
+        <div class="col-12">
+            <div class="accordion accordion-flush product-tecnic-details" id="accordionFlushExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed text-center bg-body-tertiary" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="true"
+                            aria-controls="flush-collapseOne">
+                            Detaylı Ürün Bilgileri
+                        </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse show"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            {{ urun.teknikDetaylar|safe }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</section>
+<!-- bu kısma forla bu sayfaya denk gelen ürünün kategorisine göre (benzer ürünler) getirilecek -->
+<section class="products py-5">
+    <div class="container">
+        <h6 class="minihead text-center">{{ urun.kategori }}</h6>
+        <h6 class="mdhead text-center">Benzer Ürünler</h6>
+        <hr class="headhr">
+        <div class="row mt-2">
+            {% for urun in ayniKategoridekiUrunler %}
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-3">
+                <a class="card" href="{% url 'product' urun.id %}">
+                    {% if urun.indirimli_fiyat %}
+                    <div class="sale">
+                        <p>İndirim</p>
+                    </div>
+                    {% endif %}
+                    <div class="imgbox">
+                        <img src="{{ urun.urunresmi.url }}" alt="">
+                    </div>
+                    <div class="text-box">
+                        <p class="name">{{ urun.isim }}</p>
+                    </div>
+                    <div class="price-content">
+                        <div class="price-box">
+                            {% if urun.indirimli_fiyat %}
+                            <p class="price fw-lighter text-dark"><del>{{ urun.fiyat }} TL</del></p>
+                            <p class="discounted-price ms-3">{{ urun.indirimli_fiyat }} TL</p>
+                            {% else %}
+                            <p class="price">{{ urun.fiyat }} TL</p>
+                            {% endif %}
+                        </div>
+                        <button class="btn btn-primary">İncele</button>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="row mt-5 collection-parent wrapperone">
+            <div class="col-lg-12 mt-3">
+                {% for wrapper in wrapperone %}
+                <div class="text-box">
+                    <p class="text-center pt-4 fs-2">{{ wrapper.wrapperText }}</p>
+                </div>
+                <a href="{% url 'allProduct' %}" class="btn btn-primary mt-5">Alışverişe Başla</a>
+                <div class="owl-carousel owl-theme owl-carouseltwo">
+
+                    {% if wrapper.wrapperResim1 %}
+                    <div class="item">
+                        <div class="card">
+                            <div class="imgbox">
+                                <img src="{{ wrapper.wrapperResim1.url }}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if wrapper.wrapperResim2 %}
+                    <div class="item">
+                        <div class="card">
+                            <div class="imgbox">
+                                <img src="{{ wrapper.wrapperResim2.url }}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if wrapper.wrapperResim3 %}
+                    <div class="item">
+                        <div class="card">
+                            <div class="imgbox">
+                                <img src="{{ wrapper.wrapperResim3.url }}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if wrapper.wrapperResim4 %}
+                    <div class="item">
+                        <div class="card">
+                            <div class="imgbox">
+                                <img src="{{ wrapper.wrapperResim4.url }}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if wrapper.wrapperResim5 %}
+                    <div class="item">
+                        <div class="card">
+                            <div class="imgbox">
+                                <img src="{{ wrapper.wrapperResim5.url }}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
