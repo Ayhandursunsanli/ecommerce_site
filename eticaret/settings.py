@@ -26,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-874e070+0ev7v+-(yh+8l1ip(tyemm@^w7^i!$_ypcw!p#rpj$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -122,7 +122,26 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+if DEBUG == True:
+
+    STATIC_URL = 'static/'
+    STATICFILES_DIRS = [
+        BASE_DIR / 'static'    
+    ]
+    MEDIA_URL = ''
+    MEDIA_ROOT= os.path.join(
+        BASE_DIR / 'media'
+)
+    
+else:
+    STATIC_URL = 'static/'
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT= os.path.join(
+        BASE_DIR / 'media'
+    )
+    STATIC_ROOT = os.path.join(
+        BASE_DIR / 'staticfiles'
+    )
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -131,10 +150,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #veritabanından yüklenen resimlerin kaydolacağı klasör belirleme
 
-MEDIA_URL = ''
-MEDIA_ROOT= os.path.join(
-    BASE_DIR / 'media'
-)
+
 
 #SESSION_COOKIE_AGE = 3600  # Oturum süresi (saniye cinsinden). Örnekte 1 saat (3600 saniye) olarak ayarlandı.
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Tarayıcı kapandığında otomatik olarak oturumu sonlandırır.

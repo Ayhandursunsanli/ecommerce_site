@@ -8,7 +8,7 @@ from django.db.models import Count
 from userapp.forms import UserProfileForm
 from userapp.models import MyUser
 import datetime
-
+from django.http import Http404
 #iyizipay importlar
 import iyzipay
 import json
@@ -314,7 +314,17 @@ def allProduct(request):
     return render(request, 'all-product.html', context)
 
 def category(request,categoryName):
-    urunler = Urun.objects.filter(kategori=categoryName)
+    # urunler = Urun.objects.filter(kategori=categoryName)
+    try:
+        
+        valid_categories = [urun.kategori for urun in Urun.objects.all()]  
+        if categoryName not in valid_categories:
+            raise Http404("Böyle bir kategori bulunamadı.")
+        
+        urunler = Urun.objects.filter(kategori=categoryName)
+    except Urun.DoesNotExist:
+        raise Http404("Böyle bir kategori bulunamadı.")
+    
     urun_sayisi = urunler.values('isim').annotate(urun_sayisi=Count('isim')) #Filtrede ürün sayısı göstermek için
     renk_sayisi = urunler.values('urunRengi').annotate(renk_sayisi=Count('urunRengi')) #Filtrede renk sayısı göstermek için
     kaplama_sayisi = urunler.values('ayakKaplama').annotate(kaplama_sayisi=Count('ayakKaplama')) #Filtrede kaplama sayısı göstermek için
@@ -875,3 +885,7 @@ def teslimat(request):
         'city_options': city_options,
     }
     return render(request, 'teslimat-bilgileri.html', context)
+
+
+def view_404(request, exception):
+    return redirect('/')
