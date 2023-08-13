@@ -1,0 +1,139 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}
+    Lampada | Teslimat Bilgileri
+{% endblock %}
+
+{% block content %}
+    <!-- İletişim Bilgileri (Telefon, Mail, Adres) -->
+    <section class="contact-us py-5">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-8">
+                    <div class="row" style="border: 1px solid #d2d2d2;">
+                        <div class="col-6 p-3 text-muted">
+                            <h6 class="mb-0 text-center text-muted">1. Teslimat Bilgileri</h6>
+                        </div>
+                        <div class="col-6 p-3 bg-dark-subtle">
+                            <h6 class="mb-0 text-center fw-bold">2. Ödeme İşlemleri</h6>
+                        </div>
+                        <!-- <div class="col-4 p-3">
+                            <h5 class="mb-0 text-center text-muted">3. Ödeme Sipariş Onayı</h5>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="user-account">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <form action=""  method="POST">
+                        {% csrf_token %}
+
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div
+                            class="alert text-center mb-3 {% if message.tags %}{% if 'error' in message.tags %}alert-danger{% else %}alert-{{ message.tags }}{% endif %}{% endif %}">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+
+                        <h5 class="text-center"><i class="fa-solid fa-truck"></i> Teslimat Bilgilerin</h5>
+                        <hr>
+                        <div class=" membership py-4">
+                            <!-- <p>"Profil Ayarları" kısmından değiştirebilirsiniz.</p>
+                            <label  for="username">Kullanıcı Adı:</label>
+                            <input type="text" name="username" value="{{ user.username }}" readonly>
+                            <label for="firstname">Adı:</label>
+                            <input type="text" name="firstname" value="{{ user.first_name }}" readonly>
+                            <label for="lastname">Soyadı:</label>
+                            <input type="text" name="lastname" value="{{ user.last_name }}" readonly>
+                            <label for="email">Email:</label>
+                            <input type="email" name="email" value="{{ user.email }}" readonly>
+                            <label for="phone">Telefon:</label>
+                            <input type="number" name="phone" value="{{ user.phone }}" readonly> -->
+                            <div class="d-flex justify-content-between">
+                                <p class="mb-0">İsim: </p>
+                                <p class="mb-0">{{ user.first_name }}</p>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <p class="mb-0">Soyisim: </p>
+                                <p class="mb-0">{{ user.last_name }}</p>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <p class="mb-0">Email: </p>
+                                <p class="mb-0">{{ user.email }}</p>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <p class="mb-0">Telefon: </p>
+                                <p class="mb-0">{{ user.phone }}</p>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <p class="mb-0">Ülke: </p>
+                                <p class="mb-0">Türkiye</p>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <p class="mb-0">Şehir: </p>
+                                <p class="mb-0">{{ user.city }}</p>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <p class="mb-0">İlçe: </p>
+                                <p class="mb-0">{{ user.district }}</p>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <p class="mb-0">Adres: </p>
+                                <p class="mb-0 ms-2">{{ user.address }}</p>
+                            </div>
+                        </div>
+                        
+                    </form>
+
+                </div>
+                <div class="col-lg-6 card py-4 mt-5 mt-lg-0 ">
+                    <h5 class="mb-0 text-center mt-2"><i class="fa-solid fa-cart-shopping"></i> Sepet Özetin</h5>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="mb-0">Ürün Sayısı: </h6> <h6 class="mb-0"> {{ toplam_urun_sayisi }} </h6>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="mb-0">Ara Toplam: </h6> <h6 class="mb-0"> {{ araToplam }} TL </h6>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="mb-0">KDV Tutarı (%20) : </h6> <h6 class="mb-0">{{ kdv }} TL</h6>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="mb-0">Ara Toplam + KDV: </h6> <h6 class="mb-0"> {{ toplam_tutar }} TL</h6>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="mb-0">Kargo Tutarı: </h6> <h6 class="mb-0">0,00 TL</h6>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <h5 class="mb-0">Genel Toplam: </h5> <h5 class="mb-0 text-danger">{{ toplam_tutar }} TL</h5>
+                    </div>
+                    <form action="" method="POST" class=" h-100 d-flex align-items-end border-0 py-2 px-0 mt-5 ms-3">
+                        {% csrf_token %}
+                        <input type="submit" name="odeme" value="Ödemeye Geç" class="btn btn-primary">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

@@ -797,41 +797,42 @@ def teslimat(request):
 
                 user.save()
                 messages.success(request, 'Teslimat Bilgileriniz Güncellendi.')
-                return redirect('teslimat')
+                return redirect('odemebilgilerikontrol')
             
 
-        if 'odeme' in request.POST:
+        #* burası sipariş takip fonksiyonu önemli. Buraya gelecek bilgileride çekip bu fonksiyonu başka sayfada yazacağız
+        # if 'odeme' in request.POST:
             
-            siparis = Siparis.objects.create(
-                user=user,
-                toplam_fiyat=toplam_tutar,
-                odeme_bilgisi=False,
-                gonderim_bilgisi=False,
-                teslimat_bilgileri_adi = user.first_name,
-                teslimat_bilgileri_soyadi = user.last_name,
-                teslimat_bilgileri_telefon = user.phone,
-                teslimat_bilgileri_adres = user.address,
-                teslimat_bilgileri_ulke = user.country,
-                teslimat_bilgileri_sehir = user.city,
-                teslimat_bilgileri_ilce = user.district
+        #     siparis = Siparis.objects.create(
+        #         user=user,
+        #         toplam_fiyat=toplam_tutar,
+        #         odeme_bilgisi=False,
+        #         gonderim_bilgisi=False,
+        #         teslimat_bilgileri_adi = user.first_name,
+        #         teslimat_bilgileri_soyadi = user.last_name,
+        #         teslimat_bilgileri_telefon = user.phone,
+        #         teslimat_bilgileri_adres = user.address,
+        #         teslimat_bilgileri_ulke = user.country,
+        #         teslimat_bilgileri_sehir = user.city,
+        #         teslimat_bilgileri_ilce = user.district
 
-            )
+        #     )
 
             
-            for sepet in sepetim:
-                SiparisUrun.objects.create(
-                    siparis=siparis,
-                    urun=sepet.urun,
-                    urun_stok_kodu=sepet.urun.stokKodu,
-                    adet=sepet.adet,
-                    birim_fiyat=sepet.urun.fiyat if not sepet.urun.indirimli_fiyat else sepet.urun.indirimli_fiyat,
-                    urun_resmi=sepet.urun.urunresmi
-                )
+        #     for sepet in sepetim:
+        #         SiparisUrun.objects.create(
+        #             siparis=siparis,
+        #             urun=sepet.urun,
+        #             urun_stok_kodu=sepet.urun.stokKodu,
+        #             adet=sepet.adet,
+        #             birim_fiyat=sepet.urun.fiyat if not sepet.urun.indirimli_fiyat else sepet.urun.indirimli_fiyat,
+        #             urun_resmi=sepet.urun.urunresmi
+        #         )
             
-            sepetim.delete()
+        #     sepetim.delete()
             
-            messages.success(request, 'Siparişiniz alındı. Ödeme yapabilirsiniz.')
-            return redirect('teslimat')
+        #     messages.success(request, 'Siparişiniz alındı. Ödeme yapabilirsiniz.')
+        #     return redirect('teslimat')
 
         
             
@@ -863,6 +864,166 @@ def teslimat(request):
         'city_options': city_options,
     }
     return render(request, 'teslimat-bilgileri.html', context)
+
+def odemebilgileriKontrol(request):
+    anakategori = Anakategori.objects.all()
+    socail_media = SocialMedia.objects.all()
+    footer = Footer.objects.first()
+    form = UserProfileForm
+
+    city_options = [
+        {"value": "Adana", "label": "Adana"},
+        {"value": "Adıyaman", "label": "Adıyaman"},
+        {"value": "Afyonkarahisar", "label": "Afyonkarahisar"},
+        {"value": "Ağrı", "label": "Ağrı"},
+        {"value": "Amasya", "label": "Amasya"},
+        {"value": "Ankara", "label": "Ankara"},
+        {"value": "Antalya", "label": "Antalya"},
+        {"value": "Artvin", "label": "Artvin"},
+        {"value": "Aydın", "label": "Aydın"},
+        {"value": "Balıkesir", "label": "Balıkesir"},
+        {"value": "Bilecik", "label": "Bilecik"},
+        {"value": "Bingöl", "label": "Bingöl"},
+        {"value": "Bitlis", "label": "Bitlis"},
+        {"value": "Bolu", "label": "Bolu"},
+        {"value": "Burdur", "label": "Burdur"},
+        {"value": "Bursa", "label": "Bursa"},
+        {"value": "Çanakkale", "label": "Çanakkale"},
+        {"value": "Çankırı", "label": "Çankırı"},
+        {"value": "Çorum", "label": "Çorum"},
+        {"value": "Denizli", "label": "Denizli"},
+        {"value": "Diyarbakır", "label": "Diyarbakır"},
+        {"value": "Edirne", "label": "Edirne"},
+        {"value": "Elazığ", "label": "Elazığ"},
+        {"value": "Erzincan", "label": "Erzincan"},
+        {"value": "Erzurum", "label": "Erzurum"},
+        {"value": "Eskişehir", "label": "Eskişehir"},
+        {"value": "Gaziantep", "label": "Gaziantep"},
+        {"value": "Giresun", "label": "Giresun"},
+        {"value": "Gümüşhane", "label": "Gümüşhane"},
+        {"value": "Hakkâri", "label": "Hakkâri"},
+        {"value": "Hatay", "label": "Hatay"},
+        {"value": "Isparta", "label": "Isparta"},
+        {"value": "Mersin", "label": "Mersin"},
+        {"value": "İstanbul", "label": "İstanbul"},
+        {"value": "İzmir", "label": "İzmir"},
+        {"value": "Kars", "label": "Kars"},
+        {"value": "Kastamonu", "label": "Kastamonu"},
+        {"value": "Kayseri", "label": "Kayseri"},
+        {"value": "Kırklareli", "label": "Kırklareli"},
+        {"value": "Kırşehir", "label": "Kırşehir"},
+        {"value": "Kocaeli", "label": "Kocaeli"},
+        {"value": "Konya", "label": "Konya"},
+        {"value": "Kütahya", "label": "Kütahya"},
+        {"value": "Malatya", "label": "Malatya"},
+        {"value": "Manisa", "label": "Manisa"},
+        {"value": "Kahramanmaraş", "label": "Kahramanmaraş"},
+        {"value": "Mardin", "label": "Mardin"},
+        {"value": "Muğla", "label": "Muğla"},
+        {"value": "Muş", "label": "Muş"},
+        {"value": "Nevşehir", "label": "Nevşehir"},
+        {"value": "Niğde", "label": "Niğde"},
+        {"value": "Ordu", "label": "Ordu"},
+        {"value": "Rize", "label": "Rize"},
+        {"value": "Sakarya", "label": "Sakarya"},
+        {"value": "Samsun", "label": "Samsun"},
+        {"value": "Siirt", "label": "Siirt"},
+        {"value": "Sinop", "label": "Sinop"},
+        {"value": "Sivas", "label": "Sivas"},
+        {"value": "Tekirdağ", "label": "Tekirdağ"},
+        {"value": "Tokat", "label": "Tokat"},
+        {"value": "Trabzon", "label": "Trabzon"},
+        {"value": "Tunceli", "label": "Tunceli"},
+        {"value": "Şanlıurfa", "label": "Şanlıurfa"},
+        {"value": "Uşak", "label": "Uşak"},
+        {"value": "Van", "label": "Van"},
+        {"value": "Yozgat", "label": "Yozgat"},
+        {"value": "Zonguldak", "label": "Zonguldak"},
+        {"value": "Aksaray", "label": "Aksaray"},
+        {"value": "Bayburt", "label": "Bayburt"},
+        {"value": "Karaman", "label": "Karaman"},
+        {"value": "Kırıkkale", "label": "Kırıkkale"},
+        {"value": "Batman", "label": "Batman"},
+        {"value": "Şırnak", "label": "Şırnak"},
+        {"value": "Bartın", "label": "Bartın"},
+        {"value": "Ardahan", "label": "Ardahan"},
+        {"value": "Iğdır", "label": "Iğdır"},
+        {"value": "Yalova", "label": "Yalova"},
+        {"value": "Karabük", "label": "Karabük"},
+        {"value": "Kilis", "label": "Kilis"},
+        {"value": "Osmaniye", "label": "Osmaniye"},
+        {"value": "Düzce", "label": "Düzce"},
+    ]  
+
+    # if not request.META.get('HTTP_REFERER') or '/sepet/' not in request.META.get('HTTP_REFERER'):
+    #     # Eğer sayfa refereri sepet sayfasına değilse veya referer yoksa, buraya erişim engellenir
+    #     return redirect('sepet')
+
+    user = request.user
+    toplam_tutar = Decimal('0.00')
+    toplam_urun_sayisi = 0
+
+
+    if user.is_authenticated:  # Kullanıcı girişi yapılmışsa
+        sepetim = Sepet.objects.filter(user=user)
+        for sepet in sepetim:
+            toplam_tutar += sepet.hesapla_toplam()
+            toplam_urun_sayisi += sepet.adet
+        kdv = toplam_tutar * Decimal('0.2')
+        araToplam = toplam_tutar - kdv
+    else:  # Kullanıcı girişi yapılmamışsa, boş bir sepet listesi oluştur
+        sepetim = []
+
+
+    #* burası sipariş takip fonksiyonu önemli. Buraya gelecek bilgileride çekip bu fonksiyonu başka sayfada yazacağız
+    if 'odeme' in request.POST:
+        
+        siparis = Siparis.objects.create(
+            user=user,
+            toplam_fiyat=toplam_tutar,
+            odeme_bilgisi=False,
+            gonderim_bilgisi=False,
+            teslimat_bilgileri_adi = user.first_name,
+            teslimat_bilgileri_soyadi = user.last_name,
+            teslimat_bilgileri_telefon = user.phone,
+            teslimat_bilgileri_adres = user.address,
+            teslimat_bilgileri_ulke = user.country,
+            teslimat_bilgileri_sehir = user.city,
+            teslimat_bilgileri_ilce = user.district
+
+        )
+
+        
+        for sepet in sepetim:
+            SiparisUrun.objects.create(
+                siparis=siparis,
+                urun=sepet.urun,
+                urun_stok_kodu=sepet.urun.stokKodu,
+                adet=sepet.adet,
+                birim_fiyat=sepet.urun.fiyat if not sepet.urun.indirimli_fiyat else sepet.urun.indirimli_fiyat,
+                urun_resmi=sepet.urun.urunresmi
+            )
+        
+        sepetim.delete()
+        
+        messages.success(request, 'Siparişiniz alındı. Ödeme yapabilirsiniz.')
+        return redirect('odemebilgilerikontrol')
+
+    context = {
+        'anakategori' : anakategori,
+        'footer' : footer,
+        'social_media' : socail_media,
+        'toplam_tutar': toplam_tutar,
+        'toplam_urun_sayisi': toplam_urun_sayisi,
+        'kdv': kdv,
+        'araToplam': araToplam,
+        'form':form,
+        'city_options': city_options,
+    }
+    return render(request, 'odeme-bilgileri-kontrol.html', context)
+
+
+
 
 
 def view_404(request, exception):
