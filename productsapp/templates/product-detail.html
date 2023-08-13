@@ -9,8 +9,15 @@ Lampada | Ürün Detayı
 {% block content %}
 <!-- ürün detay bölümü -->
 <section class="container sproduct py-5">
-    <div class="row mt-5">
+    <div class="row mt-2">
         <div class="col-lg-5 col-md-12 col-12">
+            <div class="d-lg-none">
+                <h6>Anasayfa / {{urun.kategori}}</h6>
+                <hr>
+                <h3 class="">{{urun.isim}}</h3>
+                <span>{{urun.aciklama}}</span>
+                <hr>
+            </div>
             <div class="sproduct-imgbox">
                 <img class="img-fluid pb-1" src="{{ urun.urunresmi.url }}" id="MainImg" alt="">
             </div>
@@ -36,11 +43,14 @@ Lampada | Ürün Detayı
             </div>
         </div>
         <div class="col-lg-6 col-md-12 col-12 mt-lg-0 mt-5">
-            <h6>Anasayfa / {{urun.kategori}}</h6>
-            <hr>
-            <h3 class="">{{urun.isim}}</h3>
-            <span>{{urun.aciklama}}</span>
-            <hr>
+            <div class="d-none d-lg-block">
+                <h6>Anasayfa / {{urun.kategori}}</h6>
+                <hr>
+                <h3 class="">{{urun.isim}}</h3>
+                <span>{{urun.aciklama}}</span>
+                <hr>
+            </div>
+            <hr class="d-lg-none">
             <div class="d-flex align-items-center justify-content-start mt-4">
                 {% if urun.indirimli_fiyat %}
                 <h2 class="text-muted fw-light"><del>{{ urun.fiyat }} TL</del></h2>

@@ -833,6 +833,10 @@ def teslimat(request):
             messages.success(request, 'Siparişiniz alındı. Ödeme yapabilirsiniz.')
             return redirect('teslimat')
 
+        
+            
+        
+
     else:
         form = UserProfileForm(initial={
             'username': request.user.username,
@@ -846,32 +850,6 @@ def teslimat(request):
             'district': request.user.district,
         })
 
-        # if 'odeme' in request.POST:
-        #     siparis = Siparis.objects.create(
-        #         user=user,
-        #         toplam_fiyat=toplam_tutar,
-        #         odeme_bilgisi=False,
-        #         teslimat_bilgileri_adi = request.user.first_name.get(),
-        #         teslimat_bilgileri_soyadi = form.cleaned_data.get('country'),
-        #         teslimat_bilgileri_telefon = form.cleaned_data.get('country'),
-        #         teslimat_bilgileri_adres = form.cleaned_data.get('country'),
-        #         teslimat_bilgileri_ulke = form.cleaned_data.get('country'),
-        #         teslimat_bilgileri_sehir = form.cleaned_data.get('country'),
-        #         teslimat_bilgileri_ilce = form.cleaned_data.get('country')
-
-        #     )
-            
-        #     for sepet in sepetim:
-        #         SiparisUrun.objects.create(
-        #             siparis=siparis,
-        #             urun=sepet.urun,
-        #             adet=sepet.adet,
-        #             birim_fiyat=sepet.urun.fiyat if not sepet.urun.indirimli_fiyat else sepet.urun.indirimli_fiyat,
-        #             urun_resmi=sepet.urun.urunresmi
-        #         )
-            
-        #     messages.success(request, 'Siparişiniz alındı. Ödeme yapabilirsiniz.')
-        #     return redirect('teslimat')
 
     context = {
         'anakategori' : anakategori,

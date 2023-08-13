@@ -46,7 +46,7 @@
                                 <label for="phone">Telefon:</label>
                                 <input type="number" name="phone" value="{{ user.phone }}" required>
                             </div>
-                            <div class="col-md-6 address-info">
+                            <div class="col-md-6 address-info mt-sm-5 mt-md-0">
                                 <h6 class="fw-bold"><i class="fa-solid fa-location-dot"></i> Adres Bilgilerim</h6>
                                 <hr>
                                 <label for="country">Ülke: </label>
@@ -68,8 +68,8 @@
                                 <textarea class="p-3" name="address" cols="30" rows="3" required>{{ user.address }}</textarea>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Kaydet</button>
-                        <a href="{% url 'new_password' %}" class="btn btn-primary" >Parolamı Güncelle</a>
+                        <button type="submit" class="btn btn-primary mt-4">Kaydet</button>
+                        <a href="{% url 'new_password' %}" class="btn btn-primary mt-4" >Parolamı Güncelle</a>
                     </form>
                 </div>
             </div>
