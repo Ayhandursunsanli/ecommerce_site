@@ -923,6 +923,30 @@ footer .socail-media img:hover {
   overflow: scroll;
 }
 
+.siparislerim .accordion .accordion-item .accordion-header h6 {
+  margin-bottom: 0;
+}
+.siparislerim .accordion .accordion-item .accordion-header .buton-baslkiler {
+  width: 100px;
+}
+.siparislerim .accordion .accordion-item .accordion-header .accordion-button::after {
+  flex-shrink: 0;
+  width: 1em;
+  height: 1em;
+  margin-left: auto;
+  content: "";
+  background-image: url("../img/chevron.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  transition: transform 0.2s ease;
+}
+.siparislerim .accordion .accordion-item .accordion-header .accordion-button:focus {
+  box-shadow: none;
+}
+.siparislerim .accordion .accordion-item .accordion-header .accordion-button:not(.collapsed) {
+  background-color: white;
+}
+
 @media screen and (max-width: 1050px) {
   .navbar-collapse .nav-item a {
     font-size: 12px !important;

@@ -17,7 +17,7 @@
                 <ul class="dropdown-menu">
                     <li><a href="{% url 'sepet' %}" class="dropdown-item"><i class="fa-solid fa-cart-shopping mt-1"></i> Sepetim:  {{ toplam_urun_sayisi }} / {{ toplam_tutar }} TL</a></li>
                     <li><a class="dropdown-item" href="{% url 'update_profile' %}"><i class="fa-solid fa-user"></i> Profili Göster</a></li>
-                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-tags"></i> Siparişlerim</a></li>
+                    <li><a class="dropdown-item" href="{% url 'siparislerim' %}"><i class="fa-solid fa-tags"></i> Siparişlerim</a></li>
                     <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="fa-solid fa-power-off"></i> Çıkış Yap</a></li>
                 </ul>
             </div>
@@ -91,7 +91,7 @@
                         {% if user.is_authenticated %}
                         <!-- eğer giriş yapmış ise display flex olacak if döndürücez -->
                         <li><a class="dropdown-item" href="{% url 'update_profile' %}"><i class="fa-solid fa-user"></i>PROFİLİ GÖSTER</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-tags"></i>SİPARİŞLERİM</a></li>
+                        <li><a class="dropdown-item" href="{% url 'siparislerim' %}"><i class="fa-solid fa-tags"></i>SİPARİŞLERİM</a></li>
                         <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="fa-solid fa-power-off"></i> ÇIKIŞ YAP</a></li>
 
                         {% else %}

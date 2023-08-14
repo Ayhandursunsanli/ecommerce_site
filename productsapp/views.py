@@ -9,6 +9,7 @@ from userapp.forms import UserProfileForm
 from userapp.models import MyUser
 import datetime
 from django.http import Http404
+from django.contrib.auth.decorators import login_required
 #iyizipay importlar
 import iyzipay
 import json
@@ -989,7 +990,8 @@ def odemebilgileriKontrol(request):
             teslimat_bilgileri_adres = user.address,
             teslimat_bilgileri_ulke = user.country,
             teslimat_bilgileri_sehir = user.city,
-            teslimat_bilgileri_ilce = user.district
+            teslimat_bilgileri_ilce = user.district,
+            teslimat_bilgileri_email = user.email
 
         )
 
@@ -1022,9 +1024,137 @@ def odemebilgileriKontrol(request):
     }
     return render(request, 'odeme-bilgileri-kontrol.html', context)
 
+@login_required
+def siparislerim(request):
+    user = request.user
+    siparisler = Siparis.objects.filter(user=user).order_by('-satinalma_tarihi')
+    anakategori = Anakategori.objects.all()
+    socail_media = SocialMedia.objects.all()
+    footer = Footer.objects.first()
+    form = UserProfileForm
+
+    city_options = [
+        {"value": "Adana", "label": "Adana"},
+        {"value": "Adıyaman", "label": "Adıyaman"},
+        {"value": "Afyonkarahisar", "label": "Afyonkarahisar"},
+        {"value": "Ağrı", "label": "Ağrı"},
+        {"value": "Amasya", "label": "Amasya"},
+        {"value": "Ankara", "label": "Ankara"},
+        {"value": "Antalya", "label": "Antalya"},
+        {"value": "Artvin", "label": "Artvin"},
+        {"value": "Aydın", "label": "Aydın"},
+        {"value": "Balıkesir", "label": "Balıkesir"},
+        {"value": "Bilecik", "label": "Bilecik"},
+        {"value": "Bingöl", "label": "Bingöl"},
+        {"value": "Bitlis", "label": "Bitlis"},
+        {"value": "Bolu", "label": "Bolu"},
+        {"value": "Burdur", "label": "Burdur"},
+        {"value": "Bursa", "label": "Bursa"},
+        {"value": "Çanakkale", "label": "Çanakkale"},
+        {"value": "Çankırı", "label": "Çankırı"},
+        {"value": "Çorum", "label": "Çorum"},
+        {"value": "Denizli", "label": "Denizli"},
+        {"value": "Diyarbakır", "label": "Diyarbakır"},
+        {"value": "Edirne", "label": "Edirne"},
+        {"value": "Elazığ", "label": "Elazığ"},
+        {"value": "Erzincan", "label": "Erzincan"},
+        {"value": "Erzurum", "label": "Erzurum"},
+        {"value": "Eskişehir", "label": "Eskişehir"},
+        {"value": "Gaziantep", "label": "Gaziantep"},
+        {"value": "Giresun", "label": "Giresun"},
+        {"value": "Gümüşhane", "label": "Gümüşhane"},
+        {"value": "Hakkâri", "label": "Hakkâri"},
+        {"value": "Hatay", "label": "Hatay"},
+        {"value": "Isparta", "label": "Isparta"},
+        {"value": "Mersin", "label": "Mersin"},
+        {"value": "İstanbul", "label": "İstanbul"},
+        {"value": "İzmir", "label": "İzmir"},
+        {"value": "Kars", "label": "Kars"},
+        {"value": "Kastamonu", "label": "Kastamonu"},
+        {"value": "Kayseri", "label": "Kayseri"},
+        {"value": "Kırklareli", "label": "Kırklareli"},
+        {"value": "Kırşehir", "label": "Kırşehir"},
+        {"value": "Kocaeli", "label": "Kocaeli"},
+        {"value": "Konya", "label": "Konya"},
+        {"value": "Kütahya", "label": "Kütahya"},
+        {"value": "Malatya", "label": "Malatya"},
+        {"value": "Manisa", "label": "Manisa"},
+        {"value": "Kahramanmaraş", "label": "Kahramanmaraş"},
+        {"value": "Mardin", "label": "Mardin"},
+        {"value": "Muğla", "label": "Muğla"},
+        {"value": "Muş", "label": "Muş"},
+        {"value": "Nevşehir", "label": "Nevşehir"},
+        {"value": "Niğde", "label": "Niğde"},
+        {"value": "Ordu", "label": "Ordu"},
+        {"value": "Rize", "label": "Rize"},
+        {"value": "Sakarya", "label": "Sakarya"},
+        {"value": "Samsun", "label": "Samsun"},
+        {"value": "Siirt", "label": "Siirt"},
+        {"value": "Sinop", "label": "Sinop"},
+        {"value": "Sivas", "label": "Sivas"},
+        {"value": "Tekirdağ", "label": "Tekirdağ"},
+        {"value": "Tokat", "label": "Tokat"},
+        {"value": "Trabzon", "label": "Trabzon"},
+        {"value": "Tunceli", "label": "Tunceli"},
+        {"value": "Şanlıurfa", "label": "Şanlıurfa"},
+        {"value": "Uşak", "label": "Uşak"},
+        {"value": "Van", "label": "Van"},
+        {"value": "Yozgat", "label": "Yozgat"},
+        {"value": "Zonguldak", "label": "Zonguldak"},
+        {"value": "Aksaray", "label": "Aksaray"},
+        {"value": "Bayburt", "label": "Bayburt"},
+        {"value": "Karaman", "label": "Karaman"},
+        {"value": "Kırıkkale", "label": "Kırıkkale"},
+        {"value": "Batman", "label": "Batman"},
+        {"value": "Şırnak", "label": "Şırnak"},
+        {"value": "Bartın", "label": "Bartın"},
+        {"value": "Ardahan", "label": "Ardahan"},
+        {"value": "Iğdır", "label": "Iğdır"},
+        {"value": "Yalova", "label": "Yalova"},
+        {"value": "Karabük", "label": "Karabük"},
+        {"value": "Kilis", "label": "Kilis"},
+        {"value": "Osmaniye", "label": "Osmaniye"},
+        {"value": "Düzce", "label": "Düzce"},
+    ]  
+
+    # if not request.META.get('HTTP_REFERER') or '/sepet/' not in request.META.get('HTTP_REFERER'):
+    #     # Eğer sayfa refereri sepet sayfasına değilse veya referer yoksa, buraya erişim engellenir
+    #     return redirect('sepet')
+
+    toplam_tutar = Decimal('0.00')
+    toplam_urun_sayisi = 0
+    kdv = Decimal('0.00')
+    araToplam = Decimal('0.00')
+
+
+    for siparis in siparisler:
+        siparis.toplam_adet = sum(su.adet for su in siparis.siparisurun_set.all())
 
 
 
+    if user.is_authenticated:  # Kullanıcı girişi yapılmışsa
+        sepetim = Sepet.objects.filter(user=user)
+        for sepet in sepetim:
+            toplam_tutar += sepet.hesapla_toplam()
+            toplam_urun_sayisi += sepet.adet
+        kdv = toplam_tutar * Decimal('0.2')
+        araToplam = toplam_tutar - kdv
+    else:  # Kullanıcı girişi yapılmamışsa, boş bir sepet listesi oluştur
+        sepetim = []
+
+    context = {
+        'anakategori' : anakategori,
+        'footer' : footer,
+        'social_media' : socail_media,
+        'toplam_tutar': toplam_tutar,
+        'toplam_urun_sayisi': toplam_urun_sayisi,
+        'kdv': kdv,
+        'araToplam': araToplam,
+        'form':form,
+        'city_options': city_options,
+        'siparisler': siparisler
+    }
+    return render(request, 'siparislerim.html', context)
 
 def view_404(request, exception):
     return redirect('/')

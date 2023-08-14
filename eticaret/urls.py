@@ -44,7 +44,8 @@ urlpatterns = [
     path('failure/', fail, name='failure'),
     path('yardim/', yardim, name='yardim'),
     path('teslimat/', teslimat, name='teslimat'),
-    path('odemebilgilerikontrol', odemebilgileriKontrol, name='odemebilgilerikontrol')
+    path('odemebilgilerikontrol/', odemebilgileriKontrol, name='odemebilgilerikontrol'),
+    path('siparislerim/', siparislerim, name='siparislerim')
     
 
     # path('hesabim/', hesabim, name='hesabim'), #userapp içindeki url yazılıp buraya çekilecek

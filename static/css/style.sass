@@ -1,5 +1,6 @@
 $temacolororange: #c19a83
 
+
 *
     font-family: 'Oswald',sans-serif
 
@@ -865,6 +866,34 @@ footer
                     padding: 1rem
                     height: 60vh
                     overflow: scroll
+
+
+.siparislerim
+    .accordion
+        .accordion-item
+            .accordion-header
+                h6
+                    margin-bottom: 0
+                .buton-baslkiler
+                    width: 100px
+
+                .accordion-button::after 
+                    flex-shrink: 0
+                    width: 1em
+                    height: 1em
+                    margin-left: auto
+                    content: ""
+                    background-image: url('../img/chevron.png')
+                    background-repeat: no-repeat
+                    background-size: contain
+                    transition: transform 0.2s ease
+                
+                .accordion-button:focus
+                    box-shadow: none
+                .accordion-button:not(.collapsed) 
+                    background-color: white
+
+
 //MEDIA SCREEN
 
 @media screen and (max-width: 1050px)

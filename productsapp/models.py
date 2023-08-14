@@ -173,6 +173,7 @@ class Siparis(models.Model):
     teslimat_bilgileri_adi = models.CharField(max_length=200, blank=False, null=True, verbose_name='Adı')
     teslimat_bilgileri_soyadi = models.CharField(max_length=200, blank=False, null=True, verbose_name='Soyadı')
     teslimat_bilgileri_telefon = models.CharField(max_length=200, blank=False, null=True, verbose_name='Telefon')
+    teslimat_bilgileri_email = models.EmailField(max_length=200, blank=False, null=True, verbose_name='E-Mail')
     teslimat_bilgileri_adres = models.TextField(max_length=200, blank=False, null=True, verbose_name='Adress')
     teslimat_bilgileri_ulke = models.CharField(max_length=200, blank=False, null=True, verbose_name='Ülke')
     teslimat_bilgileri_sehir = models.CharField(max_length=200, blank=False, null=True, verbose_name='Şehir')
