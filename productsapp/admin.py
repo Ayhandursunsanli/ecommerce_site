@@ -81,7 +81,7 @@ class SiparisUrunAdmin(admin.ModelAdmin):
     urun_resmi_tag.short_description = 'Ürün Resmi'
 
 class SiparisAdmin(admin.ModelAdmin):
-    list_display = ('user', 'toplam_fiyat', 'satinalma_tarihi', 'odeme_bilgisi', 'gonderim_bilgisi')
+    list_display = ('user', 'toplam_fiyat', 'satinalma_tarihi', 'odeme_bilgisi', 'siparis_iptal', 'kargoya_verildi', 'siparis_teslim_edildi')
     inlines = [SiparisUrunInline]
 
     # burası admin panelden değişiklik yapılmaması için/ değişiklik yapmak istenirse silinebilir

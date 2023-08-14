@@ -923,6 +923,15 @@ footer .socail-media img:hover {
   overflow: scroll;
 }
 
+.vertical-line {
+  margin-left: 10px;
+  width: 1px;
+  height: 25px;
+  background-image: linear-gradient(to bottom, black 50%, transparent 50%);
+  background-size: 1px 10px;
+  background-repeat: repeat-y;
+}
+
 .siparislerim .accordion .accordion-item .accordion-header h6 {
   margin-bottom: 0;
 }
@@ -945,6 +954,18 @@ footer .socail-media img:hover {
 }
 .siparislerim .accordion .accordion-item .accordion-header .accordion-button:not(.collapsed) {
   background-color: white;
+}
+.siparislerim .accordion .accordion-item .siparis-sureci {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+.siparislerim .accordion .accordion-item .siparis-sureci p {
+  margin-bottom: 0;
+}
+.siparislerim .accordion .accordion-item .siparis-sureci i {
+  width: 30px;
+  font-size: 20px;
 }
 
 @media screen and (max-width: 1050px) {

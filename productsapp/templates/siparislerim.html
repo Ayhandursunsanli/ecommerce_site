@@ -14,7 +14,13 @@
         <h2 class="mdhead text-center">Siparişlerim</h2>
         <hr class="headhr">
     </section>
-
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert {% if message.tags %}{% if 'error' in message.tags %}alert-danger{% else %}alert-{{ message.tags }}{% endif %}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
     <section class="user-account siparislerim">
         <div class="container">
             <div class="row">
@@ -81,6 +87,56 @@
                                                 <p>Telefon: {{ siparis.teslimat_bilgileri_telefon }}</p>
                                                 <p>Email: {{ siparis.teslimat_bilgileri_email }}</p>
                                                 <p>Adres: {{ siparis.teslimat_bilgileri_adres }} - {{ siparis.teslimat_bilgileri_ilce }} - {{ siparis.teslimat_bilgileri_sehir }} - {{ siparis.teslimat_bilgileri_ulke }}</p>
+                                                <hr>
+
+                                                <h3>Teslimat Süreci: </h3>
+                                                <hr>
+
+                                                {% if not siparis.kargoya_verildi and not siparis.siparis_iptal %}
+                                                <div class="siparis-sureci">
+                                                    <p class="text-success"><i class="fa-solid fa-people-carry-box"></i> Siparişiniz hazırlanıyor.</p>
+                                                    <div class="vertical-line"></div>
+                                                    <p class="text-muted"><i class="fa-solid fa-truck"></i> Siparişiniz kargoya verildi.</p>
+                                                    <div class="vertical-line"></div>
+                                                    <p class="text-muted"><i class="fa-solid fa-hand-holding-heart"></i> Siparişiniz Teslim Edildi.</p>
+                                                    
+                                                </div>
+                                                <form class="p-0 mt-4 d-flex flex-column gap-2 border-0" method="POST">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="siparis_id" value="{{ siparis.id }}">
+                                                    <button class="btn btn-primary py-2" type="submit" name="siparis_iptal_btn" style="width: 150px;">Siparişi İptal Et</button>
+                                                    <small class="fw-light"><i>Siparişinizi kargoya tesliminden önce iptal edebilirsiniz.Siparişinizin kargoya tesliminden sonra ki iptal ve iade süreçleri için bizimle iletişime geçiniz.</i></small>
+                                                </form>
+
+                                                {% elif siparis.siparis_iptal %}
+                                                <div class="siparis-sureci">
+                                                    <p class="text-muted"><i class="fa-solid fa-people-carry-box"></i> Siparişiniz hazırlanıyor.</p>
+                                                    <div class="vertical-line"></div>
+                                                    <p class="text-danger"><i class="fa-regular fa-rectangle-xmark"></i> Siparişiniz iptal edildi.</p>
+                                                    <div class="vertical-line"></div>
+                                                    <p class="text-muted"><i class="fa-solid fa-truck text-muted"></i> Siparişiniz kargoya verildi.</p>
+                                                    <div class="vertical-line"></div>
+                                                    <p class="text-muted"><i class="fa-solid fa-hand-holding-heart"></i> Siparişiniz Teslim Edildi.</p>
+                                                </div>
+
+                                                {% elif siparis.kargoya_verildi and not siparis.siparis_teslim_edildi %}
+                                                <div class="siparis-sureci">
+                                                    <p class="text-success"><i class="fa-solid fa-people-carry-box"></i> Siparişiniz hazırlanıyor.</p>
+                                                    <div class="vertical-line text-success" style="color: green;"></div>
+                                                    <p class="text-success"><i class="fa-solid fa-truck"></i> Siparişiniz kargoya verildi.</p>
+                                                    <div class="vertical-line"></div>
+                                                    <p class="text-muted"><i class="fa-solid fa-hand-holding-heart"></i> Siparişiniz Teslim Edildi.</p>
+                                                </div>
+
+                                                {% elif siparis.kargoya_verildi and siparis.siparis_teslim_edildi %}
+                                                <div class="siparis-sureci">
+                                                    <p class="text-success"><i class="fa-solid fa-people-carry-box"></i> Siparişiniz hazırlanıyor.</p>
+                                                    <div class="vertical-line text-success" style="color: green;"></div>
+                                                    <p class="text-success"><i class="fa-solid fa-truck"></i> Siparişiniz kargoya verildi.</p>
+                                                    <div class="vertical-line" style="color: green;"></div>
+                                                    <p class="text-success"><i class="fa-solid fa-hand-holding-heart"></i> Siparişiniz Teslim Edildi.</p>
+                                                </div>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>

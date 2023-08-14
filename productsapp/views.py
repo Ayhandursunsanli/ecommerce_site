@@ -983,7 +983,6 @@ def odemebilgileriKontrol(request):
             user=user,
             toplam_fiyat=toplam_tutar,
             odeme_bilgisi=False,
-            gonderim_bilgisi=False,
             teslimat_bilgileri_adi = user.first_name,
             teslimat_bilgileri_soyadi = user.last_name,
             teslimat_bilgileri_telefon = user.phone,
@@ -1032,6 +1031,20 @@ def siparislerim(request):
     socail_media = SocialMedia.objects.all()
     footer = Footer.objects.first()
     form = UserProfileForm
+
+    
+
+
+    if request.method == 'POST':
+        siparis_id = request.POST.get('siparis_id')  # Formdan gelen siparis_id
+        siparis = Siparis.objects.get(id=siparis_id)
+        
+        if 'siparis_iptal_btn' in request.POST:
+            if not siparis.kargoya_verildi and not siparis.siparis_iptal:
+                siparis.siparis_iptal = True
+                siparis.save()
+                messages.success(request, 'Siparişiniz iptal edildi.')
+                return redirect('siparislerim')
 
     city_options = [
         {"value": "Adana", "label": "Adana"},
@@ -1142,6 +1155,8 @@ def siparislerim(request):
     else:  # Kullanıcı girişi yapılmamışsa, boş bir sepet listesi oluştur
         sepetim = []
 
+
+
     context = {
         'anakategori' : anakategori,
         'footer' : footer,
@@ -1152,7 +1167,8 @@ def siparislerim(request):
         'araToplam': araToplam,
         'form':form,
         'city_options': city_options,
-        'siparisler': siparisler
+        'siparisler': siparisler,
+        'siparis': siparis
     }
     return render(request, 'siparislerim.html', context)
 
