@@ -1140,8 +1140,14 @@ def siparislerim(request):
     araToplam = Decimal('0.00')
 
 
+    siparis = None  # siparis değişkenini döngü dışında tanımladık
+
     for siparis in siparisler:
-        siparis.toplam_adet = sum(su.adet for su in siparis.siparisurun_set.all())
+        try:
+            siparis.toplam_adet = sum(su.adet for su in siparis.siparisurun_set.all())
+        except Siparis.DoesNotExist:
+            # Sipariş silindi, böylece üzerinde işlem yapamayız
+            pass
 
 
 
