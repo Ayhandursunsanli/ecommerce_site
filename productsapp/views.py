@@ -573,10 +573,44 @@ def sepet(request):
 
 
 
+
     if request.method == 'POST':
         urunId = request.POST['urunId']
         sepet = Sepet.objects.get(id=urunId)
-        if 'guncelle' in request.POST:
+
+        # if 'guncelle' in request.POST: #Formda name'i guncelle butonu açılır tekrar kullanılmak istenirse
+        #     yeniAdet = request.POST['yeniAdet']
+
+        #     if yeniAdet > '0':
+        #         sepet.adet = yeniAdet
+        #         if sepet.urun.indirimli_fiyat:
+        #             sepet.toplam = sepet.urun.indirimli_fiyat * int(yeniAdet)
+        #         else:
+        #             sepet.toplam = sepet.urun.fiyat * int(yeniAdet)
+                
+        #         sepet.save()
+        #         messages.success(request, f'{sepet.urun.isim} Ürününün Adedi Güncellendi')
+        #     else:
+        #         messages.error(request, 'Geçersiz ürün adedi. Lütfen pozitif bir değer girin.')
+        #     return redirect('sepet')
+
+        if 'artir' in request.POST:
+            yeniAdet = request.POST['yeniAdet']
+
+            if yeniAdet > '0':
+                sepet.adet = yeniAdet
+                if sepet.urun.indirimli_fiyat:
+                    sepet.toplam = sepet.urun.indirimli_fiyat * int(yeniAdet)
+                else:
+                    sepet.toplam = sepet.urun.fiyat * int(yeniAdet)
+                
+                sepet.save()
+                messages.success(request, f'{sepet.urun.isim} Ürününün Adedi Güncellendi')
+            else:
+                messages.error(request, 'Geçersiz ürün adedi. Lütfen pozitif bir değer girin.')
+            return redirect('sepet')
+        
+        elif 'azalt' in request.POST:
             yeniAdet = request.POST['yeniAdet']
 
             if yeniAdet > '0':
@@ -596,6 +630,8 @@ def sepet(request):
             sepet.delete()
             messages.success(request, 'Ürün sepetten kaldırıldı.')
             return redirect('sepet')
+
+        
         
 
     for sepet in sepetim:
@@ -616,6 +652,8 @@ def sepet(request):
         'araToplam': araToplam
     }
     return render(request, 'sepet.html', context)
+
+
 
 def loading_page(request):
     return render(request, 'includes/_loading.html')

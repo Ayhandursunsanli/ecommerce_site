@@ -117,7 +117,7 @@
   align-items: center;
 }
 .input-number-group .input-group-button {
-  line-height: calc(76px/2 - 5px);
+  line-height: calc(76px/2 - 7px);
   margin-right: 0;
   margin-left: 0;
 }
@@ -147,6 +147,7 @@
   display: inline-block;
   width: 38px;
   background: rgba(197, 197, 197, 0.6117647059);
+  border: 1px solid gray;
   color: black;
   text-align: center;
   cursor: pointer;

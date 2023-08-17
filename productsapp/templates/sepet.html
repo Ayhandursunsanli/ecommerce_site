@@ -75,16 +75,19 @@
                                 {% csrf_token %}
                                 <div class="input-number-group input-number-group-responsive me-3">
                                     <div class="input-group-button">
-                                        <span class="input-number-decrement">-</span>
+                                        <!-- <span class="input-number-decrement">-</span> -->
+                                        <button class="input-number-decrement border-0" name="azalt" type="submit">-</button>
                                     </div>
                                     <input type="hidden" name="urunId" value="{{ urun.id }}">
                                     <input class="input-number adetInput responsive-adet" type="text" name="yeniAdet" value="{{ urun.adet }}" min="1" max="5">
                                     <div class="input-group-button">
-                                        <span class="input-number-increment">+</span>
+                                        <!-- <span class="input-number-increment">+</span> -->
+                                        <button class="input-number-increment border-0" name="artir" type="submit">+</button>
                                     </div>
-                                    <input type="submit" value="🗸" name="guncelle" class="btn btn-primary ms-1 fw-light px-2 py-1">
+                                    <!-- <input type="submit" value="🗸" name="guncelle" class="btn btn-primary ms-1 fw-light px-2 py-1"> -->
                                 </div>
                             </form>
+                            
                         </div>
                         <div class="col-lg-2 col-3">
                             <p>{{ urun.toplam|floatformat:2}} TL</p>
