@@ -53,6 +53,7 @@ def login_request(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
+                messages.success(request, f'Hoşgeldin {request.user.first_name}.')
                 return redirect('index')
             else:
                 messages.error(request, 'Hesabınız aktif değil. Lütfen e-posta onayınızı tamamlayın.')
@@ -273,6 +274,7 @@ def register(request):
 
 def logout_request(request):
     logout(request)
+    messages.success(request, "Başarıyla çıkış yaptınız.")
     return redirect('index')
 
 

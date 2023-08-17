@@ -53,10 +53,18 @@
             <img src="{% static 'img/table-lamp.png' %}" alt="">
         </span>
     </div>
+
     
     {% block content %}
 
-
+    {% if messages %}
+        {% for message in messages %}
+        <div
+            class="alert text-center mb-3 {% if message.tags %}{% if 'error' in message.tags %}alert-danger{% else %}alert-{{ message.tags }}{% endif %}{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endif %}
 
     <header>
         <img class="header-img" src="{{ slogan.gorsel.url }}" alt="">

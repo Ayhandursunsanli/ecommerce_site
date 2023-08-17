@@ -882,24 +882,6 @@ footer .socail-media img:hover {
   transform: translateX(-50%);
 }
 
-.membership-teslimat {
-  transition: 0.3s;
-}
-.membership-teslimat p {
-  font-size: 13px;
-  position: absolute;
-  top: 20px;
-  color: red;
-  display: none;
-  transition: 0.3s all;
-}
-.membership-teslimat:hover {
-  box-shadow: rgba(183, 32, 32, 0.212) 0px 7px 29px 0px;
-}
-.membership-teslimat:hover p {
-  display: flex;
-}
-
 .help-section .accordion .accordion-item .accordion-header .accordion-button:focus {
   box-shadow: none;
 }

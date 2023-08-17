@@ -47,10 +47,9 @@
                         <h5 class="text-center"><i class="fa-solid fa-truck"></i> Teslimat Bilgilerini Düzenle</h5>
                         <hr>
                         <div class="row">
-                            <div class="col-md-6 membership membership-teslimat py-4">
-                                <p>"Profil Ayarları" kısmından değiştirebilirsiniz.</p>
-                                <label  for="username">Kullanıcı Adı:</label>
-                                <input type="text" name="username" value="{{ user.username }}" required>
+                            <div class="col-md-6 membership py-4">
+                                <label class="d-none"  for="username">Kullanıcı Adı:</label>
+                                <input class="d-none" type="text" name="username" value="{{ user.username }}" required>
                                 <label for="firstname">Adı:</label>
                                 <input type="text" name="firstname" value="{{ user.first_name }}" required>
                                 <label for="lastname">Soyadı:</label>
@@ -58,7 +57,7 @@
                                 <label for="email">Email:</label>
                                 <input type="email" name="email" value="{{ user.email }}" required>
                                 <label for="phone">Telefon:</label>
-                                <input type="number" name="phone" value="{{ user.phone }}" readonly>
+                                <input type="number" name="phone" value="{{ user.phone }}" required>
                             </div>
                             <div class="col-md-6 address-info py-4">
                                 <label for="country">Ülke: </label>
