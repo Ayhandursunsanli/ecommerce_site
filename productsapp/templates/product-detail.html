@@ -129,7 +129,7 @@ Lampada | Ürün Detayı
                 <a class="card" href="{% url 'product' urun.id %}">
                     {% if urun.indirimli_fiyat %}
                     <div class="sale">
-                        <p>İndirim</p>
+                        <img class="indirim_resmi" src="{% static 'img/indirim.png' %}" alt="">
                     </div>
                     {% endif %}
                     <div class="imgbox">

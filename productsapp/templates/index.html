@@ -102,8 +102,8 @@
                                 <a class="card" href="{% url 'product' urunler.id %}">
                                     {% if urunler.indirimli_fiyat %}
                                         <div class="sale">
-                                            <p>İndirim</p>
-                                        </div> 
+                                            <img class="indirim_resmi" src="{% static 'img/indirim.png' %}" alt="">
+                                        </div>
                                     {% endif %}
 
                                     <div class="imgbox">
