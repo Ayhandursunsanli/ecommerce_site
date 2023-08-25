@@ -10,6 +10,7 @@ from userapp.models import MyUser
 import datetime
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
+import time
 #iyizipay importlar
 import iyzipay
 import json
@@ -41,20 +42,24 @@ sozlukToken = list()
 
 def payment(request):
     context = dict()
+    odemeler = Siparis.objects.filter(user=request.user, odeme_bilgisi=False).order_by('-pk').first()
+
+    
+
 
     buyer={
         'id': 'BY789',
-        'name': 'John',
-        'surname': 'Doe',
-        'gsmNumber': '+905350000000',
-        'email': 'email@email.com',
+        'name': odemeler.teslimat_bilgileri_adi,
+        'surname': odemeler.teslimat_bilgileri_soyadi,
+        'gsmNumber': odemeler.teslimat_bilgileri_telefon,
+        'email': odemeler.teslimat_bilgileri_email,
         'identityNumber': '74300864791',
         'lastLoginDate': '2015-10-05 12:43:35',
         'registrationDate': '2013-04-21 15:12:09',
         'registrationAddress': 'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1',
         'ip': '85.34.78.112',
-        'city': 'Istanbul',
-        'country': 'Turkey',
+        'city': odemeler.teslimat_bilgileri_sehir,
+        'country': odemeler.teslimat_bilgileri_ulke,
         'zipCode': '34732'
     }
 
@@ -97,7 +102,7 @@ def payment(request):
         'locale': 'tr',
         'conversationId': '123456789',
         'price': '1',
-        'paidPrice': '10',
+        'paidPrice': str(odemeler.toplam_fiyat),
         'currency': 'TRY',
         'basketId': 'B67832',
         'paymentGroup': 'PRODUCT',
@@ -172,8 +177,12 @@ def success(request):
     messages.success(request, 'İşlem Başarılı')
 
     template = 'ok.html'
-    return render(request, template, context)
-    # return redirect('index')
+    response = render(request, template, context)
+
+    # 5 saniye bekleyip sonra ana sayfaya yönlendirme
+    response['refresh'] = '5;url=/'
+    
+    return response
 
 def fail(request):
     context = dict()
@@ -1046,7 +1055,7 @@ def odemebilgileriKontrol(request):
         sepetim.delete()
         
         messages.success(request, 'Siparişiniz alındı. Ödeme yapabilirsiniz.')
-        return redirect('odemebilgilerikontrol')
+        return redirect('payment')
 
     context = {
         'anakategori' : anakategori,

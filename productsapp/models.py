@@ -182,6 +182,7 @@ class Siparis(models.Model):
     teslimat_bilgileri_ilce = models.CharField(max_length=200, blank=False, null=True, verbose_name='İlçe')
 
 
+
     class Meta:
         verbose_name_plural = 'Siparişler'
 
