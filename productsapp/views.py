@@ -7,10 +7,11 @@ from django.db.models import Q
 from django.db.models import Count
 from userapp.forms import UserProfileForm
 from userapp.models import MyUser
-import datetime
+from datetime import datetime
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
 import time
+from django.utils import timezone
 #iyizipay importlar
 import iyzipay
 import json
@@ -20,6 +21,18 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 import requests
 import pprint
+
+
+#ip adresi çekme
+def get_public_ip():
+    try:
+        response = requests.get('https://api64.ipify.org?format=json')
+        data = response.json()
+        return data['ip']
+    except Exception as e:
+        print("IP alınamadı:", e)
+        return None
+ip_address = get_public_ip()
 
 # Create your views here.
 
@@ -43,32 +56,34 @@ sozlukToken = list()
 def payment(request):
     context = dict()
     odemeler = Siparis.objects.filter(user=request.user, odeme_bilgisi=False).order_by('-pk').first()
+    turkey_timezone = timezone.get_current_timezone()
+    ip_address = get_public_ip()
 
     
 
 
     buyer={
-        'id': 'BY789',
+        'id': odemeler.user.id,  #'BY789'
         'name': odemeler.teslimat_bilgileri_adi,
         'surname': odemeler.teslimat_bilgileri_soyadi,
         'gsmNumber': odemeler.teslimat_bilgileri_telefon,
         'email': odemeler.teslimat_bilgileri_email,
-        'identityNumber': '74300864791',
-        'lastLoginDate': '2015-10-05 12:43:35',
-        'registrationDate': '2013-04-21 15:12:09',
-        'registrationAddress': 'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1',
-        'ip': '85.34.78.112',
+        'identityNumber': '98756487512',
+        'lastLoginDate': odemeler.user.last_login.astimezone(turkey_timezone).strftime('%Y-%m-%d %H:%M:%S'),
+        'registrationDate': odemeler.user.date_joined.astimezone(turkey_timezone).strftime('%Y-%m-%d %H:%M:%S'),
+        'registrationAddress': odemeler.teslimat_bilgileri_adres,
+        'ip': ip_address, #burayı çekmiyor olabilir
         'city': odemeler.teslimat_bilgileri_sehir,
         'country': odemeler.teslimat_bilgileri_ulke,
-        'zipCode': '34732'
+        # 'zipCode': '34732' zorunlu değil
     }
 
     address={
-        'contactName': 'Jane Doe',
-        'city': 'Istanbul',
-        'country': 'Turkey',
-        'address': 'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1',
-        'zipCode': '34732'
+        'contactName': f'{odemeler.teslimat_bilgileri_adi} {odemeler.teslimat_bilgileri_soyadi}',
+        'city': odemeler.teslimat_bilgileri_sehir,
+        'country': odemeler.teslimat_bilgileri_ulke,
+        'address': odemeler.teslimat_bilgileri_adres,
+        # 'zipCode': '34732' zorunlu değil
     }
 
     basket_items=[
@@ -78,7 +93,7 @@ def payment(request):
             'category1': 'Collectibles',
             'category2': 'Accessories',
             'itemType': 'PHYSICAL',
-            'price': '0.3'
+            'price': '0.3' #sanırım buraların toplamı request te bulunan paidprice ile eşit olacak
         },
         {
             'id': 'BI102',
@@ -86,7 +101,7 @@ def payment(request):
             'category1': 'Game',
             'category2': 'Online Game Items',
             'itemType': 'VIRTUAL',
-            'price': '0.5'
+            'price': '0.5' #sanırım buraların toplamı request te bulunan paidprice ile eşit olacak
         },
         {
             'id': 'BI103',
@@ -94,13 +109,13 @@ def payment(request):
             'category1': 'Electronics',
             'category2': 'Usb / Cable',
             'itemType': 'PHYSICAL',
-            'price': '0.2'
+            'price': '0.2' #sanırım buraların toplamı request te bulunan paidprice ile eşit olacak
         }
     ]
 
     request={
         'locale': 'tr',
-        'conversationId': '123456789',
+        'conversationId': '123456789', #sepet id
         'price': '1',
         'paidPrice': str(odemeler.toplam_fiyat),
         'currency': 'TRY',
