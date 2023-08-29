@@ -53,9 +53,46 @@ sozlukToken = list()
 
 #iyizipay viewsleri
 
+def prepare_basket_items(siparis_urunler):
+    prepared_items = []
+    
+    for siparis_urun in siparis_urunler:
+        urun = siparis_urun.urun
+        prepared_item = {
+            'id': urun.stokKodu,
+            'name': urun.isim,
+            'category1': urun.kategori,
+            'category2': urun.kategori,
+            'itemType': 'PHYSICAL',  # Varsayılan olarak fiziksel ürün
+            'price': str(siparis_urun.birim_fiyat),  # Fiyatı string olarak çevir
+        }
+        prepared_items.append(prepared_item)
+
+        print(f"Ürün Adı: {prepared_item['name']}, Fiyat: {prepared_item['price']}")
+    
+    return prepared_items
+
+
+
+
+
+# SiparisUrun objelerini alın
+siparis_urunler = SiparisUrun.objects.all()
+
+# prepare_basket_items fonksiyonunu kullanarak basket_items listesini doldurun
+basket_items = prepare_basket_items(siparis_urunler)
+
+
+
+
+
+
+
+
 def payment(request):
     context = dict()
     odemeler = Siparis.objects.filter(user=request.user, odeme_bilgisi=False).order_by('-pk').first()
+    siparis_urunler = SiparisUrun.objects.filter(siparis=odemeler)
     turkey_timezone = timezone.get_current_timezone()
     ip_address = get_public_ip()
 
@@ -86,37 +123,43 @@ def payment(request):
         # 'zipCode': '34732' zorunlu değil
     }
 
-    basket_items=[
-        {
-            'id': 'BI101',
-            'name': 'Binocular',
-            'category1': 'Collectibles',
-            'category2': 'Accessories',
-            'itemType': 'PHYSICAL',
-            'price': '0.3' #sanırım buraların toplamı request te bulunan paidprice ile eşit olacak
-        },
-        {
-            'id': 'BI102',
-            'name': 'Game code',
-            'category1': 'Game',
-            'category2': 'Online Game Items',
-            'itemType': 'VIRTUAL',
-            'price': '0.5' #sanırım buraların toplamı request te bulunan paidprice ile eşit olacak
-        },
-        {
-            'id': 'BI103',
-            'name': 'Usb',
-            'category1': 'Electronics',
-            'category2': 'Usb / Cable',
-            'itemType': 'PHYSICAL',
-            'price': '0.2' #sanırım buraların toplamı request te bulunan paidprice ile eşit olacak
-        }
-    ]
+    
+
+    # basket_items=[
+    #     {
+    #         'id': 'BI101',
+    #         'name': 'Binocular',
+    #         'category1': 'Collectibles',
+    #         'category2': 'Accessories',
+    #         'itemType': 'PHYSICAL',
+    #         'price': '0.3' #sanırım buraların toplamı request te bulunan paidprice ile eşit olacak
+    #     },
+    #     {
+    #         'id': 'BI102',
+    #         'name': 'Game code',
+    #         'category1': 'Game',
+    #         'category2': 'Online Game Items',
+    #         'itemType': 'VIRTUAL',
+    #         'price': '0.5' #sanırım buraların toplamı request te bulunan paidprice ile eşit olacak
+    #     },
+    #     {
+    #         'id': 'BI103',
+    #         'name': 'Usb',
+    #         'category1': 'Electronics',
+    #         'category2': 'Usb / Cable',
+    #         'itemType': 'PHYSICAL',
+    #         'price': '0.2' #sanırım buraların toplamı request te bulunan paidprice ile eşit olacak
+    #     }
+    # ]
+
+    basket_items = prepare_basket_items(siparis_urunler)
+
+    print(basket_items)
 
     request={
         'locale': 'tr',
         'conversationId': '123456789', #sepet id
-        'price': '1',
+        'price': str(odemeler.toplam_fiyat),
         'paidPrice': str(odemeler.toplam_fiyat),
         'currency': 'TRY',
         'basketId': 'B67832',
