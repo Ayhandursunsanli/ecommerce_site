@@ -58,13 +58,14 @@ def prepare_basket_items(siparis_urunler):
     
     for siparis_urun in siparis_urunler:
         urun = siparis_urun.urun
+        toplam_fiyat = siparis_urun.toplam_fiyat()
         prepared_item = {
             'id': urun.stokKodu,
             'name': urun.isim,
             'category1': urun.kategori,
             'category2': urun.kategori,
             'itemType': 'PHYSICAL',  # Varsayılan olarak fiziksel ürün
-            'price': str(siparis_urun.birim_fiyat),  # Fiyatı string olarak çevir
+            'price': str(toplam_fiyat),  # Fiyatı string olarak çevir / buraya birim fiyat geliyordu. Toplam yaptık. Ama her ürün için bir item açılması lazım. Yani aynı model üründen 2 adet oldu mu 2 adet item oluşması gerekli. Bakılacak, unutma !!
         }
         prepared_items.append(prepared_item)
 
