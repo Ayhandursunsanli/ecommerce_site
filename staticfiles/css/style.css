@@ -117,7 +117,7 @@
   align-items: center;
 }
 .input-number-group .input-group-button {
-  line-height: calc(76px/2 - 5px);
+  line-height: calc(76px/2);
   margin-right: 0;
   margin-left: 0;
 }
@@ -144,11 +144,12 @@
 }
 .input-number-group .input-number-decrement,
 .input-number-group .input-number-increment {
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 38px;
   background: rgba(197, 197, 197, 0.6117647059);
   color: black;
-  text-align: center;
   cursor: pointer;
   font-size: 25px;
   font-weight: 200;
@@ -160,6 +161,7 @@
   color: white;
 }
 .input-number-group .input-number-decrement {
+  padding-bottom: 5px;
   margin-right: 0;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
@@ -351,7 +353,6 @@ header .slogan {
 .products .card {
   width: 100%;
   height: 500px;
-  overflow: hidden;
   position: relative;
   transition: 0.4s;
   text-decoration: none;
@@ -447,21 +448,15 @@ header .slogan {
   height: 60px;
   border-radius: 50%;
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 16px;
+  left: 16px;
   z-index: 1;
-  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
-  background-color: red;
 }
-.products .card .sale p {
-  margin-bottom: 0;
-  font-size: 14px;
-  font-weight: bold;
-  letter-spacing: 2px;
-  color: white;
+.products .card .sale img {
+  width: 100px;
 }
 .products .card:hover {
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 .products .col-filtre-section .filtre_section {
   height: 600px;
@@ -889,24 +884,6 @@ footer .socail-media img:hover {
   transform: translateX(-50%);
 }
 
-.membership-teslimat {
-  transition: 0.3s;
-}
-.membership-teslimat p {
-  font-size: 13px;
-  position: absolute;
-  top: 20px;
-  color: red;
-  display: none;
-  transition: 0.3s all;
-}
-.membership-teslimat:hover {
-  box-shadow: rgba(183, 32, 32, 0.212) 0px 7px 29px 0px;
-}
-.membership-teslimat:hover p {
-  display: flex;
-}
-
 .help-section .accordion .accordion-item .accordion-header .accordion-button:focus {
   box-shadow: none;
 }
@@ -921,6 +898,51 @@ footer .socail-media img:hover {
   padding: 1rem;
   height: 60vh;
   overflow: scroll;
+}
+
+.vertical-line {
+  margin-left: 10px;
+  width: 1px;
+  height: 25px;
+  background-image: linear-gradient(to bottom, black 50%, transparent 50%);
+  background-size: 1px 10px;
+  background-repeat: repeat-y;
+}
+
+.siparislerim .accordion .accordion-item .accordion-header h6 {
+  margin-bottom: 0;
+}
+.siparislerim .accordion .accordion-item .accordion-header .buton-baslkiler {
+  width: 100px;
+}
+.siparislerim .accordion .accordion-item .accordion-header .accordion-button::after {
+  flex-shrink: 0;
+  width: 1em;
+  height: 1em;
+  margin-left: auto;
+  content: "";
+  background-image: url("../img/chevron.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  transition: transform 0.2s ease;
+}
+.siparislerim .accordion .accordion-item .accordion-header .accordion-button:focus {
+  box-shadow: none;
+}
+.siparislerim .accordion .accordion-item .accordion-header .accordion-button:not(.collapsed) {
+  background-color: white;
+}
+.siparislerim .accordion .accordion-item .siparis-sureci {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+.siparislerim .accordion .accordion-item .siparis-sureci p {
+  margin-bottom: 0;
+}
+.siparislerim .accordion .accordion-item .siparis-sureci i {
+  width: 30px;
+  font-size: 20px;
 }
 
 @media screen and (max-width: 1050px) {
@@ -976,7 +998,7 @@ footer .socail-media img:hover {
     margin-left: 0;
   }
   .sepet .input-number-group-responsive .input-number {
-    width: 20px;
+    width: 25px;
     padding: 0 5px;
     vertical-align: top;
     text-align: center;
@@ -999,11 +1021,12 @@ footer .socail-media img:hover {
   }
   .sepet .input-number-group-responsive .input-number-decrement,
   .sepet .input-number-group-responsive .input-number-increment {
-    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 22.5px;
     background: rgba(197, 197, 197, 0.6117647059);
     color: black;
-    text-align: center;
     cursor: pointer;
     font-size: 15px;
     font-weight: 200;

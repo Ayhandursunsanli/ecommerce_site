@@ -1,5 +1,6 @@
 $temacolororange: #c19a83
 
+
 *
     font-family: 'Oswald',sans-serif
 
@@ -107,9 +108,10 @@ $input-number-size: 76px
     align-items: center
 
     .input-group-button
-        line-height: calc(#{$input-number-size}/2 - 5px)
+        line-height: calc(#{$input-number-size}/2)
         margin-right: 0
         margin-left: 0
+        
 
     .input-number
         width: 50px
@@ -134,11 +136,13 @@ $input-number-size: 76px
 
     .input-number-decrement,
     .input-number-increment
-        display: inline-block
+        display: flex
+        justify-content: center
+        align-items: center
         width: $input-number-size/2
         background: #c5c5c59c
         color: black
-        text-align: center
+        // text-align: center
         cursor: pointer
         font-size: 25px
         font-weight: 200
@@ -149,6 +153,7 @@ $input-number-size: 76px
         
 
     .input-number-decrement
+        padding-bottom: 5px
         margin-right: 0
         border-top-left-radius: 10px
         border-bottom-left-radius: 10px
@@ -319,7 +324,7 @@ header
     .card
         width: 100%
         height: 500px
-        overflow: hidden
+        // overflow: hidden
         position: relative
         transition: .4s
         text-decoration: none
@@ -400,19 +405,13 @@ header
             height: 60px
             border-radius: 50%
             position: absolute
-            top: 20px
-            left: 20px
+            top: 16px
+            left: 16px
             z-index: 1
-            box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px
-            background-color: red
-            p
-                margin-bottom: 0
-                font-size: 14px
-                font-weight: bold
-                letter-spacing: 2px
-                color: white
+            img
+                width: 100px
         &:hover
-            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px
     .col-filtre-section
         .filtre_section
             height: 600px
@@ -831,22 +830,6 @@ footer
     // &:hover #progress-value
     //     // box-shadow: rgba(240, 233, 46, 0.4) -5px 5px, rgba(214, 240, 46, 0.3) -10px 10px, rgba(221, 240, 46, 0.2) -15px 15px, rgba(240, 233, 46, 0.1) -20px 20px, rgba(240, 224, 46, 0.05) -25px 25px
     //     background: #d9ff00
-        
-.membership-teslimat
-    transition: .3s
-    p
-        font-size: 13px
-        position: absolute
-        top: 20px
-        color: red
-        display: none
-        transition: .3s all
-        
-            
-    &:hover
-        box-shadow: rgba(183, 32, 32, 0.212) 0px 7px 29px 0px
-    &:hover p
-        display: flex
 
 .help-section
     .accordion
@@ -865,6 +848,49 @@ footer
                     padding: 1rem
                     height: 60vh
                     overflow: scroll
+
+.vertical-line
+    margin-left: 10px
+    width: 1px
+    height: 25px
+    background-image: linear-gradient(to bottom, black 50%, transparent 50%)
+    background-size: 1px 10px
+    background-repeat: repeat-y
+
+.siparislerim
+    .accordion
+        .accordion-item
+            .accordion-header
+                h6
+                    margin-bottom: 0
+                .buton-baslkiler
+                    width: 100px
+
+                .accordion-button::after 
+                    flex-shrink: 0
+                    width: 1em
+                    height: 1em
+                    margin-left: auto
+                    content: ""
+                    background-image: url('../img/chevron.png')
+                    background-repeat: no-repeat
+                    background-size: contain
+                    transition: transform 0.2s ease
+                
+                .accordion-button:focus
+                    box-shadow: none
+                .accordion-button:not(.collapsed) 
+                    background-color: white
+            .siparis-sureci
+                display: flex
+                flex-direction: column
+                align-items: start
+                p
+                    margin-bottom: 0
+                i
+                    width: 30px
+                    font-size: 20px
+
 //MEDIA SCREEN
 
 @media screen and (max-width: 1050px)
@@ -920,7 +946,7 @@ footer
                 margin-left: 0
 
             .input-number
-                width: 20px
+                width: 25px
                 padding: 0 5px
                 vertical-align: top
                 text-align: center
@@ -943,11 +969,12 @@ footer
 
             .input-number-decrement,
             .input-number-increment
-                display: inline-block
+                display: flex
+                justify-content: center
+                align-items: center
                 width: $input-number-size/2
                 background: #c5c5c59c
                 color: black
-                text-align: center
                 cursor: pointer
                 font-size: 15px
                 font-weight: 200
@@ -962,11 +989,13 @@ footer
                 border-top-left-radius: 10px
                 border-bottom-left-radius: 10px
                 
+                
 
             .input-number-increment
                 margin-left: 0
                 border-top-right-radius: 10px
                 border-bottom-right-radius: 10px
+                
             .btn-primary
                 font-size: 10px
                 width: 20px
