@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
 
 
@@ -159,12 +160,23 @@ AUTH_USER_MODEL = 'userapp.MyUser'
 
 #email onayı 
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_FROM = 'soyaltunfatih@gmail.com'
-EMAIL_HOST_USER = 'soyaltunfatih@gmail.com'
-EMAIL_HOST_PASSWORD = 'xpnjllgjuqjstfac'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+# env = environ.Env()
+# environ.Env.read_env()
 
-PASSWORD_RESET_TIMEOUT = 14400
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = env('EMAIL_HOST')
+# EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+# EMAIL_PORT = env('EMAIL_PORT')
+# EMAIL_USE_TLS = env('EMAIL_USE_TLS')
+
+
+
+load_dotenv()
+
+# settings.py içindeki ortam değişkenlerini yükleyin
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS') == 'True'

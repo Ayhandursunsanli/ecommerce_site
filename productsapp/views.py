@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib import messages
 from .models import *
 from decimal import Decimal
@@ -21,6 +21,8 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 import requests
 import pprint
+from userapp.forms import UserProfileForm
+
 
 
 #ip adresi çekme
@@ -85,7 +87,14 @@ basket_items = prepare_basket_items(siparis_urunler)
 
 
 
-
+# def odeme_bilgisi_guncelle(siparis_id):
+#     try:
+#         siparis = Siparis.objects.get(pk=siparis_id)
+#         siparis.odeme_bilgisi = True
+#         siparis.save()
+#     except Siparis.DoesNotExist:
+#         # Sipariş bulunamazsa veya işlem sırasında hata olursa bir şey yapma
+#         pass
 
 
 
@@ -233,6 +242,17 @@ def result(request):
 def success(request):
     context = dict()
     context['success'] = 'İşlem Başarılı'
+    odemeler = Siparis.objects.filter(user=request.user, odeme_bilgisi=False)
+
+
+    # Bulunan her bir siparişin ödeme bilgisini True olarak güncelleyin
+    for siparis in odemeler:
+        siparis.odeme_bilgisi = True
+        siparis.save()
+
+    # Sepeti temizle
+    Sepet.objects.filter(user=request.user).delete()
+
     messages.success(request, 'İşlem Başarılı')
 
     template = 'ok.html'
@@ -722,7 +742,6 @@ def sepet(request):
     return render(request, 'sepet.html', context)
 
 
-
 def loading_page(request):
     return render(request, 'includes/_loading.html')
 
@@ -907,44 +926,6 @@ def teslimat(request):
                 return redirect('odemebilgilerikontrol')
             
 
-        #* burası sipariş takip fonksiyonu önemli. Buraya gelecek bilgileride çekip bu fonksiyonu başka sayfada yazacağız
-        # if 'odeme' in request.POST:
-            
-        #     siparis = Siparis.objects.create(
-        #         user=user,
-        #         toplam_fiyat=toplam_tutar,
-        #         odeme_bilgisi=False,
-        #         gonderim_bilgisi=False,
-        #         teslimat_bilgileri_adi = user.first_name,
-        #         teslimat_bilgileri_soyadi = user.last_name,
-        #         teslimat_bilgileri_telefon = user.phone,
-        #         teslimat_bilgileri_adres = user.address,
-        #         teslimat_bilgileri_ulke = user.country,
-        #         teslimat_bilgileri_sehir = user.city,
-        #         teslimat_bilgileri_ilce = user.district
-
-        #     )
-
-            
-        #     for sepet in sepetim:
-        #         SiparisUrun.objects.create(
-        #             siparis=siparis,
-        #             urun=sepet.urun,
-        #             urun_stok_kodu=sepet.urun.stokKodu,
-        #             adet=sepet.adet,
-        #             birim_fiyat=sepet.urun.fiyat if not sepet.urun.indirimli_fiyat else sepet.urun.indirimli_fiyat,
-        #             urun_resmi=sepet.urun.urunresmi
-        #         )
-            
-        #     sepetim.delete()
-            
-        #     messages.success(request, 'Siparişiniz alındı. Ödeme yapabilirsiniz.')
-        #     return redirect('teslimat')
-
-        
-            
-        
-
     else:
         form = UserProfileForm(initial={
             'username': request.user.username,
@@ -976,7 +957,81 @@ def odemebilgileriKontrol(request):
     anakategori = Anakategori.objects.all()
     socail_media = SocialMedia.objects.all()
     footer = Footer.objects.first()
-    form = UserProfileForm
+
+    # UserProfileForm'u oluşturun
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST)
+        if form.is_valid():
+            user = request.user
+            user.username = form.cleaned_data['username']
+            user.email = form.cleaned_data['email']
+            user.first_name = form.cleaned_data['firstname']
+            user.last_name = form.cleaned_data['lastname']
+            user.phone = form.cleaned_data['phone']
+            user.address = form.cleaned_data['address']
+            user.country = form.cleaned_data['country']
+            user.city = form.cleaned_data['city']
+            user.district = form.cleaned_data['district']
+            user.save()
+            messages.success(request, 'Teslimat Bilgileriniz Güncellendi.')
+            return redirect('odemebilgilerikontrol')
+    else:
+        # İlk defa sayfa yüklendiğinde formu başlatın
+        form = UserProfileForm(initial={
+            'username': request.user.username,
+            'email': request.user.email,
+            'firstname': request.user.first_name,
+            'lastname': request.user.last_name,
+            'phone': request.user.phone,
+            'address': request.user.address,
+            'country': request.user.country,
+            'city': request.user.city,
+            'district': request.user.district,
+        })
+
+    # Geri kalan işlemleri devam ettirin
+    user = request.user
+    toplam_tutar = Decimal('0.00')
+    toplam_urun_sayisi = 0
+    if user.is_authenticated:
+        sepetim = Sepet.objects.filter(user=user)
+        for sepet in sepetim:
+            toplam_tutar += sepet.hesapla_toplam()
+            toplam_urun_sayisi += sepet.adet
+        kdv = toplam_tutar * Decimal('0.2')
+        araToplam = toplam_tutar - kdv
+    else:
+        sepetim = []
+
+    if 'odeme' in request.POST:
+        siparis = Siparis.objects.create(
+            user=user,
+            toplam_fiyat=toplam_tutar,
+            odeme_bilgisi=False,
+            teslimat_bilgileri_adi=user.first_name,
+            teslimat_bilgileri_soyadi=user.last_name,
+            teslimat_bilgileri_telefon=user.phone,
+            teslimat_bilgileri_adres=user.address,
+            teslimat_bilgileri_ulke=user.country,
+            teslimat_bilgileri_sehir=user.city,
+            teslimat_bilgileri_ilce=user.district,
+            teslimat_bilgileri_email=user.email
+        )
+
+        for sepet in sepetim:
+            SiparisUrun.objects.create(
+                siparis=siparis,
+                urun=sepet.urun,
+                urun_stok_kodu=sepet.urun.stokKodu,
+                adet=sepet.adet,
+                birim_fiyat=sepet.urun.fiyat if not sepet.urun.indirimli_fiyat else sepet.urun.indirimli_fiyat,
+                urun_resmi=sepet.urun.urunresmi
+            )
+
+        # sepetim.delete()
+
+        messages.success(request, 'Siparişiniz alındı. Ödeme yapabilirsiniz.')
+        return redirect('payment')
 
     city_options = [
         {"value": "Adana", "label": "Adana"},
@@ -1060,71 +1115,17 @@ def odemebilgileriKontrol(request):
         {"value": "Kilis", "label": "Kilis"},
         {"value": "Osmaniye", "label": "Osmaniye"},
         {"value": "Düzce", "label": "Düzce"},
-    ]  
-
-    # if not request.META.get('HTTP_REFERER') or '/sepet/' not in request.META.get('HTTP_REFERER'):
-    #     # Eğer sayfa refereri sepet sayfasına değilse veya referer yoksa, buraya erişim engellenir
-    #     return redirect('sepet')
-
-    user = request.user
-    toplam_tutar = Decimal('0.00')
-    toplam_urun_sayisi = 0
-
-
-    if user.is_authenticated:  # Kullanıcı girişi yapılmışsa
-        sepetim = Sepet.objects.filter(user=user)
-        for sepet in sepetim:
-            toplam_tutar += sepet.hesapla_toplam()
-            toplam_urun_sayisi += sepet.adet
-        kdv = toplam_tutar * Decimal('0.2')
-        araToplam = toplam_tutar - kdv
-    else:  # Kullanıcı girişi yapılmamışsa, boş bir sepet listesi oluştur
-        sepetim = []
-
-
-    #* burası sipariş takip fonksiyonu önemli. Buraya gelecek bilgileride çekip bu fonksiyonu başka sayfada yazacağız
-    if 'odeme' in request.POST:
-        
-        siparis = Siparis.objects.create(
-            user=user,
-            toplam_fiyat=toplam_tutar,
-            odeme_bilgisi=False,
-            teslimat_bilgileri_adi = user.first_name,
-            teslimat_bilgileri_soyadi = user.last_name,
-            teslimat_bilgileri_telefon = user.phone,
-            teslimat_bilgileri_adres = user.address,
-            teslimat_bilgileri_ulke = user.country,
-            teslimat_bilgileri_sehir = user.city,
-            teslimat_bilgileri_ilce = user.district,
-            teslimat_bilgileri_email = user.email
-
-        )
-
-        
-        for sepet in sepetim:
-            SiparisUrun.objects.create(
-                siparis=siparis,
-                urun=sepet.urun,
-                urun_stok_kodu=sepet.urun.stokKodu,
-                adet=sepet.adet,
-                birim_fiyat=sepet.urun.fiyat if not sepet.urun.indirimli_fiyat else sepet.urun.indirimli_fiyat,
-                urun_resmi=sepet.urun.urunresmi
-            )
-        
-        sepetim.delete()
-        
-        messages.success(request, 'Siparişiniz alındı. Ödeme yapabilirsiniz.')
-        return redirect('payment')
+    ]
 
     context = {
-        'anakategori' : anakategori,
-        'footer' : footer,
-        'social_media' : socail_media,
+        'anakategori': anakategori,
+        'footer': footer,
+        'social_media': socail_media,
         'toplam_tutar': toplam_tutar,
         'toplam_urun_sayisi': toplam_urun_sayisi,
         'kdv': kdv,
         'araToplam': araToplam,
-        'form':form,
+        'form': form,
         'city_options': city_options,
     }
     return render(request, 'odeme-bilgileri-kontrol.html', context)

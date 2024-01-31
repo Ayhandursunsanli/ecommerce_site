@@ -15,13 +15,23 @@ from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
+from django import forms
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.forms import PasswordChangeForm
+
 
 def is_valid_phone_number(phone_number, country_code):
     try:
         parsed_number = phonenumbers.parse(phone_number, country_code)
         return phonenumbers.is_valid_number(parsed_number)
-    except phonenumbers.phonenumberutil.NumberParseException:
+    except Exception as e:
+        print("Telefon numarası analizi sırasında bir hata oluştu:", e)
         return False
+
+
+class CustomAuthenticationForm(AuthenticationForm):
+    remember_me = forms.BooleanField(required=False)
 
 def login_request(request):
     socail_media = SocialMedia.objects.all()
@@ -31,46 +41,36 @@ def login_request(request):
         return redirect('index')
 
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST["password"]
-        remember_me = request.POST.get('remember_me') 
+        form = CustomAuthenticationForm(request, request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            remember_me = form.cleaned_data.get('remember_me')
 
-        user = authenticate(request, username=username, password=password)
+            user = authenticate(request, username=username, password=password)
 
-        # if user is not None:
-        #     login(request, user)
-        #     if remember_me:
-        #         request.session.set_expiry(3600)
-        #     return redirect('index')
-        # else:
-        #     return render(request, "login.html", {
-        #         'error': 'Kullanıcı adı veya parola hatalı',
-        #         'anakategori': anakategori,
-        #         'footer': footer,
-        #         'social_media': socail_media,
-        #     })
-
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                messages.success(request, f'Hoşgeldin {request.user.first_name}.')
-                return redirect('index')
-            else:
-                messages.error(request, 'Hesabınız aktif değil. Lütfen e-posta onayınızı tamamlayın.')
-                return redirect('login')
-        else:
-            user = MyUser.objects.filter(username=username).first()
-            if user is not None and not user.is_active:
-                messages.error(request, 'Hesabınız aktif değil. Lütfen e-posta onayınızı tamamlayın.')
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    messages.success(request, f'Hoşgeldin {request.user.first_name}.')
+                    return redirect('index')
+                else:
+                    messages.error(request, 'Hesabınız aktif değil. Lütfen e-posta onayınızı tamamlayın.')
+                    return redirect('login')
             else:
                 messages.error(request, 'Kullanıcı adı veya parola hatalı')
-            return redirect('login')
+                return redirect('login')
+    else:
+        form = CustomAuthenticationForm()
+
     context = {
-        'anakategori' : anakategori,
-        'footer' : footer,
-        'social_media' : socail_media,
+        'form': form,
+        'anakategori': anakategori,
+        'footer': footer,
+        'social_media': socail_media,
     }
     return render(request, 'login.html', context)
+
 
 def activate(request, uidb64, token):
     try:
@@ -82,12 +82,11 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-
         messages.success(request, 'Hesabınız başarıyla etkinleştirildi!')
         return redirect('login')
     else:
         messages.error(request, 'Aktivasyon bağlantısı geçersiz!')
-        return render(request, 'login.html')
+        return redirect('login')
 
 def activateEmail(request, user, to_email):
     mail_subject = 'Activate your account.'
@@ -100,15 +99,16 @@ def activateEmail(request, user, to_email):
     })
     email = EmailMessage(mail_subject, message, to=[to_email])
 
-    # Kullanıcı adını ekle
-    email.from_email = f"{user.username} <from@example.com>"
+    try:
+        if email.send():
+            messages.success(request, f"Sayın {user.username}, lütfen e-postanızdaki {to_email} gelen kutusuna gidin ve kaydı onaylamak için alınan aktivasyon bağlantısına tıklayın.")
+        else:
+            messages.error(request, f"Sayın {user.username}, e-postaya aktivasyon bağlantısı gönderilirken bir hata oluştu.")
+    except Exception as e:
+        messages.error(request, f"E-posta gönderilirken bir hata oluştu: {e}")
 
-    if email.send():
-        messages.success(request, f"Sayın {user.username}, lütfen e-postanızdaki {to_email} gelen kutusuna gidin ve kaydı onaylamak için alınan aktivasyon bağlantısına tıklayın.")
-        return redirect('login')  # Login sayfasına yönlendirme
-    else:
-        messages.error(request, f"Sayın {user.username}, e-postaya aktivasyon bağlantısı gönderilirken bir hata oluştu.")
-        return redirect('login')  # Login sayfasına yönlendirme
+    return redirect('login')
+
 
 def register(request):
     anakategori = Anakategori.objects.all()
@@ -132,8 +132,7 @@ def register(request):
         accept_privacy = request.POST.get('accept_privacy')
 
         if not username.strip() or not email or not accept_terms or not accept_privacy:
-            return render(request, 'register.html',
-            {
+            return render(request, 'register.html', {
                 'error': 'Kullanıcı adı, e-posta, üyelik sözleşmesi ve kişisel veri aydınlatma metni kabul edilmelidir.',
                 'username': username,
                 'email': email,
@@ -143,13 +142,12 @@ def register(request):
                 'anakategori': anakategori,
                 'footer': footer,
                 'social_media': socail_media,
-                'uyelikMetni' : uyelikMetni,
-                'kvkkMetni' : kvkkMetni
+                'uyelikMetni': uyelikMetni,
+                'kvkkMetni': kvkkMetni
             })
 
         if ' ' in username or re.search(r'[ğüşıöçĞÜŞİÖÇ]', username):
-            return render(request, 'register.html',
-            {
+            return render(request, 'register.html', {
                 'error': 'Kullanıcı adı boşluk içeremez ve Türkçe karakterler içeremez.',
                 'username': username,
                 'email': email,
@@ -159,14 +157,13 @@ def register(request):
                 'anakategori': anakategori,
                 'footer': footer,
                 'social_media': socail_media,
-                'uyelikMetni' : uyelikMetni,
-                'kvkkMetni' : kvkkMetni
+                'uyelikMetni': uyelikMetni,
+                'kvkkMetni': kvkkMetni
             })
 
         if password == repassword:
             if MyUser.objects.filter(username=username).exists():
-                return render(request, 'register.html',
-                {
+                return render(request, 'register.html', {
                     'error': 'Bu kullanıcı adı daha önce alınmış',
                     'username': username,
                     'email': email,
@@ -176,13 +173,12 @@ def register(request):
                     'anakategori': anakategori,
                     'footer': footer,
                     'social_media': socail_media,
-                    'uyelikMetni' : uyelikMetni,
-                    'kvkkMetni' : kvkkMetni
+                    'uyelikMetni': uyelikMetni,
+                    'kvkkMetni': kvkkMetni
                 })
             else:
                 if MyUser.objects.filter(email=email).exists():
-                    return render(request, 'register.html',
-                    {
+                    return render(request, 'register.html', {
                         'error': 'Bu email daha önce alınmış',
                         'username': username,
                         'email': email,
@@ -192,14 +188,13 @@ def register(request):
                         'anakategori': anakategori,
                         'footer': footer,
                         'social_media': socail_media,
-                        'uyelikMetni' : uyelikMetni,
-                        'kvkkMetni' : kvkkMetni
+                        'uyelikMetni': uyelikMetni,
+                        'kvkkMetni': kvkkMetni
                     })
                 else:
-                    if not re.search(r'^(?=.*[a-z])(?=.*[A-Z]).{8,}$', password):
-                        return render(request, 'register.html',
-                        {
-                            'error': 'Parola en az 8 karakter uzunluğunda olmalı ve en az bir büyük harf ve bir küçük harf içermelidir.',
+                    if not re.search(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$', password):
+                        return render(request, 'register.html', {
+                            'error': 'Parola en az 8 karakter uzunluğunda olmalı ve en az bir büyük harf, bir küçük harf ve bir rakam içermelidir.',
                             'username': username,
                             'email': email,
                             'firstname': firstname,
@@ -208,10 +203,10 @@ def register(request):
                             'anakategori': anakategori,
                             'footer': footer,
                             'social_media': socail_media,
-                            'uyelikMetni' : uyelikMetni,
-                            'kvkkMetni' : kvkkMetni
+                            'uyelikMetni': uyelikMetni,
+                            'kvkkMetni': kvkkMetni
                         })
-                    
+
                     if MyUser.objects.filter(phone=phone).exists():
                         return render(request, 'register.html', {
                             'error': 'Bu telefon numarası daha önce alınmış',
@@ -223,13 +218,12 @@ def register(request):
                             'anakategori': anakategori,
                             'footer': footer,
                             'social_media': socail_media,
-                            'uyelikMetni' : uyelikMetni,
-                            'kvkkMetni' : kvkkMetni
+                            'uyelikMetni': uyelikMetni,
+                            'kvkkMetni': kvkkMetni
                         })
 
                     if not is_valid_phone_number(phone, 'TR'):  # Telefon numarasını geçerlilik kontrolü yapmak için ülke kodunu uygun şekilde ayarlayın
-                        return render(request, 'register.html',
-                        {
+                        return render(request, 'register.html', {
                             'error': 'Geçersiz telefon numarası',
                             'username': username,
                             'email': email,
@@ -239,17 +233,18 @@ def register(request):
                             'anakategori': anakategori,
                             'footer': footer,
                             'social_media': socail_media,
-                            'uyelikMetni' : uyelikMetni,
-                            'kvkkMetni' : kvkkMetni
+                            'uyelikMetni': uyelikMetni,
+                            'kvkkMetni': kvkkMetni
                         })
-                    user = MyUser.objects.create_user(username=username, email=email, first_name=firstname,last_name=lastname, password=password, phone=phone)
+
+                    # Kullanıcı kayıt işlemi buraya eklenecek
+                    user = MyUser.objects.create_user(username=username, email=email, first_name=firstname, last_name=lastname, password=password, phone=phone)
                     user.is_active = False
                     user.save()
                     activateEmail(request, user, email)
                     return redirect('login')
         else:
-            return render(request, 'register.html',
-            {
+            return render(request, 'register.html', {
                 'error': 'Parolalar eşleşmiyor',
                 'username': username,
                 'email': email,
@@ -259,18 +254,20 @@ def register(request):
                 'anakategori': anakategori,
                 'footer': footer,
                 'social_media': socail_media,
-                'uyelikMetni' : uyelikMetni,
-                'kvkkMetni' : kvkkMetni
+                'uyelikMetni': uyelikMetni,
+                'kvkkMetni': kvkkMetni
             })
 
     context = {
         'anakategori': anakategori,
         'footer': footer,
         'social_media': socail_media,
-        'uyelikMetni' : uyelikMetni,
-        'kvkkMetni' : kvkkMetni
+        'uyelikMetni': uyelikMetni,
+        'kvkkMetni': kvkkMetni
     }
     return render(request, 'register.html', context)
+
+
 
 def logout_request(request):
     logout(request)
@@ -433,6 +430,7 @@ def update_profile(request):
     }
     return render(request, 'hesabim.html', context)
 
+
 @login_required
 def new_password(request):
     anakategori = Anakategori.objects.all()
@@ -463,35 +461,15 @@ def new_password(request):
     }
 
     if request.method == 'POST':
-        old_password = request.POST['oldpassword']
-        new_password = request.POST['password']
-        confirm_password = request.POST['repassword']
-
-        # Eski parolayı kontrol et
-        if not request.user.check_password(old_password):
-            messages.error(request, 'Eski parolayı yanlış girdiniz.')
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Oturum kimliğini güncelle
+            messages.success(request, 'Parolanız başarıyla güncellendi.')
             return redirect('new_password')
+    else:
+        form = PasswordChangeForm(request.user)
 
-        # Yeni parolaların eşleştiğini kontrol et
-        if new_password != confirm_password:
-            messages.error(request, 'Yeni parolalar eşleşmiyor.')
-            return redirect('new_password')
+    return render(request, 'new_password.html', {'form': form, **context})
 
-        # Parola karmaşıklığını kontrol et
-        if not re.search(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$', new_password):
-            messages.error(request, 'Parola en az 8 karakter uzunluğunda, en az bir büyük harf, bir küçük harf ve bir sayı içermelidir.')
-            return redirect('new_password')
-
-        # Yeni parolayı güncelle
-        user = request.user
-        user.set_password(new_password)
-        user.save()
-
-        # Oturum kimliğini güncelle
-        update_session_auth_hash(request, user)
-
-        messages.success(request, 'Parolanız başarıyla güncellendi.')
-        return redirect('new_password')
-
-    return render(request, 'new_password.html', context)
 
